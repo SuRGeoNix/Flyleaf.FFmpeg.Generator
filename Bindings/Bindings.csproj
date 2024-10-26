@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyName>Flyleaf.FFmpeg.Bindings</AssemblyName>
+    <RootNamespace>Flyleaf.FFmpeg</RootNamespace>
+    <Title>FFmpeg Bindings for C#/.NET</Title>
+    <Authors>SuRGeoNix</Authors>
+    <Version>7.1.0</Version>
+    <Description>FFmpeg Bindings for C#/.NET</Description>
+    <Copyright>SuRGeoNix © 2024</Copyright>
+    <PackageTags>flyleaf;ffmpeg;bindings</PackageTags>
+    <PackageReleaseNotes>FFmpeg Bindings Update</PackageReleaseNotes>
+    <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <IsAotCompatible>True</IsAotCompatible>
+    <NoWarn>1701;1702;CS1573;CS1591;</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <IsAotCompatible>True</IsAotCompatible>
+    <NoWarn>1701;1702;CS1573;CS1591;</NoWarn>
+  </PropertyGroup>
+
+</Project>
