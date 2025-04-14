@@ -93,9 +93,6 @@ public unsafe struct _iobuf {}
 public unsafe struct AVIODirContext {}
 
 /// <remarks>This struct is incomplete.</remarks>
-public unsafe struct AVFilterPad {}
-
-/// <remarks>This struct is incomplete.</remarks>
 public unsafe struct AVFilterFormats {}
 
 /// <remarks>This struct is incomplete.</remarks>
@@ -103,4 +100,19 @@ public unsafe struct AVFilterChannelLayouts {}
 
 /// <remarks>This struct is incomplete.</remarks>
 public unsafe struct AVFilterCommand {}
+
+/// <remarks>This struct is incomplete.</remarks>
+public unsafe struct AVAES {}
+
+/// <remarks>This struct is incomplete.</remarks>
+public unsafe struct URLContext {}
+
+/// <remarks>This struct is incomplete.</remarks>
+public unsafe struct FFStreamInfo {}
+
+/// <remarks>This struct is incomplete.</remarks>
+public unsafe struct FFOutputFormat {}
+
+/// <remarks>This struct is incomplete.</remarks>
+public unsafe struct FFInputFormat {}
 

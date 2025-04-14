@@ -705,6 +705,22 @@ public unsafe static partial class Raw
     [DllImport(AVCODEC, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern uint avcodec_version();
     
+    /// <summary>Wipe the list and unref all the packets in it.</summary>
+    [DllImport(AVCODEC, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern void avpriv_packet_list_free(PacketList* list);
+    
+    /// <summary>Remove the oldest AVPacket in the list and return it.</summary>
+    /// <param name="pkt">Pointer to an AVPacket struct</param>
+    [DllImport(AVCODEC, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern int avpriv_packet_list_get(PacketList* list, AVPacket* pkt);
+    
+    /// <summary>Append an AVPacket to the list.</summary>
+    /// <param name="list">A PacketList</param>
+    /// <param name="pkt">The packet being appended. The data described in it will be made reference counted if it isn&apos;t already.</param>
+    /// <param name="copy">A callback to copy the contents of the packet to the list. May be null, in which case the packet&apos;s reference will be moved to the list.</param>
+    [DllImport(AVCODEC, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern int avpriv_packet_list_put(PacketList* list, AVPacket* pkt, avpriv_packet_list_put_copy_func copy, int flags);
+    
     /// <summary>Free all allocated data in the given subtitle struct.</summary>
     /// <param name="sub">AVSubtitle to free.</param>
     [DllImport(AVCODEC, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
@@ -2120,6 +2136,20 @@ public unsafe static partial class Raw
     /// <param name="type">the kind of data written starting at the current pos</param>
     [DllImport(AVFORMAT, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern void avio_write_marker(AVIOContext* s, long time, AVIODataMarkerType type);
+    
+    [DllImport(AVFORMAT, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern void avpriv_register_devices(FFOutputFormat** o, FFInputFormat** i);
+    
+    [DllImport(AVFORMAT, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern void avpriv_register_devices(FFOutputFormat*[] o, FFInputFormat*[] i);
+    
+    /// <summary>Set the time base and wrapping info for a given stream. This will be used to interpret the stream&apos;s timestamps. If the new time base is invalid (numerator or denominator are non-positive), it leaves the stream unchanged.</summary>
+    /// <param name="st">stream</param>
+    /// <param name="pts_wrap_bits">number of bits effectively used by the pts (used for wrap control)</param>
+    /// <param name="pts_num">time base numerator</param>
+    /// <param name="pts_den">time base denominator</param>
+    [DllImport(AVFORMAT, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern void avpriv_set_pts_info(AVStream* st, int pts_wrap_bits, uint pts_num, uint pts_den);
     
     /// <summary>Add two rationals.</summary>
     /// <param name="b">First rational</param>

@@ -620,6 +620,13 @@ public unsafe struct AVCodecParserContext
     public int format;
 }
 
+/// <summary>**********************************************</summary>
+public unsafe struct AVCodecTag
+{
+    public AVCodecID id;
+    public uint tag;
+}
+
 public unsafe struct AVComponentDescriptor
 {
     /// <summary>Which of the 4 planes contains the component.</summary>
@@ -859,7 +866,7 @@ public unsafe struct AVFilter
     /// <summary>The number of entries in the list of outputs.</summary>
     public byte nb_outputs;
     /// <summary>This field determines the state of the formats union. It is an enum FilterFormatsState value.</summary>
-    public byte formats_state;
+    public FilterFormatsState formats_state;
     /// <summary>Filter pre-initialization function</summary>
     public AVFilter_preinit_func preinit;
     /// <summary>Filter initialization function.</summary>
@@ -1048,6 +1055,34 @@ public unsafe struct AVFilterLink
     public AVFilterFormatsConfig incfg;
     /// <summary>Lists of supported formats / etc. supported by the output filter.</summary>
     public AVFilterFormatsConfig outcfg;
+}
+
+/// <summary>A filter pad used for either input or output.</summary>
+public unsafe struct AVFilterPad
+{
+    /// <summary>Pad name. The name is unique among inputs and among outputs, but an input may have the same name as an output. This may be NULL if this pad has no need to ever be referenced by name.</summary>
+    public byte* name;
+    /// <summary>AVFilterPad type.</summary>
+    public AVMediaType type;
+    /// <summary>A combination of AVFILTERPAD_FLAG_* flags.</summary>
+    public int flags;
+    public AVFilterPad_get_buffer get_buffer;
+    /// <summary>Filtering callback. This is where a filter receives a frame with audio/video data and should do its processing.</summary>
+    public AVFilterPad_filter_frame_func filter_frame;
+    /// <summary>Frame request callback. A call to this should result in some progress towards producing output over the given link. This should return zero on success, and another value on error.</summary>
+    public AVFilterPad_request_frame_func request_frame;
+    /// <summary>Link configuration callback.</summary>
+    public AVFilterPad_config_props_func config_props;
+}
+
+/// <summary>Callback functions to get a video/audio buffers. If NULL, the filter system will use ff_default_get_video_buffer() for video and ff_default_get_audio_buffer() for audio.</summary>
+[StructLayout(LayoutKind.Explicit)]
+public unsafe struct AVFilterPad_get_buffer
+{
+    [FieldOffset(0)]
+    public _video_func video;
+    [FieldOffset(0)]
+    public _audio_func audio;
 }
 
 /// <summary>Parameters of a filter&apos;s input or output pad.</summary>
@@ -1587,6 +1622,12 @@ public unsafe struct AVMasteringDisplayMetadata
     public int has_primaries;
     /// <summary>Flag indicating whether the luminance (min_ and max_) have been set.</summary>
     public int has_luminance;
+}
+
+public unsafe struct AVMetadataConv
+{
+    public byte* native;
+    public byte* generic;
 }
 
 /// <summary>OpenCL device details.</summary>
@@ -2140,12 +2181,418 @@ public unsafe struct AVVulkanFramesContext
     public AVVulkanFramesContext_unlock_frame_func unlock_frame;
 }
 
+public unsafe struct CodecMime
+{
+    public byte_array32 str;
+    public AVCodecID id;
+}
+
+public unsafe struct FFFormatContext
+{
+    /// <summary>The public context.</summary>
+    public AVFormatContext pub;
+    /// <summary>Number of streams relevant for interleaving. Muxing only.</summary>
+    public int nb_interleaved_streams;
+    public FFFormatContext_avoid_negative_ts_status avoid_negative_ts_status;
+    /// <summary>The interleavement function in use. Always set for muxers.</summary>
+    public FFFormatContext_interleave_packet_func interleave_packet;
+    /// <summary>This buffer is only needed when packets were already buffered but not decoded, for example to get the codec parameters in MPEG streams.</summary>
+    public PacketList packet_buffer;
+    /// <summary>offset of the first packet</summary>
+    public long data_offset;
+    /// <summary>Raw packets from the demuxer, prior to parsing and decoding. This buffer is used for buffering packets until the codec can be identified, as parsing cannot be done without knowing the codec.</summary>
+    public PacketList raw_packet_buffer;
+    /// <summary>Packets split by the parser get queued here.</summary>
+    public PacketList parse_queue;
+    /// <summary>The generic code uses this as a temporary packet to parse packets or for muxing, especially flushing. For demuxers, it may also be used for other means for short periods that are guaranteed not to overlap with calls to av_read_frame() (or ff_read_packet()) or with each other. It may be used by demuxers as a replacement for stack packets (unless they call one of the aforementioned functions with their own AVFormatContext). Every user has to ensure that this packet is blank after using it.</summary>
+    public AVPacket* parse_pkt;
+    /// <summary>Used to hold temporary packets for the generic demuxing code. When muxing, it may be used by muxers to hold packets (even permanent ones).</summary>
+    public AVPacket* pkt;
+    /// <summary>Sum of the size of packets in raw_packet_buffer, in bytes.</summary>
+    public int raw_packet_buffer_size;
+    public int missing_ts_warning;
+    public int inject_global_side_data;
+    public int avoid_negative_ts_use_pts;
+    /// <summary>Timestamp of the end of the shortest stream.</summary>
+    public long shortest_end;
+    /// <summary>Whether or not avformat_init_output has already been called</summary>
+    public int initialized;
+    /// <summary>Whether or not avformat_init_output fully initialized streams</summary>
+    public int streams_initialized;
+    /// <summary>ID3v2 tag useful for MP3 demuxing</summary>
+    public AVDictionary* id3v2_meta;
+    public int prefer_codec_framerate;
+    /// <summary>Set if chapter ids are strictly monotonic.</summary>
+    public int chapter_ids_monotonic;
+    /// <summary>Contexts and child contexts do not contain a metadata option</summary>
+    public int metafree;
+}
+
+/// <summary>The exact value of the fractional number is: &apos;val + num / den&apos;. num is assumed to be 0 &lt;= num &lt; den.</summary>
+public unsafe struct FFFrac
+{
+    public long val;
+    public long num;
+    public long den;
+}
+
+public unsafe struct FFIOContext
+{
+    public AVIOContext pub;
+    /// <summary>A callback that is used instead of short_seek_threshold.</summary>
+    public FFIOContext_short_seek_get_func short_seek_get;
+    /// <summary>Threshold to favor readahead over seek.</summary>
+    public int short_seek_threshold;
+    public AVIODataMarkerType current_type;
+    public long last_time;
+    /// <summary>max filesize, used to limit allocations</summary>
+    public long maxsize;
+    /// <summary>Bytes read statistic</summary>
+    public long bytes_read;
+    /// <summary>Bytes written statistic</summary>
+    public long bytes_written;
+    /// <summary>seek statistic</summary>
+    public int seek_count;
+    /// <summary>writeout statistic</summary>
+    public int writeout_count;
+    /// <summary>Original buffer size used after probing to ensure seekback and to reset the buffer size</summary>
+    public int orig_buffer_size;
+    /// <summary>Written output size is updated each time a successful writeout ends up further position-wise</summary>
+    public long written_output_size;
+}
+
+public unsafe struct FFStream
+{
+    /// <summary>The public context.</summary>
+    public AVStream pub;
+    public AVFormatContext* fmtctx;
+    /// <summary>Set to 1 if the codec allows reordering, so pts can be different from dts.</summary>
+    public int reorder;
+    /// <summary>bitstream filter to run on stream - encoding: Set by muxer using ff_stream_add_bitstream_filter - decoding: unused</summary>
+    public AVBSFContext* bsfc;
+    /// <summary>Whether or not check_bitstream should still be run on each packet</summary>
+    public int bitstream_checked;
+    /// <summary>The codec context used by avformat_find_stream_info, the parser, etc.</summary>
+    public AVCodecContext* avctx;
+    /// <summary>1 if avctx has been initialized with the values from the codec parameters</summary>
+    public int avctx_inited;
+    public FFStream_extract_extradata extract_extradata;
+    /// <summary>Whether the internal avctx needs to be updated from codecpar (after a late change to codecpar)</summary>
+    public int need_context_update;
+    public int is_intra_only;
+    public FFFrac priv_pts;
+    /// <summary>Stream information used internally by avformat_find_stream_info()</summary>
+    public FFStreamInfo* info;
+    /// <summary>Only used if the format does not support seeking natively.</summary>
+    public AVIndexEntry* index_entries;
+    public int nb_index_entries;
+    public uint index_entries_allocated_size;
+    public long interleaver_chunk_size;
+    public long interleaver_chunk_duration;
+    /// <summary>stream probing state -1 -&gt; probing finished 0 -&gt; no probing requested rest -&gt; perform probing with request_probe being the minimum score to accept.</summary>
+    public int request_probe;
+    /// <summary>Indicates that everything up to the next keyframe should be discarded.</summary>
+    public int skip_to_keyframe;
+    /// <summary>Number of samples to skip at the start of the frame decoded from the next packet.</summary>
+    public int skip_samples;
+    /// <summary>If not 0, the number of samples that should be skipped from the start of the stream (the samples are removed from packets with pts==0, which also assumes negative timestamps do not happen). Intended for use with formats such as mp3 with ad-hoc gapless audio support.</summary>
+    public long start_skip_samples;
+    /// <summary>If not 0, the first audio sample that should be discarded from the stream. This is broken by design (needs global sample count), but can&apos;t be avoided for broken by design formats such as mp3 with ad-hoc gapless audio support.</summary>
+    public long first_discard_sample;
+    /// <summary>The sample after last sample that is intended to be discarded after first_discard_sample. Works on frame boundaries only. Used to prevent early EOF if the gapless info is broken (considered concatenated mp3s).</summary>
+    public long last_discard_sample;
+    /// <summary>Number of internally decoded frames, used internally in libavformat, do not access its lifetime differs from info which is why it is not in that structure.</summary>
+    public int nb_decoded_frames;
+    /// <summary>Timestamp offset added to timestamps before muxing</summary>
+    public long mux_ts_offset;
+    /// <summary>This is the lowest ts allowed in this track; it may be set by the muxer during init or write_header and influences the automatic timestamp shifting code.</summary>
+    public long lowest_ts_allowed;
+    /// <summary>Internal data to check for wrapping of the time stamp</summary>
+    public long pts_wrap_reference;
+    /// <summary>Options for behavior, when a wrap is detected.</summary>
+    public int pts_wrap_behavior;
+    /// <summary>Internal data to prevent doing update_initial_durations() twice</summary>
+    public int update_initial_durations_done;
+    /// <summary>Internal data to generate dts from pts</summary>
+    public long_array17 pts_reorder_error;
+    public byte_array17 pts_reorder_error_count;
+    public long_array17 pts_buffer;
+    /// <summary>Internal data to analyze DTS and detect faulty mpeg streams</summary>
+    public long last_dts_for_order_check;
+    public byte dts_ordered;
+    public byte dts_misordered;
+    /// <summary>Internal data to inject global side data</summary>
+    public int inject_global_side_data;
+    /// <summary>display aspect ratio (0 if unknown) - encoding: unused - decoding: Set by libavformat to calculate sample_aspect_ratio internally</summary>
+    public AVRational display_aspect_ratio;
+    public AVProbeData probe_data;
+    /// <summary>last packet in packet_buffer for this stream when muxing.</summary>
+    public PacketListEntry* last_in_packet_buffer;
+    public long last_IP_pts;
+    public int last_IP_duration;
+    /// <summary>Number of packets to buffer for codec probing</summary>
+    public int probe_packets;
+    public AVStreamParseType need_parsing;
+    public AVCodecParserContext* parser;
+    /// <summary>Number of frames that have been demuxed during avformat_find_stream_info()</summary>
+    public int codec_info_nb_frames;
+    /// <summary>Stream Identifier This is the MPEG-TS stream identifier +1 0 means unknown</summary>
+    public int stream_identifier;
+    /// <summary>Timestamp corresponding to the last dts sync point.</summary>
+    public long first_dts;
+    public long cur_dts;
+    public AVCodecDescriptor* codec_desc;
+    public AVRational transferred_mux_tb;
+}
+
+public unsafe struct FFStream_extract_extradata
+{
+    public AVBSFContext* bsf;
+    public int inited;
+}
+
+public unsafe struct FFStreamGroup
+{
+    /// <summary>The public context.</summary>
+    public AVStreamGroup pub;
+    public AVFormatContext* fmtctx;
+}
+
+/// <summary>Link properties exposed to filter code, but not external callers.</summary>
+public unsafe struct FilterLink
+{
+    public AVFilterLink pub;
+    /// <summary>Graph the filter belongs to.</summary>
+    public AVFilterGraph* graph;
+    /// <summary>Current timestamp of the link, as defined by the most recent frame(s), in link time_base units.</summary>
+    public long current_pts;
+    /// <summary>Current timestamp of the link, as defined by the most recent frame(s), in AV_TIME_BASE units.</summary>
+    public long current_pts_us;
+    /// <summary>Minimum number of samples to filter at once.</summary>
+    public int min_samples;
+    /// <summary>Maximum number of samples to filter at once. If filter_frame() is called with more samples, it will split them.</summary>
+    public int max_samples;
+    /// <summary>Number of past frames sent through the link.</summary>
+    public long frame_count_in;
+    /// <summary>Number of past frames sent through the link.</summary>
+    public long frame_count_out;
+    /// <summary>Number of past samples sent through the link.</summary>
+    public long sample_count_in;
+    /// <summary>Number of past samples sent through the link.</summary>
+    public long sample_count_out;
+    /// <summary>Frame rate of the stream on the link, or 1/0 if unknown or variable.</summary>
+    public AVRational frame_rate;
+    /// <summary>For hwaccel pixel formats, this should be a reference to the AVHWFramesContext describing the frames.</summary>
+    public AVBufferRef* hw_frames_ctx;
+}
+
+public unsafe struct HLSAudioSetupInfo
+{
+    public AVCodecID codec_id;
+    public uint codec_tag;
+    public ushort priming;
+    public byte version;
+    public byte setup_data_length;
+    public byte_array10 setup_data;
+}
+
+public unsafe struct HLSContext
+{
+    public AVClass* @class;
+    public AVFormatContext* ctx;
+    public int n_variants;
+    public variant** variants;
+    public int n_playlists;
+    public playlist** playlists;
+    public int n_renditions;
+    public rendition** renditions;
+    public long cur_seq_no;
+    public int m3u8_hold_counters;
+    public int live_start_index;
+    public int prefer_x_start;
+    public int first_packet;
+    public long first_timestamp;
+    public long cur_timestamp;
+    public AVIOInterruptCB* interrupt_callback;
+    public AVDictionary* avio_opts;
+    public AVDictionary* seg_format_opts;
+    public byte* allowed_extensions;
+    public int extension_picky;
+    public int max_reload;
+    public int http_persistent;
+    public int http_multiple;
+    public int http_seekable;
+    public int seg_max_retry;
+    public AVIOContext* playlist_pb;
+    public HLSCryptoContext crypto_ctx;
+}
+
+public unsafe struct HLSCryptoContext
+{
+    public AVAES* aes_ctx;
+    public byte_array16 key;
+    public byte_array16 iv;
+}
+
+public unsafe struct ID3v2EncContext
+{
+    /// <summary>ID3v2 minor version, either 3 or 4</summary>
+    public int version;
+    /// <summary>offset of the tag total size</summary>
+    public long size_pos;
+    /// <summary>size of the tag written so far</summary>
+    public int len;
+}
+
+public unsafe struct ID3v2ExtraMeta
+{
+    public byte* tag;
+    public ID3v2ExtraMeta* next;
+    public ID3v2ExtraMeta_data data;
+}
+
+[StructLayout(LayoutKind.Explicit)]
+public unsafe struct ID3v2ExtraMeta_data
+{
+    [FieldOffset(0)]
+    public ID3v2ExtraMetaAPIC apic;
+    [FieldOffset(0)]
+    public ID3v2ExtraMetaCHAP chap;
+    [FieldOffset(0)]
+    public ID3v2ExtraMetaGEOB geob;
+    [FieldOffset(0)]
+    public ID3v2ExtraMetaPRIV priv;
+}
+
+public unsafe struct ID3v2ExtraMetaAPIC
+{
+    public AVBufferRef* buf;
+    public byte* type;
+    public byte* description;
+    public AVCodecID id;
+}
+
+public unsafe struct ID3v2ExtraMetaCHAP
+{
+    public byte* element_id;
+    public uint start;
+    public uint end;
+    public AVDictionary* meta;
+}
+
+public unsafe struct ID3v2ExtraMetaGEOB
+{
+    public uint datasize;
+    public byte* mime_type;
+    public byte* file_name;
+    public byte* description;
+    public byte* data;
+}
+
+public unsafe struct ID3v2ExtraMetaPRIV
+{
+    public byte* owner;
+    public byte* data;
+    public uint datasize;
+}
+
+public unsafe struct PacketList
+{
+    public PacketListEntry* head;
+    public PacketListEntry* tail;
+}
+
+public unsafe struct PacketListEntry
+{
+    public PacketListEntry* next;
+    public AVPacket pkt;
+}
+
+public unsafe struct playlist
+{
+    public byte_array4096 url;
+    public FFIOContext pb;
+    public byte* read_buffer;
+    public AVIOContext* input;
+    public int input_read_done;
+    public AVIOContext* input_next;
+    public int input_next_requested;
+    public AVFormatContext* parent;
+    public int index;
+    public AVFormatContext* ctx;
+    public AVPacket* pkt;
+    public int has_noheader_flag;
+    public AVStream** main_streams;
+    public int n_main_streams;
+    public int finished;
+    public PlaylistType type;
+    public long target_duration;
+    public long start_seq_no;
+    public int time_offset_flag;
+    public long start_time_offset;
+    public int n_segments;
+    public segment** segments;
+    public int needed;
+    public int broken;
+    public long cur_seq_no;
+    public long last_seq_no;
+    public int m3u8_hold_counters;
+    public long cur_seg_offset;
+    public long last_load_time;
+    public segment* cur_init_section;
+    public byte* init_sec_buf;
+    public uint init_sec_buf_size;
+    public uint init_sec_data_len;
+    public uint init_sec_buf_read_offset;
+    public byte_array4096 key_url;
+    public byte_array16 key;
+    public int is_id3_timestamped;
+    public long id3_mpegts_timestamp;
+    public long id3_offset;
+    public byte* id3_buf;
+    public uint id3_buf_size;
+    public AVDictionary* id3_initial;
+    public int id3_found;
+    public int id3_changed;
+    public ID3v2ExtraMeta* id3_deferred_extra;
+    public HLSAudioSetupInfo audio_setup_info;
+    public long seek_timestamp;
+    public int seek_flags;
+    public int seek_stream_index;
+    public int n_renditions;
+    public rendition** renditions;
+    public int n_init_sections;
+    public segment** init_sections;
+}
+
 public unsafe struct RcOverride
 {
     public int start_frame;
     public int end_frame;
     public int qscale;
     public float quality_factor;
+}
+
+public unsafe struct rendition
+{
+    public AVMediaType type;
+    public playlist* playlist;
+    public byte_array64 group_id;
+    public byte_array64 language;
+    public byte_array64 name;
+    public int disposition;
+}
+
+public unsafe struct segment
+{
+    public long duration;
+    public long url_offset;
+    public long size;
+    public byte* url;
+    public byte* key;
+    public KeyType key_type;
+    public byte_array16 iv;
+    public segment* init_section;
 }
 
 public unsafe struct SwsFilter
@@ -2162,5 +2609,15 @@ public unsafe struct SwsVector
     public double* coeff;
     /// <summary>number of coefficients in the vector</summary>
     public int length;
+}
+
+public unsafe struct variant
+{
+    public int bandwidth;
+    public int n_playlists;
+    public playlist** playlists;
+    public byte_array64 audio_group;
+    public byte_array64 video_group;
+    public byte_array64 subtitles_group;
 }
 

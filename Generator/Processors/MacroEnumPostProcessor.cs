@@ -14,7 +14,7 @@ internal static class MacroEnumPostProcessor
         [
             new("AV_BUFFERSINK_FLAG_", "BufferSinkFlags", IsFlags: true),
 
-            new("AV_CH_", "ChannelFlags", IsFlags: true),// Except: HashSet("AV_CH_LAYOUT_NATIVE")),
+            new("AV_CH_", "ChannelFlags", IsFlags: true),// Except: HashSet("AV_CH_LAYOUT_NATIVE")), // TBR: re-uses flags as new names*
             new("AV_CODEC_FLAG_", "CodecFlags", IsFlags: true),
             new("AV_CODEC_FLAG2_", "CodecFlags2", IsFlags: true),
             new("AV_CODEC_CAP_", "CodecCapFlags", IsFlags: true),
@@ -29,7 +29,7 @@ internal static class MacroEnumPostProcessor
 
             new("AV_EF_", "ErrorDetectFlags", IsFlags: true),
 
-            new("AVFILTER_FLAG_", "FilterFlags", IsFlags: true),
+            new("AVFILTER_FLAG_", "FilterFlags", IsFlags: true, Except: HashSet("AVFILTER_FLAG_SUPPORT_TIMELINE")), // SupportTimeline = SupportTimelineGeneric | SupportTimelineInternal
             new("AVFILTER_CMD_FLAG_", "FilterCmdFlags", IsFlags: true),
             new("AVFILTER_THREAD_", "FilterThreadFlags", IsFlags: true),
             new("AVFMT_FLAG_", "FmtFlags2", IsFlags: true),
@@ -46,7 +46,7 @@ internal static class MacroEnumPostProcessor
             
             new("AVINDEX_", "IndexFlags", IsFlags: true),
 
-            new("AVIO_FLAG_", "IOFlags", IsFlags: true),
+            new("AVIO_FLAG_", "IOFlags", IsFlags: true, Except: HashSet("AVIO_FLAG_READ_WRITE")), // ReadWrite = Read | Write
             new("AVIO_SEEKABLE_", "IOSeekableFlags", IsFlags: true),
 
             new("AV_LOG_", "LogFlags", Only: HashSet("AV_LOG_SKIP_REPEATED", "AV_LOG_PRINT_LEVEL")),

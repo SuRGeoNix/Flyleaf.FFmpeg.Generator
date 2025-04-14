@@ -2755,6 +2755,14 @@ public enum ErrorDetectFlags : int
     Aggressive = 1 << 18,
 }
 
+/// <summary>Whether the timestamp shift offset has already been determined. -1: disabled, 0: not yet determined, 1: determined.</summary>
+public enum FFFormatContext_avoid_negative_ts_status : int
+{
+    Disabled = -1,
+    Unknown = 0,
+    Known = 1,
+}
+
 /// <summary>Macro enum, prefix: AVFILTER_CMD_FLAG_</summary>
 [Flags]
 public enum FilterCmdFlags : int
@@ -2785,8 +2793,24 @@ public enum FilterFlags : int
     SupportTimelineGeneric = 1 << 16,
     /// <summary>AVFILTER_FLAG_SUPPORT_TIMELINE_INTERNAL</summary>
     SupportTimelineInternal = 1 << 17,
-    /// <summary>AVFILTER_FLAG_SUPPORT_TIMELINE</summary>
-    SupportTimeline = SupportTimelineGeneric | SupportTimelineInternal,
+}
+
+public enum FilterFormatsState : byte
+{
+    /// <summary>The default value meaning that this filter supports all formats and (for audio) sample rates and channel layouts/counts as long as these properties agree for all inputs and outputs. This state is only allowed in case all inputs and outputs actually have the same type. The union is unused in this state.</summary>
+    Passthrough = 0,
+    /// <summary>formats.query active.</summary>
+    QueryFunc = 1,
+    /// <summary>formats.query_func2 active.</summary>
+    QueryFunc2 = 2,
+    /// <summary>formats.pixels_list active.</summary>
+    PixfmtList = 3,
+    /// <summary>formats.samples_list active.</summary>
+    SamplefmtsList = 4,
+    /// <summary>formats.pix_fmt active</summary>
+    SinglePixfmt = 5,
+    /// <summary>formats.sample_fmt active.</summary>
+    SingleSamplefmt = 6,
 }
 
 /// <summary>Macro enum, prefix: AVFILTER_THREAD_</summary>
@@ -2950,6 +2974,14 @@ public enum HWAccelFlags : int
     UnsafeOutput = 1 << 3,
 }
 
+public enum ID3v2Encoding : int
+{
+    Iso8859 = 0,
+    Utf16bom = 1,
+    Utf16be = 2,
+    Utf8 = 3,
+}
+
 /// <summary>Macro enum, prefix: FF_IDCT_</summary>
 public enum IDCTAlgo : int
 {
@@ -3001,8 +3033,6 @@ public enum IOFlags : uint
     Read = 1,
     /// <summary>AVIO_FLAG_WRITE</summary>
     Write = 2,
-    /// <summary>AVIO_FLAG_READ_WRITE</summary>
-    ReadWrite = Read | Write,
     /// <summary>AVIO_FLAG_NONBLOCK</summary>
     Nonblock = 8,
     /// <summary>AVIO_FLAG_DIRECT</summary>
@@ -3034,6 +3064,13 @@ public enum IOSeekFlags : uint
     Size = 0x10000,
     /// <summary>AVSEEK_FORCE</summary>
     Force = 0x20000,
+}
+
+public enum KeyType : int
+{
+    None = 0,
+    Aes_128 = 1,
+    SampleAes = 2,
 }
 
 /// <summary>Macro enum, prefix: AV_LOG_</summary>
@@ -3193,6 +3230,13 @@ public enum PktFlags : uint
     Trusted = 0x0008,
     /// <summary>AV_PKT_FLAG_DISPOSABLE</summary>
     Disposable = 0x0010,
+}
+
+public enum PlaylistType : int
+{
+    Unspecified = 0,
+    Event = 1,
+    Vod = 2,
 }
 
 /// <summary>Macro enum, prefix: AVSEEK_FLAG_</summary>

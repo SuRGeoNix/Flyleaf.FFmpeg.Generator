@@ -32,7 +32,7 @@ public class CliOptions
     [Option('d', "documentation", Required = false, Default = true)]
     public bool XMLDocumentation { get; set; }
 
-    [Option('v', HelpText = "Print details during execution.")]
+    [Option('v', Default = true, HelpText = "Print details during execution.")]
     public bool Verbose { get; set; }
 
     [Option("using-online-ffmpeg-binaries", Required = false, Default = true)]

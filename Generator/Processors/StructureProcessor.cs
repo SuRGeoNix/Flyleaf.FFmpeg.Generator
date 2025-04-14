@@ -29,6 +29,11 @@ internal class StructureProcessor
             var className = @class.Name;
             MakeDefinition(@class, className);
         }
+
+        foreach (var @class in translationUnit.Classes)
+        {
+            MakeDefinition(@class, @class.Name);
+        }
     }
 
     private void MakeDefinition(Class @class, string name)
@@ -199,6 +204,10 @@ internal class StructureProcessor
 
         if (className == "AVSideDataDescriptor" && fieldName == "props")
             return new() { Name = "AVSideDataProps" }; // orginally an enum
+
+        // libavfilter/filters.h (extra)
+        if (className == "AVFilter" && fieldName == "formats_state")
+            return new() { Name = "FilterFormatsState" };
 
         if (className == "AVCodecContext")
         {

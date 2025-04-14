@@ -9,9 +9,9 @@
     <RootNamespace>Flyleaf.FFmpeg</RootNamespace>
     <Title>FFmpeg Bindings for C#/.NET</Title>
     <Authors>SuRGeoNix</Authors>
-    <Version>7.1.0</Version>
+    <Version>7.1.1</Version>
     <Description>FFmpeg Bindings for C#/.NET</Description>
-    <Copyright>SuRGeoNix © 2024</Copyright>
+    <Copyright>SuRGeoNix © 2025</Copyright>
     <PackageTags>flyleaf;ffmpeg;bindings</PackageTags>
     <PackageReleaseNotes>FFmpeg Bindings Update</PackageReleaseNotes>
     <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>

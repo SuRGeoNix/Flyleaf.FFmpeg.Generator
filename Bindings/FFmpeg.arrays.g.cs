@@ -1197,6 +1197,51 @@ public unsafe struct int_array9
     }
 }
 
+public unsafe struct byte_array10
+{
+    public const int Size = 10;
+    public fixed byte _[10];
+    
+    public byte this[int i]
+    {
+        get => i switch
+        {
+            >= 0 and < Size => _[i],
+            _ => throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size})"),
+        };
+        set => _[i] = i switch
+        {
+            >= 0 and < Size => value,
+            _ => throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size})"),
+        };
+    }
+    
+    public byte[] ToArray() => new [] { _[0], _[1], _[2], _[3], _[4], _[5], _[6], _[7], _[8], _[9] };
+    
+    
+    public void UpdateFrom(byte[] array)
+    {
+        if (array.Length != Size)
+        {
+            throw new ArgumentOutOfRangeException($"array size({array.Length}) should == {Size}");
+        }
+        
+        fixed (byte* p = array)
+        {
+            _[0] = p[0];
+            _[1] = p[1];
+            _[2] = p[2];
+            _[3] = p[3];
+            _[4] = p[4];
+            _[5] = p[5];
+            _[6] = p[6];
+            _[7] = p[7];
+            _[8] = p[8];
+            _[9] = p[9];
+        }
+    }
+}
+
 public unsafe struct AVHDRPlusPercentile_array15
 {
     public const int Size = 15;
@@ -1358,6 +1403,110 @@ public unsafe struct byte_array16
     }
 }
 
+public unsafe struct byte_array17
+{
+    public const int Size = 17;
+    public fixed byte _[17];
+    
+    public byte this[int i]
+    {
+        get => i switch
+        {
+            >= 0 and < Size => _[i],
+            _ => throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size})"),
+        };
+        set => _[i] = i switch
+        {
+            >= 0 and < Size => value,
+            _ => throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size})"),
+        };
+    }
+    
+    public byte[] ToArray() => new [] { _[0], _[1], _[2], _[3], _[4], _[5], _[6], _[7], _[8], _[9], _[10], _[11], _[12], _[13], _[14], _[15], _[16] };
+    
+    
+    public void UpdateFrom(byte[] array)
+    {
+        if (array.Length != Size)
+        {
+            throw new ArgumentOutOfRangeException($"array size({array.Length}) should == {Size}");
+        }
+        
+        fixed (byte* p = array)
+        {
+            _[0] = p[0];
+            _[1] = p[1];
+            _[2] = p[2];
+            _[3] = p[3];
+            _[4] = p[4];
+            _[5] = p[5];
+            _[6] = p[6];
+            _[7] = p[7];
+            _[8] = p[8];
+            _[9] = p[9];
+            _[10] = p[10];
+            _[11] = p[11];
+            _[12] = p[12];
+            _[13] = p[13];
+            _[14] = p[14];
+            _[15] = p[15];
+            _[16] = p[16];
+        }
+    }
+}
+
+public unsafe struct long_array17
+{
+    public const int Size = 17;
+    public fixed long _[17];
+    
+    public long this[int i]
+    {
+        get => i switch
+        {
+            >= 0 and < Size => _[i],
+            _ => throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size})"),
+        };
+        set => _[i] = i switch
+        {
+            >= 0 and < Size => value,
+            _ => throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size})"),
+        };
+    }
+    
+    public long[] ToArray() => new [] { _[0], _[1], _[2], _[3], _[4], _[5], _[6], _[7], _[8], _[9], _[10], _[11], _[12], _[13], _[14], _[15], _[16] };
+    
+    
+    public void UpdateFrom(long[] array)
+    {
+        if (array.Length != Size)
+        {
+            throw new ArgumentOutOfRangeException($"array size({array.Length}) should == {Size}");
+        }
+        
+        fixed (long* p = array)
+        {
+            _[0] = p[0];
+            _[1] = p[1];
+            _[2] = p[2];
+            _[3] = p[3];
+            _[4] = p[4];
+            _[5] = p[5];
+            _[6] = p[6];
+            _[7] = p[7];
+            _[8] = p[8];
+            _[9] = p[9];
+            _[10] = p[10];
+            _[11] = p[11];
+            _[12] = p[12];
+            _[13] = p[13];
+            _[14] = p[14];
+            _[15] = p[15];
+            _[16] = p[16];
+        }
+    }
+}
+
 public unsafe struct AVRational_array25
 {
     public const int Size = 25;
@@ -1488,6 +1637,73 @@ public unsafe struct AVRational_array25x25
     }
 }
 
+public unsafe struct byte_array32
+{
+    public const int Size = 32;
+    public fixed byte _[32];
+    
+    public byte this[int i]
+    {
+        get => i switch
+        {
+            >= 0 and < Size => _[i],
+            _ => throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size})"),
+        };
+        set => _[i] = i switch
+        {
+            >= 0 and < Size => value,
+            _ => throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size})"),
+        };
+    }
+    
+    public byte[] ToArray() => new [] { _[0], _[1], _[2], _[3], _[4], _[5], _[6], _[7], _[8], _[9], _[10], _[11], _[12], _[13], _[14], _[15], _[16], _[17], _[18], _[19], _[20], _[21], _[22], _[23], _[24], _[25], _[26], _[27], _[28], _[29], _[30], _[31] };
+    
+    
+    public void UpdateFrom(byte[] array)
+    {
+        if (array.Length != Size)
+        {
+            throw new ArgumentOutOfRangeException($"array size({array.Length}) should == {Size}");
+        }
+        
+        fixed (byte* p = array)
+        {
+            _[0] = p[0];
+            _[1] = p[1];
+            _[2] = p[2];
+            _[3] = p[3];
+            _[4] = p[4];
+            _[5] = p[5];
+            _[6] = p[6];
+            _[7] = p[7];
+            _[8] = p[8];
+            _[9] = p[9];
+            _[10] = p[10];
+            _[11] = p[11];
+            _[12] = p[12];
+            _[13] = p[13];
+            _[14] = p[14];
+            _[15] = p[15];
+            _[16] = p[16];
+            _[17] = p[17];
+            _[18] = p[18];
+            _[19] = p[19];
+            _[20] = p[20];
+            _[21] = p[21];
+            _[22] = p[22];
+            _[23] = p[23];
+            _[24] = p[24];
+            _[25] = p[25];
+            _[26] = p[26];
+            _[27] = p[27];
+            _[28] = p[28];
+            _[29] = p[29];
+            _[30] = p[30];
+            _[31] = p[31];
+        }
+    }
+}
+
 public unsafe struct AVVulkanDeviceQueueFamily_array64
 {
     public const int Size = 64;
@@ -1588,6 +1804,154 @@ public unsafe struct AVVulkanDeviceQueueFamily_array64
             _61 = p[61];
             _62 = p[62];
             _63 = p[63];
+        }
+    }
+}
+
+public unsafe struct byte_array64
+{
+    public const int Size = 64;
+    public fixed byte _[64];
+    
+    public byte this[int i]
+    {
+        get => i switch
+        {
+            >= 0 and < Size => _[i],
+            _ => throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size})"),
+        };
+        set => _[i] = i switch
+        {
+            >= 0 and < Size => value,
+            _ => throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size})"),
+        };
+    }
+    
+    public byte[] ToArray() => new [] { _[0], _[1], _[2], _[3], _[4], _[5], _[6], _[7], _[8], _[9], _[10], _[11], _[12], _[13], _[14], _[15], _[16], _[17], _[18], _[19], _[20], _[21], _[22], _[23], _[24], _[25], _[26], _[27], _[28], _[29], _[30], _[31], _[32], _[33], _[34], _[35], _[36], _[37], _[38], _[39], _[40], _[41], _[42], _[43], _[44], _[45], _[46], _[47], _[48], _[49], _[50], _[51], _[52], _[53], _[54], _[55], _[56], _[57], _[58], _[59], _[60], _[61], _[62], _[63] };
+    
+    
+    public void UpdateFrom(byte[] array)
+    {
+        if (array.Length != Size)
+        {
+            throw new ArgumentOutOfRangeException($"array size({array.Length}) should == {Size}");
+        }
+        
+        fixed (byte* p = array)
+        {
+            _[0] = p[0];
+            _[1] = p[1];
+            _[2] = p[2];
+            _[3] = p[3];
+            _[4] = p[4];
+            _[5] = p[5];
+            _[6] = p[6];
+            _[7] = p[7];
+            _[8] = p[8];
+            _[9] = p[9];
+            _[10] = p[10];
+            _[11] = p[11];
+            _[12] = p[12];
+            _[13] = p[13];
+            _[14] = p[14];
+            _[15] = p[15];
+            _[16] = p[16];
+            _[17] = p[17];
+            _[18] = p[18];
+            _[19] = p[19];
+            _[20] = p[20];
+            _[21] = p[21];
+            _[22] = p[22];
+            _[23] = p[23];
+            _[24] = p[24];
+            _[25] = p[25];
+            _[26] = p[26];
+            _[27] = p[27];
+            _[28] = p[28];
+            _[29] = p[29];
+            _[30] = p[30];
+            _[31] = p[31];
+            _[32] = p[32];
+            _[33] = p[33];
+            _[34] = p[34];
+            _[35] = p[35];
+            _[36] = p[36];
+            _[37] = p[37];
+            _[38] = p[38];
+            _[39] = p[39];
+            _[40] = p[40];
+            _[41] = p[41];
+            _[42] = p[42];
+            _[43] = p[43];
+            _[44] = p[44];
+            _[45] = p[45];
+            _[46] = p[46];
+            _[47] = p[47];
+            _[48] = p[48];
+            _[49] = p[49];
+            _[50] = p[50];
+            _[51] = p[51];
+            _[52] = p[52];
+            _[53] = p[53];
+            _[54] = p[54];
+            _[55] = p[55];
+            _[56] = p[56];
+            _[57] = p[57];
+            _[58] = p[58];
+            _[59] = p[59];
+            _[60] = p[60];
+            _[61] = p[61];
+            _[62] = p[62];
+            _[63] = p[63];
+        }
+    }
+}
+
+public unsafe struct byte_array4096
+{
+    public const int Size = 4096;
+    public fixed byte _[4096];
+    
+    public byte this[int i]
+    {
+        get => i switch
+        {
+            >= 0 and < Size => _[i],
+            _ => throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size})"),
+        };
+        set => _[i] = i switch
+        {
+            >= 0 and < Size => value,
+            _ => throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size})"),
+        };
+    }
+    
+    public byte[] ToArray()
+    {
+        fixed (byte_array4096* p = &this)
+        {
+            var a = new byte[Size];
+            for (uint i = 0; i < Size; i++)
+            {
+                a[i] = p->_[i];
+            }
+            return a;
+        }
+    }
+    
+    public void UpdateFrom(byte[] array)
+    {
+        if (array.Length != Size)
+        {
+            throw new ArgumentOutOfRangeException($"array size({array.Length}) should == {Size}");
+        }
+        
+        fixed (byte* p = array)
+        {
+            for (int i = 0; i < Size; ++i)
+            {
+                _[i] = p[i];
+            }
         }
     }
 }

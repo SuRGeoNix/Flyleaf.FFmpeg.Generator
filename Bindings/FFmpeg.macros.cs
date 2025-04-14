@@ -2,14 +2,13 @@
 
 public unsafe static partial class Raw
 {
-    public const long                   NoTs        = long.MinValue;
-    public static readonly int          TIME_BASE   = AV_TIME_BASE;
-    public static readonly AVRational   TIME_BASE_Q = new() { Num = 1, Den = TIME_BASE };
+    public const long                   NoTs            = long.MinValue;
+    public static readonly int          TIME_BASE       = AV_TIME_BASE;
+    public static readonly AVRational   TIME_BASE_Q     = new() { Num = 1, Den = TIME_BASE };
 
-    public static readonly AVRational   TimebaseMcs = new() { Num = 1, Den = TIME_BASE };
-    public static readonly AVRational   TimebaseMs  = new() { Num = 1, Den = 1000 };
-
-    public const int AVFILTERPAD_SIZE = 48;       // CRIT: sizeof(AVFilterPad) fixed here (required to reconstruct the graph after config) - possible include from libavfilter - internal.h
+    public static readonly AVRational   TimebaseTicks   = new() { Num = 1, Den = 10_000_000 };
+    public static readonly AVRational   TimebaseMcs     = new() { Num = 1, Den = TIME_BASE };
+    public static readonly AVRational   TimebaseMs      = new() { Num = 1, Den = 1000 };
 
     #if OSX
     public const int EAGAIN = 35;

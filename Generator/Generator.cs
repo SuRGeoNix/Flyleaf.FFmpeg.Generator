@@ -32,7 +32,7 @@ internal class Generator
 
     public InlineFunctionDefinition[] ExistingInlineFunctions { get; init; }
 
-    public void Parse(params string[] sourceFiles)
+    public void Parse(string[] sourceFiles)
     {
         _hasParsingErrors = false;
         ASTContext context = MetricHelper.RecordTime("Parse header files", () => ParseInternal(sourceFiles));

@@ -58,8 +58,8 @@ public enum DemuxerSpecFlags : uint
     Experimental    = FmtFlags.Experimental,
     /// <summary>Use generic index building code</summary>
     GenericIndex    = FmtFlags.GenericIndex,
-    /// <summary>Needs '%d' in filename</summary>
-    NeedNumber      = FmtFlags.Neednumber,
+    ///// <summary>Needs '%d' in filename</summary>
+    //NeedNumber      = FmtFlags.Neednumber, // // Not used - only for webm_chunk muxer*?
     /// <summary>Format does not allow to fall back on binary search via read_timestamp</summary>
     NoBinSearch     = FmtFlags.Nobinsearch,
     /// <summary>Format does not allow seeking by bytes</summary>
@@ -76,6 +76,9 @@ public enum DemuxerSpecFlags : uint
     ShowIds         = FmtFlags.ShowIds,
     /// <summary>Format allows timestamp discontinuities. Note, muxers always require valid (monotone) timestamps</summary>
     TsDiscont       = FmtFlags.TsDiscont,
+
+    /// <summary>Format does not require strictly increasing timestamps, but they must still be monotonic</summary>
+    TsNonStrict     = FmtFlags.TsNonstrict, // this should not be in DemuxerSpecFlags based on ffmpeg comments but dhav demuxer has it
 }
 
 [Flags]

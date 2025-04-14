@@ -649,3 +649,91 @@ public unsafe record struct AVFilterGraph_execute_func(IntPtr Pointer)
         _ => GetFunctionPointerForDelegate(func)
     });
 }
+
+[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+public unsafe delegate int FFIOContext_short_seek_get (void* opaque);
+public unsafe record struct FFIOContext_short_seek_get_func(IntPtr Pointer)
+{
+    public static implicit operator FFIOContext_short_seek_get_func(FFIOContext_short_seek_get func) => new(func switch
+    {
+        null => IntPtr.Zero,
+        _ => GetFunctionPointerForDelegate(func)
+    });
+}
+
+[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+public unsafe delegate int avpriv_packet_list_put_copy (AVPacket* dst, AVPacket* src);
+public unsafe record struct avpriv_packet_list_put_copy_func(IntPtr Pointer)
+{
+    public static implicit operator avpriv_packet_list_put_copy_func(avpriv_packet_list_put_copy func) => new(func switch
+    {
+        null => IntPtr.Zero,
+        _ => GetFunctionPointerForDelegate(func)
+    });
+}
+
+[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+public unsafe delegate int FFFormatContext_interleave_packet (AVFormatContext* s, AVPacket* pkt, int flush, int has_packet);
+public unsafe record struct FFFormatContext_interleave_packet_func(IntPtr Pointer)
+{
+    public static implicit operator FFFormatContext_interleave_packet_func(FFFormatContext_interleave_packet func) => new(func switch
+    {
+        null => IntPtr.Zero,
+        _ => GetFunctionPointerForDelegate(func)
+    });
+}
+
+[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+public unsafe delegate AVFrame* _video (AVFilterLink* link, int w, int h);
+public unsafe record struct _video_func(IntPtr Pointer)
+{
+    public static implicit operator _video_func(_video func) => new(func switch
+    {
+        null => IntPtr.Zero,
+        _ => GetFunctionPointerForDelegate(func)
+    });
+}
+
+[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+public unsafe delegate AVFrame* _audio (AVFilterLink* link, int nb_samples);
+public unsafe record struct _audio_func(IntPtr Pointer)
+{
+    public static implicit operator _audio_func(_audio func) => new(func switch
+    {
+        null => IntPtr.Zero,
+        _ => GetFunctionPointerForDelegate(func)
+    });
+}
+
+[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+public unsafe delegate int AVFilterPad_filter_frame (AVFilterLink* link, AVFrame* frame);
+public unsafe record struct AVFilterPad_filter_frame_func(IntPtr Pointer)
+{
+    public static implicit operator AVFilterPad_filter_frame_func(AVFilterPad_filter_frame func) => new(func switch
+    {
+        null => IntPtr.Zero,
+        _ => GetFunctionPointerForDelegate(func)
+    });
+}
+
+[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+public unsafe delegate int AVFilterPad_request_frame (AVFilterLink* link);
+public unsafe record struct AVFilterPad_request_frame_func(IntPtr Pointer)
+{
+    public static implicit operator AVFilterPad_request_frame_func(AVFilterPad_request_frame func) => new(func switch
+    {
+        null => IntPtr.Zero,
+        _ => GetFunctionPointerForDelegate(func)
+    });
+}
+
+[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+public unsafe delegate int AVFilterPad_config_props (AVFilterLink* link);
+public unsafe record struct AVFilterPad_config_props_func(IntPtr Pointer)
+{
+    public static implicit operator AVFilterPad_config_props_func(AVFilterPad_config_props func) => new(func switch
+    {
+        null => IntPtr.Zero,
+        _ => GetFunctionPointerForDelegate(func)
+    });
+}

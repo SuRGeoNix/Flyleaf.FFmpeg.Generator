@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-
+using System.Net.Http;
 using Flyleaf.FFmpeg.Generator.Processors;
 
 namespace Flyleaf.FFmpeg.Generator;
@@ -57,7 +57,53 @@ internal static class Program
         ASTProcessor astProcessor = new (exports
                 .GroupBy(x => x.Name).Select(x => x.First()) // Eliminate duplicated names
                 .ToDictionary(x => x.Name));
+
         astProcessor.IgnoreUnitNames.Add("__NSConstantString_tag");
+
+        // TBR: MacroEnum that was excluded (causes also issue int/uint)
+        astProcessor.IgnoreUnitNames.Add("AVIO_FLAG_READ_WRITE");
+
+        // TODO: Extra headers to be included (should exclude functions as they are private* and enums/structs/macros should have a prefix of 'class' eg HLSPlaylist to avoid duplicates)
+        string extraRelease = "7.1";
+
+        string projectDir = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory)
+            .Parent.Parent.Parent.FullName;
+
+        // Required structs for HLS live seek (TBR: might downloaded and rename to hls.h to avoid keeping it up to date?)
+        File.Copy(Path.Combine(projectDir, "CustomHeaders", "hls.h"), Path.Combine(Options.FFmpegIncludesDir, "libavformat", "hls.h"), true);
+
+        string[] parseExtraHeaders =
+            [
+            "libavformat/hls.h",        // HLS live seek
+            "libavfilter/filters.h",    // AVFilterPad, FilterLink etc..
+            ];
+
+        DownloadExtraHeaders([
+            "libavfilter/filters.h",
+
+            // HLS requirements
+            "libavformat/internal.h",
+            "libavformat/avio_internal.h",
+            "libavformat/id3v2.h",
+            "libavformat/hls_sample_encryption.h",
+            "libavformat/metadata.h",
+            "libavcodec/packet_internal.h",
+            ], extraRelease);
+
+        // libavfilter/filters.h"
+        astProcessor.IgnoreUnitNames.Add("ff_outlink_set_status");
+        astProcessor.IgnoreUnitNames.Add("ff_filter_link");
+        astProcessor.IgnoreUnitNames.Add("av_intfloat32");
+        astProcessor.IgnoreUnitNames.Add("av_intfloat64");
+
+        // internal inline functions
+        astProcessor.IgnoreUnitNames.Add("ffstream");
+        astProcessor.IgnoreUnitNames.Add("ffstreamgroup");
+        astProcessor.IgnoreUnitNames.Add("ffiocontext");
+        astProcessor.IgnoreUnitNames.Add("ffio_wfourcc");
+        astProcessor.IgnoreUnitNames.Add("ffformatcontext");
+        astProcessor.IgnoreUnitNames.Add("cffstreamgroup");
+        astProcessor.IgnoreUnitNames.Add("cffstream");
 
         var defines = new[] { "__STDC_CONSTANT_MACROS" };
 
@@ -71,7 +117,7 @@ internal static class Program
             ExistingInlineFunctions         = existingInlineFunctions2
         };
 
-        g.Parse(
+        g.Parse([
             "libavutil/avutil.h",
             "libavutil/audio_fifo.h",
             "libavutil/channel_layout.h",
@@ -106,12 +152,11 @@ internal static class Program
             //"libavcodec/d3d11va.h",
 
             "libavformat/avformat.h",
-
             "libavfilter/avfilter.h",
             "libavfilter/buffersrc.h",
             "libavfilter/buffersink.h",
 
-            "libavdevice/avdevice.h");
+            "libavdevice/avdevice.h", .. parseExtraHeaders]);
 
         g.WriteMacros(              Path.Combine(Options.OutputDir, "FFmpeg.macros.g.cs"));
         g.WriteEnums(               Path.Combine(Options.OutputDir, "FFmpeg.enums.g.cs"));
@@ -121,5 +166,26 @@ internal static class Program
         g.WriteIncompleteStructures(Path.Combine(Options.OutputDir, "FFmpeg.structs.incomplete.g.cs"));
         g.WriteExportFunctions(     Path.Combine(Options.OutputDir, "FFmpeg.functions.export.g.cs"));
         g.WriteInlineFunctions(     Path.Combine(Options.OutputDir, "FFmpeg.functions.inline.cs"));
+    }
+
+    static void DownloadExtraHeaders(string[] extraHeaders, string ffmpegRelease)
+    {
+        foreach (var header in extraHeaders)
+        {
+            var extraFile = Path.Combine(Options.FFmpegIncludesDir, header);
+            if (!File.Exists(extraFile))
+            {
+                var onlineFile = $"https://raw.githubusercontent.com/FFmpeg/FFmpeg/refs/heads/release/{ffmpegRelease}/{header}";
+                Console.WriteLine($"Downloading {onlineFile} to {extraFile} ...");
+                {
+                    HttpClient http = new();
+                    Stream msg = http.GetStreamAsync(onlineFile).GetAwaiter().GetResult();
+                    using FileStream file = File.OpenWrite(extraFile);
+                    msg.CopyTo(file);
+                    file.SetLength(file.Position);
+                    Console.WriteLine($"Done.");
+                }
+            }
+        }
     }
 }

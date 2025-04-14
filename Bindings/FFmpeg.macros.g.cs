@@ -537,7 +537,17 @@ public unsafe static partial class Raw
     public static readonly int AVERROR_STREAM_NOT_FOUND = FFERRTAG(0xF8, 'S', 'T', 'R');
     /// <summary>AVERROR_UNKNOWN = FFERRTAG( &apos;U&apos;,&apos;N&apos;,&apos;K&apos;,&apos;N&apos;)</summary>
     public static readonly int AVERROR_UNKNOWN = FFERRTAG('U', 'N', 'K', 'N');
+    // public static AVFILTER_DEFINE_CLASS = (fname) AVFILTER_DEFINE_CLASS_EXT(fname, #fname, fname##_options);
+    // public static AVFILTER_DEFINE_CLASS_EXT = (name, desc, options) static const AVClass name##_class = {       .class_name = desc,                     .item_name  = av_default_item_name,     .option     = options,                  .version    = LIBAVUTIL_VERSION_INT,    .category   = AV_CLASS_CATEGORY_FILTER, };
+    /// <summary>AVFILTER_FLAG_SUPPORT_TIMELINE = (AVFILTER_FLAG_SUPPORT_TIMELINE_GENERIC | AVFILTER_FLAG_SUPPORT_TIMELINE_INTERNAL)</summary>
+    public const int AVFILTER_FLAG_SUPPORT_TIMELINE = (int)FilterFlags.SupportTimelineGeneric | (int)FilterFlags.SupportTimelineInternal;
+    /// <summary>AVFILTERPAD_FLAG_FREE_NAME = (1 &lt;&lt; 1)</summary>
+    public const int AVFILTERPAD_FLAG_FREE_NAME = 1 << 1;
+    /// <summary>AVFILTERPAD_FLAG_NEEDS_WRITABLE = (1 &lt;&lt; 0)</summary>
+    public const int AVFILTERPAD_FLAG_NEEDS_WRITABLE = 1 << 0;
     // public static avio_print = (s, ...) avio_print_string_array(s, (const char*[]){__VA_ARGS__, NULL});
+    // public static AVOID_NEGATIVE_TS_ENABLED = (status) ((status) >= 0);
+    // public static AVPACKET_IS_EMPTY = (pkt) (!(pkt)->data && !(pkt)->side_data_elems);
     public const int AVPALETTE_COUNT = 256;
     public const int AVPALETTE_SIZE = 1024;
     public const int AVPROBE_PADDING_SIZE = 32;
@@ -549,6 +559,8 @@ public unsafe static partial class Raw
     /// <summary>AVPROBE_SCORE_STREAM_RETRY = (AVPROBE_SCORE_MAX/4-1)</summary>
     public const int AVPROBE_SCORE_STREAM_RETRY = AVPROBE_SCORE_MAX / 4 - 1;
     // public static AVUNERROR = (e) (-(e));
+    // public static D2TS = (d)      (isnan(d) ? AV_NOPTS_VALUE : (int64_t)(d));
+    // public static dynarray_add = (tab, nb_ptr, elem)do {av_dynarray_add((tab), nb_ptr, (elem));} while(0);
     /// <summary>FF_API_ALLOW_FLUSH = (LIBAVFORMAT_VERSION_MAJOR &lt; 62)</summary>
     public const bool FF_API_ALLOW_FLUSH = LIBAVFORMAT_VERSION_MAJOR < 62;
     /// <summary>FF_API_AVCODEC_CLOSE = (LIBAVCODEC_VERSION_MAJOR &lt; 62)</summary>
@@ -614,6 +626,14 @@ public unsafe static partial class Raw
     // public static FF_CEIL_RSHIFT = AV_CEIL_RSHIFT;
     public const int FF_COMPRESSION_DEFAULT = -1;
     public const uint FF_FDEBUG_TS = 0x0001;
+    /// <summary>FF_FILTER_FLAG_HWFRAME_AWARE = (1 &lt;&lt; 0)</summary>
+    public const int FF_FILTER_FLAG_HWFRAME_AWARE = 1 << 0;
+    // public static FF_FILTER_FORWARD_STATUS = (inlink, outlink) do { int status; int64_t pts; if (ff_inlink_acknowledge_status(inlink, &status, &pts)) { ff_outlink_set_status(outlink, status, pts); return 0; } } while (0);
+    // public static FF_FILTER_FORWARD_STATUS_ALL = (inlink, filter) do { int status; int64_t pts; if (ff_inlink_acknowledge_status(inlink, &status, &pts)) { unsigned i; for (i = 0; i < filter->nb_outputs; i++) ff_outlink_set_status(filter->outputs[i], status, pts); return 0; } } while (0);
+    // public static FF_FILTER_FORWARD_STATUS_BACK = (outlink, inlink) do { int ret = ff_outlink_get_status(outlink); if (ret) { ff_inlink_set_status(inlink, ret); return 0; } } while (0);
+    // public static FF_FILTER_FORWARD_STATUS_BACK_ALL = (outlink, filter) do { int ret = ff_outlink_get_status(outlink); if (ret) { unsigned i; for (i = 0; i < filter->nb_inputs; i++) ff_inlink_set_status(filter->inputs[i], ret); return 0; } } while (0);
+    // public static FF_FILTER_FORWARD_WANTED = (outlink, inlink) do { if (ff_outlink_frame_wanted(outlink)) { ff_inlink_request_frame(inlink); return 0; } } while (0);
+    // public static FF_INLINK_IDX = (link)  ((int)((link)->dstpad - (link)->dst->input_pads));
     /// <summary>FF_LAMBDA_MAX = (256*128-1)</summary>
     public const int FF_LAMBDA_MAX = 256 * 128 - 1;
     /// <summary>FF_LAMBDA_SCALE = (1&lt;&lt;FF_LAMBDA_SHIFT)</summary>
@@ -628,6 +648,7 @@ public unsafe static partial class Raw
     public const uint FF_LOSS_EXCESS_DEPTH = 0x0080;
     public const uint FF_LOSS_EXCESS_RESOLUTION = 0x0040;
     public const uint FF_LOSS_RESOLUTION = 0x0001;
+    // public static FF_OUTLINK_IDX = (link) ((int)((link)->srcpad - (link)->src->output_pads));
     public const int FF_PROFILE_AAC_ELD = 38;
     public const int FF_PROFILE_AAC_HE = 4;
     public const int FF_PROFILE_AAC_HE_V2 = 28;
@@ -749,6 +770,8 @@ public unsafe static partial class Raw
     // public static FFABSU = (a) ((a) <= 0 ? -(unsigned)(a) : (unsigned)(a));
     // public static FFALIGN = (x, a) (((x)+(a)-1)&~((a)-1));
     // public static FFDIFFSIGN = (x,y) (((x)>(y)) - ((x)<(y)));
+    /// <summary>FFERROR_NOT_READY = FFERRTAG(&apos;N&apos;,&apos;R&apos;,&apos;D&apos;,&apos;Y&apos;)</summary>
+    public static readonly int FFERROR_NOT_READY = FFERRTAG('N', 'R', 'D', 'Y');
     // public static FFERRTAG = (a, b, c, d) (-(int)MKTAG(a, b, c, d));
     // public static FFMAX = (a,b) ((a) > (b) ? (a) : (b));
     // public static FFMAX3 = (a,b,c) FFMAX(FFMAX(a,b),c);
@@ -759,8 +782,30 @@ public unsafe static partial class Raw
     // public static FFSWAP = (type,a,b) do{type SWAP_tmp= b; b= a; a= SWAP_tmp;}while(0);
     // public static FFUDIV = (a,b) (((a)>0 ?(a):(a)-(b)+1) / (b));
     // public static FFUMOD = (a,b) ((a)-(b)*FFUDIV(a,b));
+    // public static FILTER_INOUTPADS = (inout, array) .inout        = array, .nb_ ## inout = FF_ARRAY_ELEMS(array);
+    // public static FILTER_INPUTS = (array) FILTER_INOUTPADS(inputs, (array));
+    // public static FILTER_OUTPUTS = (array) FILTER_INOUTPADS(outputs, (array));
+    // public static FILTER_PIXFMTS = (...)            FILTER_PIXFMTS_ARRAY(((const enum AVPixelFormat []) { __VA_ARGS__, AV_PIX_FMT_NONE }));
+    // public static FILTER_PIXFMTS_ARRAY = (array)    .formats.pixels_list  = array, .formats_state        = FF_FILTER_FORMATS_PIXFMT_LIST;
+    // public static FILTER_QUERY_FUNC = (func)        .formats.query_func   = func,  .formats_state        = FF_FILTER_FORMATS_QUERY_FUNC;
+    // public static FILTER_QUERY_FUNC2 = (func)       .formats.query_func2  = func,  .formats_state        = FF_FILTER_FORMATS_QUERY_FUNC2;
+    // public static FILTER_SAMPLEFMTS = (...)         FILTER_SAMPLEFMTS_ARRAY(((const enum AVSampleFormat[]) { __VA_ARGS__, AV_SAMPLE_FMT_NONE }));
+    // public static FILTER_SAMPLEFMTS_ARRAY = (array) .formats.samples_list = array, .formats_state        = FF_FILTER_FORMATS_SAMPLEFMTS_LIST;
+    // public static FILTER_SINGLE_PIXFMT = (pix_fmt_)  .formats.pix_fmt = pix_fmt_,    .formats_state   = FF_FILTER_FORMATS_SINGLE_PIXFMT;
+    // public static FILTER_SINGLE_SAMPLEFMT = (sample_fmt_) .formats.sample_fmt = sample_fmt_,   .formats_state      = FF_FILTER_FORMATS_SINGLE_SAMPLEFMT;
     // public static GET_UTF16 = (val, GET_16BIT, ERROR)val = (GET_16BIT);{unsigned int hi = val - 0xD800;if (hi < 0x800) {val = (GET_16BIT) - 0xDC00;if (val > 0x3FFU || hi > 0x3FFU){ERROR}val += (hi<<10) + 0x10000;}};
     // public static GET_UTF8 = (val, GET_BYTE, ERROR)val= (GET_BYTE);{uint32_t top = (val & 128) >> 1;if ((val & 0xc0) == 0x80 || val >= 0xFE){ERROR}while (val & top) {unsigned int tmp = (GET_BYTE) - 128;if(tmp>>6){ERROR}val= (val<<6) + tmp;top <<= 5;}val &= (top << 1) - 1;};
+    // public static hex_dump_debug = (class, buf, size) do { if (0) av_hex_dump_log(class, AV_LOG_DEBUG, buf, size); } while(0);
+    public const int HLS_MAX_AUDIO_SETUP_DATA_LEN = 10;
+    public const int HLS_MAX_ID3_TAGS_DATA_LEN = 138;
+    public const string ID3v2_DEFAULT_MAGIC = "ID3";
+    public const uint ID3v2_FLAG_COMPRESSION = 0x0008;
+    public const uint ID3v2_FLAG_DATALEN = 0x0001;
+    public const uint ID3v2_FLAG_ENCRYPTION = 0x0004;
+    public const uint ID3v2_FLAG_UNSYNCH = 0x0002;
+    public const int ID3v2_HEADER_SIZE = 10;
+    public const string ID3v2_PRIV_METADATA_PREFIX = "id3v2_priv.";
+    public const int INITIAL_BUFFER_SIZE = 32768;
     public static readonly uint LIBAVCODEC_BUILD = LIBAVCODEC_VERSION_INT;
     /// <summary>LIBAVCODEC_IDENT = &quot;Lavc&quot; AV_STRINGIFY(LIBAVCODEC_VERSION)</summary>
     public const string LIBAVCODEC_IDENT = "Lavc" + "LIBAVCODEC_VERSION";
@@ -768,7 +813,7 @@ public unsafe static partial class Raw
     public static readonly string LIBAVCODEC_VERSION = AV_VERSION(LIBAVCODEC_VERSION_MAJOR, LIBAVCODEC_VERSION_MINOR, LIBAVCODEC_VERSION_MICRO);
     public static readonly uint LIBAVCODEC_VERSION_INT = AV_VERSION_INT(LIBAVCODEC_VERSION_MAJOR, LIBAVCODEC_VERSION_MINOR, LIBAVCODEC_VERSION_MICRO);
     public const uint LIBAVCODEC_VERSION_MAJOR = 61;
-    public const uint LIBAVCODEC_VERSION_MICRO = 100;
+    public const uint LIBAVCODEC_VERSION_MICRO = 101;
     public const uint LIBAVCODEC_VERSION_MINOR = 19;
     public static readonly uint LIBAVDEVICE_BUILD = LIBAVDEVICE_VERSION_INT;
     /// <summary>LIBAVDEVICE_IDENT = &quot;Lavd&quot; AV_STRINGIFY(LIBAVDEVICE_VERSION)</summary>
@@ -855,8 +900,18 @@ public unsafe static partial class Raw
     public const float M_SQRT1_2f = 0.70710678118654752440f;
     public const double M_SQRT2 = 1.41421356237309504880;
     public const float M_SQRT2f = 1.41421356237309504880f;
+    public const int MAX_CHARACTERISTICS_LEN = 512;
+    public const int MAX_FIELD_LEN = 64;
+    public const int MAX_REORDER_DELAY = 16;
+    public const int MAX_URL_SIZE = 4096;
     // public static MKBETAG = (a,b,c,d) ((d) | ((c) << 8) | ((b) << 16) | ((unsigned)(a) << 24));
     // public static MKTAG = (a,b,c,d)   ((a) | ((b) << 8) | ((c) << 16) | ((unsigned)(d) << 24));
+    public const int MPEG_TIME_BASE = 90000;
+    // public static MPEG_TIME_BASE_Q = (AVRational){1, MPEG_TIME_BASE};
+    /// <summary>NTP_OFFSET = 2208988800ULL</summary>
+    public const ulong NTP_OFFSET = 2208988800UL;
+    /// <summary>NTP_OFFSET_US = (NTP_OFFSET * 1000000ULL)</summary>
+    public const ulong NTP_OFFSET_US = NTP_OFFSET * 1000000UL;
     public const uint PP_CPU_CAPS_3DNOW = 0x40000000;
     public const uint PP_CPU_CAPS_ALTIVEC = 0x10000000;
     public const uint PP_CPU_CAPS_AUTO = 0x00080000;
@@ -875,10 +930,16 @@ public unsafe static partial class Raw
     public const uint PP_FORMAT_444 = 0x00000000 | PP_FORMAT;
     public const uint PP_PICT_TYPE_QP2 = 0x00000010;
     public const int PP_QUALITY_MAX = 6;
+    /// <summary>PROBE_BUF_MAX = (1 &lt;&lt; 20)</summary>
+    public const int PROBE_BUF_MAX = 1 << 20;
+    public const int PROBE_BUF_MIN = 2048;
     // public static PUT_UTF16 = (val, tmp, PUT_16BIT){uint32_t in = val;if (in < 0x10000) {tmp = in;PUT_16BIT} else {tmp = 0xD800 | ((in - 0x10000) >> 10);PUT_16BITtmp = 0xDC00 | ((in - 0x10000) & 0x3FF);PUT_16BIT}};
     // public static PUT_UTF8 = (val, tmp, PUT_BYTE){int bytes, shift;uint32_t in = val;if (in < 0x80) {tmp = in;PUT_BYTE} else {bytes = (av_log2(in) + 4) / 5;shift = (bytes - 1) * 6;tmp = (256 - (256 >> bytes)) | (in >> shift);PUT_BYTEwhile (shift >= 6) {shift -= 6;tmp = 0x80 | ((in >> shift) & 0x3f);PUT_BYTE}}};
     // public static ROUNDED_DIV = (a,b) (((a)>=0 ? (a) + ((b)>>1) : (a) - ((b)>>1))/(b));
     // public static RSHIFT = (a,b) ((a) > 0 ? ((a) + ((1<<(b))>>1))>>(b) : ((a) + ((1<<(b))>>1)-1)>>(b));
+    public const string SPACE_CHARS = " \t\r\n";
     public const int SWR_FLAG_RESAMPLE = 1;
     public const double SWS_MAX_REDUCE_CUTOFF = 0.002;
+    // public static TS2D = (ts)     ((ts) == AV_NOPTS_VALUE ? NAN : (double)(ts));
+    // public static TS2T = (ts, tb) ((ts) == AV_NOPTS_VALUE ? NAN : (double)(ts) * av_q2d(tb));
 }

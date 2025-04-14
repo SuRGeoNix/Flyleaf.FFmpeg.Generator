@@ -1,11 +1,5 @@
 ﻿namespace Flyleaf.FFmpeg;
 
-public struct AVCodecTag // libavformat/internal.h?
-{
-    public AVCodecID id;
-    public uint tag;
-}
-
 public struct AVRational(int numerator, int denominator = 1)
 {
     public static readonly AVRational Default = new(0, 1);
