@@ -8,7 +8,10 @@ namespace Flyleaf.FFmpeg.Generator;
 
 internal static class Program
 {
-    /* TODO
+    /* NOTES
+     * REQUIRES Windows 10 SDK (CppSharp)
+     * 
+     * TODO
      * Re-coding and clean up
      * Don't marshal all strings by default (eg. av log overhead with format that we might not be used)
      * PixelFormat enum (big/little endian)
@@ -63,11 +66,14 @@ internal static class Program
         // TBR: MacroEnum that was excluded (causes also issue int/uint)
         astProcessor.IgnoreUnitNames.Add("AVIO_FLAG_READ_WRITE");
 
+        // TBR: IsBitField (requires custom methods/properties to return the values properly)
+        astProcessor.IgnoreUnitNames.Add("AVIndexEntry");
+
         // TODO: Extra headers to be included (should exclude functions as they are private* and enums/structs/macros should have a prefix of 'class' eg HLSPlaylist to avoid duplicates)
         string extraRelease = "7.1";
 
         string projectDir = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory)
-            .Parent.Parent.Parent.FullName;
+            .Parent!.Parent!.Parent!.FullName;
 
         // Required structs for HLS live seek (TBR: might downloaded and rename to hls.h to avoid keeping it up to date?)
         File.Copy(Path.Combine(projectDir, "CustomHeaders", "hls.h"), Path.Combine(Options.FFmpegIncludesDir, "libavformat", "hls.h"), true);
@@ -116,7 +122,7 @@ internal static class Program
             ClassName                       = Options.ClassName,
             ExistingInlineFunctions         = existingInlineFunctions2
         };
-
+        
         g.Parse([
             "libavutil/avutil.h",
             "libavutil/audio_fifo.h",

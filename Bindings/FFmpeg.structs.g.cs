@@ -1065,7 +1065,7 @@ public unsafe struct AVFilterPad
     /// <summary>AVFilterPad type.</summary>
     public AVMediaType type;
     /// <summary>A combination of AVFILTERPAD_FLAG_* flags.</summary>
-    public int flags;
+    public FilterPadFlags flags;
     public AVFilterPad_get_buffer get_buffer;
     /// <summary>Filtering callback. This is where a filter receives a frame with audio/video data and should do its processing.</summary>
     public AVFilterPad_filter_frame_func filter_frame;
@@ -1488,17 +1488,6 @@ public unsafe struct AVHWFramesContext
     public int width;
     /// <summary>The allocated dimensions of the frames in this pool.</summary>
     public int height;
-}
-
-public unsafe struct AVIndexEntry
-{
-    public long pos;
-    /// <summary>Timestamp in AVStream.time_base units, preferably the time from which on correctly decoded frames are available when seeking to this entry. That means preferable PTS on keyframe based formats. But demuxers can choose to store a different timestamp, if it is more convenient for the implementation or nothing better is known</summary>
-    public long timestamp;
-    /// <summary>Flag is used to indicate which frame should be discarded after decoding.</summary>
-    public int flags2_size30;
-    /// <summary>Minimum distance between this and the previous keyframe, used to avoid unneeded searching.</summary>
-    public int min_distance;
 }
 
 /// <summary>@{</summary>

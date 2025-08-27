@@ -19,6 +19,16 @@ The main purpose is to support ***Flyleaf Suite*** projects and possible access 
 >✅ *Impoves performance with DllImport and avoids marshaling in some cases*<br/>
 >✅ *Plans to access private structs to extend the functionality (eg. HLS live seeking, Develop custom demuxer/muxers/codecs/filters etc.)*
 
+## [Requirements]
+
+***Windows 10 SDK*** is required (for CppSharp) to successfully compile the bindings and can be install from Visual Studio Installer.
+
+Otherwise, it will fail with the following error:
+
+```
+fatal: 'errno.h' file not found
+```
+
 ## [Releases]
 
 [Flyleaf.FFmpeg.Bindings](https://www.nuget.org/packages/Flyleaf.FFmpeg.Bindings) NuGet package <sub>(major/minor versioning is based on FFmpeg releases versioning)</sub>

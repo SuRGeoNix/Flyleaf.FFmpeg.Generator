@@ -2447,6 +2447,8 @@ public enum D3D12_RESOURCE_FLAGS : int
     AllowCrossAdapter = 16,
     AllowSimultaneousAccess = 32,
     VideoDecodeReferenceOnly = 64,
+    VideoEncodeReferenceOnly = 128,
+    RaytracingAccelerationStructure = 256,
 }
 
 /// <summary>Macro enum, prefix: FF_DCT_</summary>
@@ -2716,6 +2718,7 @@ public enum DXGI_FORMAT : int
     V408 = 132,
     SamplerFeedbackMinMipOpaque = 189,
     SamplerFeedbackMipRegionUsedOpaque = 190,
+    A4b4g4r4Unorm = 191,
     ForceUint = -1,
 }
 
@@ -2811,6 +2814,17 @@ public enum FilterFormatsState : byte
     SinglePixfmt = 5,
     /// <summary>formats.sample_fmt active.</summary>
     SingleSamplefmt = 6,
+}
+
+/// <summary>Macro enum, prefix: AVFILTERPAD_FLAG_</summary>
+[Flags]
+public enum FilterPadFlags : int
+{
+    None = 0,
+    /// <summary>AVFILTERPAD_FLAG_NEEDS_WRITABLE</summary>
+    NeedsWritable = 1 << 0,
+    /// <summary>AVFILTERPAD_FLAG_FREE_NAME</summary>
+    FreeName = 1 << 1,
 }
 
 /// <summary>Macro enum, prefix: AVFILTER_THREAD_</summary>

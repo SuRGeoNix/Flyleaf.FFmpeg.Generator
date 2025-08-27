@@ -541,10 +541,6 @@ public unsafe static partial class Raw
     // public static AVFILTER_DEFINE_CLASS_EXT = (name, desc, options) static const AVClass name##_class = {       .class_name = desc,                     .item_name  = av_default_item_name,     .option     = options,                  .version    = LIBAVUTIL_VERSION_INT,    .category   = AV_CLASS_CATEGORY_FILTER, };
     /// <summary>AVFILTER_FLAG_SUPPORT_TIMELINE = (AVFILTER_FLAG_SUPPORT_TIMELINE_GENERIC | AVFILTER_FLAG_SUPPORT_TIMELINE_INTERNAL)</summary>
     public const int AVFILTER_FLAG_SUPPORT_TIMELINE = (int)FilterFlags.SupportTimelineGeneric | (int)FilterFlags.SupportTimelineInternal;
-    /// <summary>AVFILTERPAD_FLAG_FREE_NAME = (1 &lt;&lt; 1)</summary>
-    public const int AVFILTERPAD_FLAG_FREE_NAME = 1 << 1;
-    /// <summary>AVFILTERPAD_FLAG_NEEDS_WRITABLE = (1 &lt;&lt; 0)</summary>
-    public const int AVFILTERPAD_FLAG_NEEDS_WRITABLE = 1 << 0;
     // public static avio_print = (s, ...) avio_print_string_array(s, (const char*[]){__VA_ARGS__, NULL});
     // public static AVOID_NEGATIVE_TS_ENABLED = (status) ((status) >= 0);
     // public static AVPACKET_IS_EMPTY = (pkt) (!(pkt)->data && !(pkt)->side_data_elems);

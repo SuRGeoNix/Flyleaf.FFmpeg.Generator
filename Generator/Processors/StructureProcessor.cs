@@ -67,6 +67,7 @@ internal class StructureProcessor
         long bitCounter = 0;
         var fields = new List<StructureField>();
 
+        // IsBitField (Currently only AVIndexEntry but we should review new ones if any)
         foreach (var field in @class.Fields)
         {
             if (field.IsBitField)
@@ -74,7 +75,7 @@ internal class StructureProcessor
                 bitFieldNames.Add($"{field.Name}{field.BitWidth}");
                 bitFieldComments.Add(field.Comment?.BriefText ?? string.Empty);
                 bitCounter += field.BitWidth;
-
+                Console.WriteLine($"{name} -> {field.Name} ({field.BitWidth})");
                 if (bitCounter % 8 == 0)
                 {
                     fields.Add(GetBitField(bitFieldNames, bitCounter, bitFieldComments));
@@ -120,6 +121,9 @@ internal class StructureProcessor
 
             if (className == "AVCodecContext")
                 return new() { Name = "CodecFlags" };
+
+            if (className == "AVFilterPad")
+                return new() { Name = "FilterPadFlags" };
 
             if (className == "AVFormatContext")
                 return new() { Name = "FmtFlags2" };

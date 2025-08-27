@@ -31,6 +31,7 @@ internal static class MacroEnumPostProcessor
 
             new("AVFILTER_FLAG_", "FilterFlags", IsFlags: true, Except: HashSet("AVFILTER_FLAG_SUPPORT_TIMELINE")), // SupportTimeline = SupportTimelineGeneric | SupportTimelineInternal
             new("AVFILTER_CMD_FLAG_", "FilterCmdFlags", IsFlags: true),
+            new("AVFILTERPAD_FLAG_", "FilterPadFlags", IsFlags: true),
             new("AVFILTER_THREAD_", "FilterThreadFlags", IsFlags: true),
             new("AVFMT_FLAG_", "FmtFlags2", IsFlags: true),
             new("AVFMT_EVENT_FLAG_", "FmtEventFlags", IsFlags: true),
