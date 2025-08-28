@@ -50,7 +50,7 @@ internal static class MacroEnumPostProcessor
             new("AVIO_FLAG_", "IOFlags", IsFlags: true, Except: HashSet("AVIO_FLAG_READ_WRITE")), // ReadWrite = Read | Write
             new("AVIO_SEEKABLE_", "IOSeekableFlags", IsFlags: true),
 
-            new("AV_LOG_", "LogFlags", Only: HashSet("AV_LOG_SKIP_REPEATED", "AV_LOG_PRINT_LEVEL")),
+            new("AV_LOG_", "LogFlags", Only: HashSet("AV_LOG_SKIP_REPEATED", "AV_LOG_PRINT_LEVEL", "AV_LOG_PRINT_TIME", "AV_LOG_PRINT_DATETIME")),
             new("AV_LOG_", "LogLevel", Except: HashSet("AV_LOG_C")),
 
             new("AV_OPT_FLAG_", "OptFlags", IsFlags: true),

@@ -208,8 +208,10 @@ public enum AVClassCategory : int
     Nb = 46,
 }
 
+[Flags]
 public enum AVClassStateFlags : int
 {
+    None = 0,
     /// <summary>Object initialization has finished and it is now in the &apos;runtime&apos; stage. This affects e.g. what options can be set on the object (only AV_OPT_FLAG_RUNTIME_PARAM options can be set on initialized objects).</summary>
     Initialized = 1,
 }
@@ -3238,6 +3240,10 @@ public enum LogFlags : int
     SkipRepeated = 1,
     /// <summary>AV_LOG_PRINT_LEVEL</summary>
     PrintLevel = 2,
+    /// <summary>AV_LOG_PRINT_TIME</summary>
+    PrintTime = 4,
+    /// <summary>AV_LOG_PRINT_DATETIME</summary>
+    PrintDatetime = 8,
 }
 
 /// <summary>Macro enum, prefix: AV_LOG_</summary>
@@ -3263,10 +3269,6 @@ public enum LogLevel : int
     Trace = 56,
     /// <summary>AV_LOG_MAX_OFFSET</summary>
     Max = Trace - Quiet,
-    /// <summary>AV_LOG_PRINT_TIME</summary>
-    PrintTime = 4,
-    /// <summary>AV_LOG_PRINT_DATETIME</summary>
-    PrintDatetime = 8,
 }
 
 /// <summary>Macro enum, prefix: FF_MB_DECISION_</summary>

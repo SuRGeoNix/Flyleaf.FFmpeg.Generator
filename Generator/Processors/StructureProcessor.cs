@@ -210,7 +210,7 @@ internal class StructureProcessor
             return new() { Name = "AVSideDataProps" }; // orginally an enum
 
         // libavfilter/filters.h (extra)
-        if (className == "AVFilter" && fieldName == "formats_state")
+        if (className == "FFFilter" && fieldName == "formats_state")
             return new() { Name = "FilterFormatsState" };
 
         if (className == "AVCodecContext")
@@ -263,6 +263,9 @@ internal class StructureProcessor
 
         if (fieldName == "avoid_negative_ts")
             return new() { Name = "AvoidNegTSFlags" };
+
+        if (fieldName == "state_flags_offset")
+            return new() { Name = "AVClassStateFlags" };
 
         return null;
     }

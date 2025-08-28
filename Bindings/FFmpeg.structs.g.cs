@@ -137,7 +137,7 @@ public unsafe struct AVClass
     /// <summary>Iterate over the AVClasses corresponding to potential AVOptions-enabled children.</summary>
     public AVClass_child_class_iterate_func child_class_iterate;
     /// <summary>When non-zero, offset in the object to an unsigned int holding object state flags, a combination of AVClassStateFlags values. The flags are updated by the object to signal its state to the generic code.</summary>
-    public int state_flags_offset;
+    public AVClassStateFlags state_flags_offset;
 }
 
 /// <summary>AVCodec.</summary>
@@ -2142,7 +2142,7 @@ public unsafe struct FFFilter
     /// <summary>The number of entries in the list of outputs.</summary>
     public byte nb_outputs;
     /// <summary>This field determines the state of the formats union. It is an enum FilterFormatsState value.</summary>
-    public byte formats_state;
+    public FilterFormatsState formats_state;
     /// <summary>Filter pre-initialization function</summary>
     public FFFilter_preinit_func preinit;
     /// <summary>Filter initialization function.</summary>

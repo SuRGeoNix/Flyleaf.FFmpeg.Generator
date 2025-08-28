@@ -3060,11 +3060,11 @@ public unsafe static partial class Raw
     
     /// <summary>Remove and free all side data instances that match any of the given side data properties. (See enum AVSideDataProps)</summary>
     [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern void av_frame_side_data_remove_by_props(AVFrameSideData*** sd, int* nb_sd, int props);
+    public static extern void av_frame_side_data_remove_by_props(AVFrameSideData*** sd, int* nb_sd, AVSideDataProps props);
     
     /// <summary>Remove and free all side data instances that match any of the given side data properties. (See enum AVSideDataProps)</summary>
     [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern void av_frame_side_data_remove_by_props(ref AVFrameSideData** sd, int* nb_sd, int props);
+    public static extern void av_frame_side_data_remove_by_props(ref AVFrameSideData** sd, int* nb_sd, AVSideDataProps props);
     
     /// <summary>Unreference all the buffers referenced by frame and reset the frame fields.</summary>
     [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]

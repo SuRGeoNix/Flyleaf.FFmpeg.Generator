@@ -200,6 +200,9 @@ internal class FunctionProcessor
         if (parameterName == "whence")
             return new() { Name = "IOSeekFlags" };
 
+        if (parameterName == "props" && functionName == "av_frame_side_data_remove_by_props")
+            return new() { Name = "AVSideDataProps" };
+
         return null;
     }
 

@@ -80,30 +80,29 @@ internal class EnumerationProcessor
         }
         else
         {
+            IEnumerable<EnumerationItem> enumItems = enumeration.Items.Select(x => new EnumerationItem
+            {
+                Name    = StringExtensions.EnumNameTransform(x.Name.StartsWith(commonPrefix) ? x.Name[commonPrefix.Length..] : x.Name),
+                RawName = x.Name, 
+                Value   = ConvertValue(x.Value, enumeration.BuiltinType.Type).ToString(),
+                XmlDocument = x.Comment?.BriefText
+            });
+
             // TBR: fix flags enums
-            if (name == "AVSideDataProps")
+            if (name == "AVSideDataProps" || name == "AVClassStateFlags")
             {
                 isflags = true;
-                enumeration.Items = [new() { Name = "None", Value = 0}, ..enumeration.Items];
+                enumItems = [new() { Name = "None", RawName = $"None{MacroEnumPostProcessor.t01++}" , Value = "0"}, ..enumItems];
             }
 
             var definition = new EnumerationDefinition
             {
-                Name = name,
-                TypeName = name == "FilterFormatsState" ? "byte" : TypeHelper.GetTypeName(enumeration.Type),
-                IsFlags = isflags,
+                Name        = name,
+                TypeName    = name == "FilterFormatsState" ? "byte" : TypeHelper.GetTypeName(enumeration.Type),
+                IsFlags     = isflags,
                 XmlDocument = enumeration.Comment?.BriefText,
-                Obsoletion = ObsoletionHelper.CreateObsoletion(enumeration),
-                Items = enumeration.Items
-                    .Select(x =>
-                        new EnumerationItem
-                        {
-                            Name = StringExtensions.EnumNameTransform(x.Name.StartsWith(commonPrefix) ? x.Name[commonPrefix.Length..] : x.Name),
-                            RawName = x.Name, 
-                            Value = ConvertValue(x.Value, enumeration.BuiltinType.Type).ToString(),
-                            XmlDocument = x.Comment?.BriefText
-                        })
-                    .ToArray()
+                Obsoletion  = ObsoletionHelper.CreateObsoletion(enumeration),
+                Items       = enumItems.ToArray()
             };
         
             _context.AddUnit(definition);
