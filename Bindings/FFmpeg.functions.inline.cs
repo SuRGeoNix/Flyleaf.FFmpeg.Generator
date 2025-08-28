@@ -406,4 +406,10 @@ public unsafe static partial class Raw
     // original body hash: o18c3ypeh9EsmYaplTel2ssgM2PZKTTDfMjsqEopycw=
     
     
+    public static FFFilter* fffilter(AVFilter* f)
+    {
+        return (FFFilter*)f;
+    }
+    // original body hash: tHWqhg7ptoT88zgKofm3eyVJ9J70h6X/T5UQVzf6VkE=
+
 }

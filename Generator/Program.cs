@@ -70,7 +70,7 @@ internal static class Program
         astProcessor.IgnoreUnitNames.Add("AVIndexEntry");
 
         // TODO: Extra headers to be included (should exclude functions as they are private* and enums/structs/macros should have a prefix of 'class' eg HLSPlaylist to avoid duplicates)
-        string extraRelease = "7.1";
+        string extraRelease = "master";
 
         string projectDir = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory)
             .Parent!.Parent!.Parent!.FullName;
@@ -181,7 +181,9 @@ internal static class Program
             var extraFile = Path.Combine(Options.FFmpegIncludesDir, header);
             if (!File.Exists(extraFile))
             {
-                var onlineFile = $"https://raw.githubusercontent.com/FFmpeg/FFmpeg/refs/heads/release/{ffmpegRelease}/{header}";
+                var onlineFile = ffmpegRelease == "master" ?
+                    $"https://raw.githubusercontent.com/FFmpeg/FFmpeg/refs/heads/master/{header}" :
+                    $"https://raw.githubusercontent.com/FFmpeg/FFmpeg/refs/heads/release/{ffmpegRelease}/{header}";
                 Console.WriteLine($"Downloading {onlineFile} to {extraFile} ...");
                 {
                     HttpClient http = new();

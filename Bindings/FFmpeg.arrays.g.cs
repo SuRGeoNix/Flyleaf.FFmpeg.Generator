@@ -42,6 +42,43 @@ public unsafe struct AVRational_array2
     }
 }
 
+public unsafe struct double_array2
+{
+    public const int Size = 2;
+    public fixed double _[2];
+    
+    public double this[int i]
+    {
+        get => i switch
+        {
+            >= 0 and < Size => _[i],
+            _ => throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size})"),
+        };
+        set => _[i] = i switch
+        {
+            >= 0 and < Size => value,
+            _ => throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size})"),
+        };
+    }
+    
+    public double[] ToArray() => new [] { _[0], _[1] };
+    
+    
+    public void UpdateFrom(double[] array)
+    {
+        if (array.Length != Size)
+        {
+            throw new ArgumentOutOfRangeException($"array size({array.Length}) should == {Size}");
+        }
+        
+        fixed (double* p = array)
+        {
+            _[0] = p[0];
+            _[1] = p[1];
+        }
+    }
+}
+
 public unsafe struct short_array2
 {
     public const int Size = 2;
@@ -252,93 +289,6 @@ public unsafe struct AVRational_array3x2
             _0 = p[0];
             _1 = p[1];
             _2 = p[2];
-        }
-    }
-}
-
-public unsafe struct byte_ptrArray3
-{
-    public const int Size = 3;
-    /// <summary>original type: byte*</summary>
-    public IntPtr _0, _1, _2;
-    
-    /// <summary>original type: byte*</summary>
-    public IntPtr this[int i]
-    {
-        get
-        {
-            if (i < 0 || i >= Size) throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size}]");
-            fixed (IntPtr* p0 = &_0)
-            {
-                return *(p0 + i);
-            }
-        }
-        set
-        {
-            if (i >= Size) throw new ArgumentOutOfRangeException($"i({i}) should < {Size}");
-            fixed (IntPtr* p0 = &_0)
-            {
-                *(p0 + i) = value;
-            }
-        }
-    }
-    
-    public byte*[] ToRawArray() => new [] { (byte*)_0, (byte*)_1, (byte*)_2 };
-    
-    /// <summary>original type: byte*</summary>
-    public IntPtr[] ToArray() => new [] { _0, _1, _2 };
-    
-    /// <summary>original type: byte*</summary>
-    public void UpdateFrom(IntPtr[] array)
-    {
-        if (array.Length != Size)
-        {
-            throw new ArgumentOutOfRangeException($"array size({array.Length}) should == {Size}");
-        }
-        
-        fixed (IntPtr* p = array)
-        {
-            _0 = p[0];
-            _1 = p[1];
-            _2 = p[2];
-        }
-    }
-}
-
-public unsafe struct int_array3
-{
-    public const int Size = 3;
-    public fixed int _[3];
-    
-    public int this[int i]
-    {
-        get => i switch
-        {
-            >= 0 and < Size => _[i],
-            _ => throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size})"),
-        };
-        set => _[i] = i switch
-        {
-            >= 0 and < Size => value,
-            _ => throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size})"),
-        };
-    }
-    
-    public int[] ToArray() => new [] { _[0], _[1], _[2] };
-    
-    
-    public void UpdateFrom(int[] array)
-    {
-        if (array.Length != Size)
-        {
-            throw new ArgumentOutOfRangeException($"array size({array.Length}) should == {Size}");
-        }
-        
-        fixed (int* p = array)
-        {
-            _[0] = p[0];
-            _[1] = p[1];
-            _[2] = p[2];
         }
     }
 }

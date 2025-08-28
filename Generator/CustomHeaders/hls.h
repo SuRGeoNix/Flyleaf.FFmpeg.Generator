@@ -34,12 +34,12 @@ struct segment {
     int64_t duration;
     int64_t url_offset;
     int64_t size;
-    char* url;
-    char* key;
+    char *url;
+    char *key;
     enum KeyType key_type;
     uint8_t iv[16];
     /* associated Media Initialization Section, treated as a segment */
-    struct segment* init_section;
+    struct segment *init_section;
 };
 
 struct rendition;
@@ -59,19 +59,19 @@ struct playlist {
     char url[MAX_URL_SIZE];
     FFIOContext pb;
     uint8_t* read_buffer;
-    AVIOContext* input;
+    AVIOContext *input;
     int input_read_done;
-    AVIOContext* input_next;
+    AVIOContext *input_next;
     int input_next_requested;
-    AVFormatContext* parent;
+    AVFormatContext *parent;
     int index;
-    AVFormatContext* ctx;
-    AVPacket* pkt;
+    AVFormatContext *ctx;
+    AVPacket *pkt;
     int has_noheader_flag;
 
     /* main demuxer streams associated with this playlist
      * indexed by the subdemuxer stream indexes */
-    AVStream** main_streams;
+    AVStream **main_streams;
     int n_main_streams;
 
     int finished;
@@ -81,7 +81,7 @@ struct playlist {
     int time_offset_flag;
     int64_t start_time_offset;
     int n_segments;
-    struct segment** segments;
+    struct segment **segments;
     int needed;
     int broken;
     int64_t cur_seq_no;
@@ -91,8 +91,8 @@ struct playlist {
     int64_t last_load_time;
 
     /* Currently active Media Initialization Section */
-    struct segment* cur_init_section;
-    uint8_t* init_sec_buf;
+    struct segment *cur_init_section;
+    uint8_t *init_sec_buf;
     unsigned int init_sec_buf_size;
     unsigned int init_sec_data_len;
     unsigned int init_sec_buf_read_offset;
@@ -107,10 +107,10 @@ struct playlist {
     int64_t id3_offset; /* in stream original tb */
     uint8_t* id3_buf; /* temp buffer for id3 parsing */
     unsigned int id3_buf_size;
-    AVDictionary* id3_initial; /* data from first id3 tag */
+    AVDictionary *id3_initial; /* data from first id3 tag */
     int id3_found; /* ID3 tag found at some point */
     int id3_changed; /* ID3 tag data has changed at some point */
-    ID3v2ExtraMeta* id3_deferred_extra; /* stored here until subdemuxer is opened */
+    ID3v2ExtraMeta *id3_deferred_extra; /* stored here until subdemuxer is opened */
 
     HLSAudioSetupInfo audio_setup_info;
 
@@ -123,12 +123,13 @@ struct playlist {
      * with them, and variant main Media Playlists may have
      * multiple (playlist-less) renditions associated with them. */
     int n_renditions;
-    struct rendition** renditions;
+    struct rendition **renditions;
 
     /* Media Initialization Sections (EXT-X-MAP) associated with this
      * playlist, if any. */
     int n_init_sections;
-    struct segment** init_sections;
+    struct segment **init_sections;
+    int is_subtitle; /* Indicates if it's a subtitle playlist */
 };
 
 /*
@@ -139,7 +140,7 @@ struct playlist {
  */
 struct rendition {
     enum AVMediaType type;
-    struct playlist* playlist;
+    struct playlist *playlist;
     char group_id[MAX_FIELD_LEN];
     char language[MAX_FIELD_LEN];
     char name[MAX_FIELD_LEN];
@@ -151,7 +152,7 @@ struct variant {
 
     /* every variant contains at least the main Media Playlist in index 0 */
     int n_playlists;
-    struct playlist** playlists;
+    struct playlist **playlists;
 
     char audio_group[MAX_FIELD_LEN];
     char video_group[MAX_FIELD_LEN];
@@ -159,14 +160,14 @@ struct variant {
 };
 
 typedef struct HLSContext {
-    AVClass* class;
-    AVFormatContext* ctx;
+    AVClass *class;
+    AVFormatContext *ctx;
     int n_variants;
-    struct variant** variants;
+    struct variant **variants;
     int n_playlists;
-    struct playlist** playlists;
+    struct playlist **playlists;
     int n_renditions;
-    struct rendition** renditions;
+    struct rendition **renditions;
 
     int64_t cur_seq_no;
     int m3u8_hold_counters;
@@ -175,16 +176,17 @@ typedef struct HLSContext {
     int first_packet;
     int64_t first_timestamp;
     int64_t cur_timestamp;
-    AVIOInterruptCB* interrupt_callback;
-    AVDictionary* avio_opts;
-    AVDictionary* seg_format_opts;
-    char* allowed_extensions;
+    AVIOInterruptCB *interrupt_callback;
+    AVDictionary *avio_opts;
+    AVDictionary *seg_format_opts;
+    char *allowed_extensions;
+    char *allowed_segment_extensions;
     int extension_picky;
     int max_reload;
     int http_persistent;
     int http_multiple;
     int http_seekable;
     int seg_max_retry;
-    AVIOContext* playlist_pb;
+    AVIOContext *playlist_pb;
     HLSCryptoContext  crypto_ctx;
 } HLSContext;

@@ -9,7 +9,7 @@
     <RootNamespace>Flyleaf.FFmpeg</RootNamespace>
     <Title>FFmpeg Bindings for C#/.NET</Title>
     <Authors>SuRGeoNix</Authors>
-    <Version>7.1.1</Version>
+    <Version>8.0</Version>
     <Description>FFmpeg Bindings for C#/.NET</Description>
     <Copyright>SuRGeoNix © 2025</Copyright>
     <PackageTags>flyleaf;ffmpeg;bindings</PackageTags>

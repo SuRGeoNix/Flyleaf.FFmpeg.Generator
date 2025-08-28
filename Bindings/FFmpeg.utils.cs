@@ -13,8 +13,6 @@ public unsafe static partial class Raw
         if (profile != LoadProfile.Main)
             LoadLibrary(path, SWSCALE, validateVersion);
         LoadLibrary(path, SWRESAMPLE, validateVersion);
-        if (profile != LoadProfile.Main)
-            LoadLibrary(path, POSTPROC, validateVersion);
         LoadLibrary(path, AVCODEC, validateVersion);
         LoadLibrary(path, AVFORMAT, validateVersion);
         if (profile != LoadProfile.Main)
@@ -73,7 +71,6 @@ public unsafe static partial class Raw
         [AVFILTER]  = LIBAVFILTER_VERSION_MAJOR,
         [AVFORMAT]  = LIBAVFORMAT_VERSION_MAJOR,
         [AVUTIL]    = LIBAVUTIL_VERSION_MAJOR,
-        [POSTPROC]  = LIBPOSTPROC_VERSION_MAJOR,
         [SWRESAMPLE]= LIBSWRESAMPLE_VERSION_MAJOR,
         [SWSCALE]   = LIBSWSCALE_VERSION_MAJOR,
     };
@@ -82,7 +79,7 @@ public unsafe static partial class Raw
     //static Dictionary<string, string[]> libΤοDependencies = new()
     //{
     //    [AVUTIL]        = [],
-    //    [POSTPROC]      = [AVUTIL],
+    //    [POSTPROC]      = [AVUTIL], REMOVED
     //    [SWRESAMPLE]    = [AVUTIL],
     //    [SWSCALE]       = [AVUTIL],
     //    [AVCODEC]       = [AVUTIL, SWRESAMPLE],

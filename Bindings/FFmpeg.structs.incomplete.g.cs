@@ -71,10 +71,10 @@ public unsafe struct AVVkFrameInternal {}
 public unsafe struct SwrContext {}
 
 /// <remarks>This struct is incomplete.</remarks>
-public unsafe struct SwsContext {}
+public unsafe struct AVCodecInternal {}
 
 /// <remarks>This struct is incomplete.</remarks>
-public unsafe struct AVCodecInternal {}
+public unsafe struct AVContainerFifo {}
 
 /// <summary>Structure for chain/list of bitstream filters. Empty list can be allocated by av_bsf_list_alloc().</summary>
 /// <remarks>This struct is incomplete.</remarks>
@@ -93,13 +93,13 @@ public unsafe struct _iobuf {}
 public unsafe struct AVIODirContext {}
 
 /// <remarks>This struct is incomplete.</remarks>
+public unsafe struct AVFilterCommand {}
+
+/// <remarks>This struct is incomplete.</remarks>
 public unsafe struct AVFilterFormats {}
 
 /// <remarks>This struct is incomplete.</remarks>
 public unsafe struct AVFilterChannelLayouts {}
-
-/// <remarks>This struct is incomplete.</remarks>
-public unsafe struct AVFilterCommand {}
 
 /// <remarks>This struct is incomplete.</remarks>
 public unsafe struct AVAES {}
@@ -109,10 +109,4 @@ public unsafe struct URLContext {}
 
 /// <remarks>This struct is incomplete.</remarks>
 public unsafe struct FFStreamInfo {}
-
-/// <remarks>This struct is incomplete.</remarks>
-public unsafe struct FFOutputFormat {}
-
-/// <remarks>This struct is incomplete.</remarks>
-public unsafe struct FFInputFormat {}
 

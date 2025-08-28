@@ -41,8 +41,6 @@ public enum MuxerFlags : uint
     BitExact        = FmtFlags2.Bitexact,
     /// <summary>Flush the AVIOContext every packet</summary>
     FlushPackets    = FmtFlags2.FlushPackets,
-    /// <summary>Stop muxing at the end of the shortest stream. It may be needed to increase max_interleave_delta to avoid flushing the longer streams before EOF.</summary>
-    Shortest        = FmtFlags2.Shortest,
 }
 
 [Flags]
@@ -91,8 +89,6 @@ public enum MuxerSpecFlags : uint
       * AVFMT_TS_NONSTRICT, AVFMT_TS_NEGATIVE
       */
     None = FmtFlags.None,
-    /// <summary>Format allows flushing. If not set, the muxer will not receive a NULL packet in the write_packet function</summary>
-    AllowFlush      = FmtFlags.AllowFlush,
     /// <summary>The muxer/demuxer is experimental and should be used with caution. For demuxer, will not be selected automatically by probing, must be specified explicitly</summary>
     Experimental    = FmtFlags.Experimental,
     /// <summary>Format wants global header</summary>
@@ -142,9 +138,6 @@ public enum AudioDecoderFlags : uint
     // ED VAS
     BitExtract      = CodecFlags.Bitexact,
     CopyOpaque      = CodecFlags.CopyOpaque,
-
-    // D VA
-    DropChanged     = CodecFlags.Dropchanged
 }
 
 [Flags]
@@ -187,9 +180,6 @@ public enum VideoDecoderFlags : uint
     // ED VAS
     BitExtract      = CodecFlags.Bitexact,
     CopyOpaque      = CodecFlags.CopyOpaque,
-
-    // D VA
-    DropChanged     = CodecFlags.Dropchanged,
 
     // ED V
     Gray            = CodecFlags.Gray,

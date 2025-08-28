@@ -28,7 +28,6 @@ public unsafe static partial class Raw
     public const string AVFILTER   = "avfilter";
     public const string AVFORMAT   = "avformat";
     public const string AVUTIL     = "avutil";
-    public const string POSTPROC   = "postproc";
     public const string SWRESAMPLE = "swresample";
     public const string SWSCALE    = "swscale";
 

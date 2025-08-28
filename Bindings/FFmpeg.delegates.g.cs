@@ -552,83 +552,6 @@ public unsafe record struct avio_alloc_context_seek_func(IntPtr Pointer)
 }
 
 [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-public unsafe delegate int AVFilter_preinit (AVFilterContext* ctx);
-public unsafe record struct AVFilter_preinit_func(IntPtr Pointer)
-{
-    public static implicit operator AVFilter_preinit_func(AVFilter_preinit func) => new(func switch
-    {
-        null => IntPtr.Zero,
-        _ => GetFunctionPointerForDelegate(func)
-    });
-}
-
-[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-public unsafe delegate int AVFilter_init (AVFilterContext* ctx);
-public unsafe record struct AVFilter_init_func(IntPtr Pointer)
-{
-    public static implicit operator AVFilter_init_func(AVFilter_init func) => new(func switch
-    {
-        null => IntPtr.Zero,
-        _ => GetFunctionPointerForDelegate(func)
-    });
-}
-
-[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-public unsafe delegate void AVFilter_uninit (AVFilterContext* ctx);
-public unsafe record struct AVFilter_uninit_func(IntPtr Pointer)
-{
-    public static implicit operator AVFilter_uninit_func(AVFilter_uninit func) => new(func switch
-    {
-        null => IntPtr.Zero,
-        _ => GetFunctionPointerForDelegate(func)
-    });
-}
-
-[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-public unsafe delegate int _query_func (AVFilterContext* p0);
-public unsafe record struct _query_func_func(IntPtr Pointer)
-{
-    public static implicit operator _query_func_func(_query_func func) => new(func switch
-    {
-        null => IntPtr.Zero,
-        _ => GetFunctionPointerForDelegate(func)
-    });
-}
-
-[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-public unsafe delegate int _query_func2 (AVFilterContext* p0, AVFilterFormatsConfig** cfg_in, AVFilterFormatsConfig** cfg_out);
-public unsafe record struct _query_func2_func(IntPtr Pointer)
-{
-    public static implicit operator _query_func2_func(_query_func2 func) => new(func switch
-    {
-        null => IntPtr.Zero,
-        _ => GetFunctionPointerForDelegate(func)
-    });
-}
-
-[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-public unsafe delegate int AVFilter_process_command (AVFilterContext* p0, byte* cmd, byte* arg, byte* res, int res_len, int flags);
-public unsafe record struct AVFilter_process_command_func(IntPtr Pointer)
-{
-    public static implicit operator AVFilter_process_command_func(AVFilter_process_command func) => new(func switch
-    {
-        null => IntPtr.Zero,
-        _ => GetFunctionPointerForDelegate(func)
-    });
-}
-
-[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-public unsafe delegate int AVFilter_activate (AVFilterContext* ctx);
-public unsafe record struct AVFilter_activate_func(IntPtr Pointer)
-{
-    public static implicit operator AVFilter_activate_func(AVFilter_activate func) => new(func switch
-    {
-        null => IntPtr.Zero,
-        _ => GetFunctionPointerForDelegate(func)
-    });
-}
-
-[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 public unsafe delegate int func (AVFilterContext* ctx, void* arg, int jobnr, int nb_jobs);
 public unsafe record struct func_func(IntPtr Pointer)
 {
@@ -673,10 +596,76 @@ public unsafe record struct avpriv_packet_list_put_copy_func(IntPtr Pointer)
 }
 
 [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-public unsafe delegate int FFFormatContext_interleave_packet (AVFormatContext* s, AVPacket* pkt, int flush, int has_packet);
-public unsafe record struct FFFormatContext_interleave_packet_func(IntPtr Pointer)
+public unsafe delegate int FFFilter_preinit (AVFilterContext* ctx);
+public unsafe record struct FFFilter_preinit_func(IntPtr Pointer)
 {
-    public static implicit operator FFFormatContext_interleave_packet_func(FFFormatContext_interleave_packet func) => new(func switch
+    public static implicit operator FFFilter_preinit_func(FFFilter_preinit func) => new(func switch
+    {
+        null => IntPtr.Zero,
+        _ => GetFunctionPointerForDelegate(func)
+    });
+}
+
+[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+public unsafe delegate int FFFilter_init (AVFilterContext* ctx);
+public unsafe record struct FFFilter_init_func(IntPtr Pointer)
+{
+    public static implicit operator FFFilter_init_func(FFFilter_init func) => new(func switch
+    {
+        null => IntPtr.Zero,
+        _ => GetFunctionPointerForDelegate(func)
+    });
+}
+
+[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+public unsafe delegate void FFFilter_uninit (AVFilterContext* ctx);
+public unsafe record struct FFFilter_uninit_func(IntPtr Pointer)
+{
+    public static implicit operator FFFilter_uninit_func(FFFilter_uninit func) => new(func switch
+    {
+        null => IntPtr.Zero,
+        _ => GetFunctionPointerForDelegate(func)
+    });
+}
+
+[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+public unsafe delegate int _query_func (AVFilterContext* p0);
+public unsafe record struct _query_func_func(IntPtr Pointer)
+{
+    public static implicit operator _query_func_func(_query_func func) => new(func switch
+    {
+        null => IntPtr.Zero,
+        _ => GetFunctionPointerForDelegate(func)
+    });
+}
+
+[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+public unsafe delegate int _query_func2 (AVFilterContext* p0, AVFilterFormatsConfig** cfg_in, AVFilterFormatsConfig** cfg_out);
+public unsafe record struct _query_func2_func(IntPtr Pointer)
+{
+    public static implicit operator _query_func2_func(_query_func2 func) => new(func switch
+    {
+        null => IntPtr.Zero,
+        _ => GetFunctionPointerForDelegate(func)
+    });
+}
+
+[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+public unsafe delegate int FFFilter_process_command (AVFilterContext* p0, byte* cmd, byte* arg, byte* res, int res_len, int flags);
+public unsafe record struct FFFilter_process_command_func(IntPtr Pointer)
+{
+    public static implicit operator FFFilter_process_command_func(FFFilter_process_command func) => new(func switch
+    {
+        null => IntPtr.Zero,
+        _ => GetFunctionPointerForDelegate(func)
+    });
+}
+
+[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+public unsafe delegate int FFFilter_activate (AVFilterContext* ctx);
+public unsafe record struct FFFilter_activate_func(IntPtr Pointer)
+{
+    public static implicit operator FFFilter_activate_func(FFFilter_activate func) => new(func switch
     {
         null => IntPtr.Zero,
         _ => GetFunctionPointerForDelegate(func)
