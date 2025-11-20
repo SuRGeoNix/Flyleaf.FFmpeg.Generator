@@ -1091,8 +1091,6 @@ public enum AVFrameSideDataType : int
     ViewId = 29,
     /// <summary>This side data contains information about the reference display width(s) and reference viewing distance(s) as well as information about the corresponding reference stereo pair(s), i.e., the pair(s) of views to be displayed for the viewer&apos;s left and right eyes on the reference display at the reference viewing distance. The payload is the AV3DReferenceDisplaysInfo struct defined in libavutil/tdrdi.h.</summary>
     _3DReferenceDisplays = 30,
-    /// <summary>Extensible image file format metadata. The payload is a buffer containing EXIF metadata, starting with either 49 49 2a 00, or 4d 4d 00 2a.</summary>
-    Exif = 31,
 }
 
 /// <summary>Option for overlapping elliptical pixel selectors in an image.</summary>
@@ -3566,17 +3564,48 @@ public enum SwsDither : int
     Nb = 6,
 }
 
-/// <summary>Macro enum, prefix: SWS_</summary>
 [Flags]
-public enum SwsFlags : uint
+public enum SwsFlags : int
 {
     None = 0,
-    /// <summary>SWS_SRC_V_CHR_DROP_MASK</summary>
-    SrcVChrDropMask = 0x30000,
-    /// <summary>SWS_SRC_V_CHR_DROP_SHIFT</summary>
-    SrcVChrDropShift = 16,
-    /// <summary>SWS_PARAM_DEFAULT</summary>
-    ParamDefault = 123456,
+    /// <summary>fast bilinear filtering</summary>
+    FastBilinear = 1,
+    /// <summary>bilinear filtering</summary>
+    Bilinear = 2,
+    /// <summary>2-tap cubic B-spline</summary>
+    Bicubic = 4,
+    /// <summary>experimental</summary>
+    X = 8,
+    /// <summary>nearest neighbor</summary>
+    Point = 16,
+    /// <summary>area averaging</summary>
+    Area = 32,
+    /// <summary>bicubic luma, bilinear chroma</summary>
+    Bicublin = 64,
+    /// <summary>gaussian approximation</summary>
+    Gauss = 128,
+    /// <summary>unwindowed sinc</summary>
+    Sinc = 256,
+    /// <summary>3-tap sinc/sinc</summary>
+    Lanczos = 512,
+    /// <summary>cubic Keys spline</summary>
+    Spline = 1024,
+    /// <summary>Return an error on underspecified conversions. Without this flag, unspecified fields are defaulted to sensible values.</summary>
+    Strict = 2048,
+    /// <summary>Emit verbose log of scaling parameters.</summary>
+    PrintInfo = 4096,
+    /// <summary>Perform full chroma upsampling when upscaling to RGB.</summary>
+    FullChrHInt = 8192,
+    /// <summary>Perform full chroma interpolation when downscaling RGB sources.</summary>
+    FullChrHInp = 16384,
+    /// <summary>Force bit-exact output. This will prevent the use of platform-specific optimizations that may lead to slight difference in rounding, in favor of always maintaining exact bit output compatibility with the reference C code.</summary>
+    AccurateRnd = 262144,
+    /// <summary>Force bit-exact output. This will prevent the use of platform-specific optimizations that may lead to slight difference in rounding, in favor of always maintaining exact bit output compatibility with the reference C code.</summary>
+    Bitexact = 524288,
+    /// <summary>This flag has no effect</summary>
+    DirectBgr = 32768,
+    /// <summary>Set `SwsContext.dither` instead</summary>
+    ErrorDiffusion = 8388608,
 }
 
 public enum SwsIntent : int

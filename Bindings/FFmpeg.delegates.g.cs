@@ -726,3 +726,113 @@ public unsafe record struct AVFilterPad_config_props_func(IntPtr Pointer)
         _ => GetFunctionPointerForDelegate(func)
     });
 }
+
+[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+public unsafe delegate int FFInputFormat_read_probe (AVProbeData* p0);
+public unsafe record struct FFInputFormat_read_probe_func(IntPtr Pointer)
+{
+    public static implicit operator FFInputFormat_read_probe_func(FFInputFormat_read_probe func) => new(func switch
+    {
+        null => IntPtr.Zero,
+        _ => GetFunctionPointerForDelegate(func)
+    });
+}
+
+[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+public unsafe delegate int FFInputFormat_read_header (AVFormatContext* p0);
+public unsafe record struct FFInputFormat_read_header_func(IntPtr Pointer)
+{
+    public static implicit operator FFInputFormat_read_header_func(FFInputFormat_read_header func) => new(func switch
+    {
+        null => IntPtr.Zero,
+        _ => GetFunctionPointerForDelegate(func)
+    });
+}
+
+[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+public unsafe delegate int FFInputFormat_read_packet (AVFormatContext* p0, AVPacket* pkt);
+public unsafe record struct FFInputFormat_read_packet_func(IntPtr Pointer)
+{
+    public static implicit operator FFInputFormat_read_packet_func(FFInputFormat_read_packet func) => new(func switch
+    {
+        null => IntPtr.Zero,
+        _ => GetFunctionPointerForDelegate(func)
+    });
+}
+
+[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+public unsafe delegate int FFInputFormat_read_close (AVFormatContext* p0);
+public unsafe record struct FFInputFormat_read_close_func(IntPtr Pointer)
+{
+    public static implicit operator FFInputFormat_read_close_func(FFInputFormat_read_close func) => new(func switch
+    {
+        null => IntPtr.Zero,
+        _ => GetFunctionPointerForDelegate(func)
+    });
+}
+
+[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+public unsafe delegate int FFInputFormat_read_seek (AVFormatContext* p0, int stream_index, long timestamp, int flags);
+public unsafe record struct FFInputFormat_read_seek_func(IntPtr Pointer)
+{
+    public static implicit operator FFInputFormat_read_seek_func(FFInputFormat_read_seek func) => new(func switch
+    {
+        null => IntPtr.Zero,
+        _ => GetFunctionPointerForDelegate(func)
+    });
+}
+
+[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+public unsafe delegate long FFInputFormat_read_timestamp (AVFormatContext* s, int stream_index, long* pos, long pos_limit);
+public unsafe record struct FFInputFormat_read_timestamp_func(IntPtr Pointer)
+{
+    public static implicit operator FFInputFormat_read_timestamp_func(FFInputFormat_read_timestamp func) => new(func switch
+    {
+        null => IntPtr.Zero,
+        _ => GetFunctionPointerForDelegate(func)
+    });
+}
+
+[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+public unsafe delegate int FFInputFormat_read_play (AVFormatContext* p0);
+public unsafe record struct FFInputFormat_read_play_func(IntPtr Pointer)
+{
+    public static implicit operator FFInputFormat_read_play_func(FFInputFormat_read_play func) => new(func switch
+    {
+        null => IntPtr.Zero,
+        _ => GetFunctionPointerForDelegate(func)
+    });
+}
+
+[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+public unsafe delegate int FFInputFormat_read_pause (AVFormatContext* p0);
+public unsafe record struct FFInputFormat_read_pause_func(IntPtr Pointer)
+{
+    public static implicit operator FFInputFormat_read_pause_func(FFInputFormat_read_pause func) => new(func switch
+    {
+        null => IntPtr.Zero,
+        _ => GetFunctionPointerForDelegate(func)
+    });
+}
+
+[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+public unsafe delegate int FFInputFormat_read_seek2 (AVFormatContext* s, int stream_index, long min_ts, long ts, long max_ts, int flags);
+public unsafe record struct FFInputFormat_read_seek2_func(IntPtr Pointer)
+{
+    public static implicit operator FFInputFormat_read_seek2_func(FFInputFormat_read_seek2 func) => new(func switch
+    {
+        null => IntPtr.Zero,
+        _ => GetFunctionPointerForDelegate(func)
+    });
+}
+
+[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+public unsafe delegate int FFInputFormat_get_device_list (AVFormatContext* s, AVDeviceInfoList* device_list);
+public unsafe record struct FFInputFormat_get_device_list_func(IntPtr Pointer)
+{
+    public static implicit operator FFInputFormat_get_device_list_func(FFInputFormat_get_device_list func) => new(func switch
+    {
+        null => IntPtr.Zero,
+        _ => GetFunctionPointerForDelegate(func)
+    });
+}

@@ -2138,6 +2138,15 @@ public unsafe static partial class Raw
     [DllImport(AVFORMAT, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern void avio_write_marker(AVIOContext* s, long time, AVIODataMarkerType type);
     
+    /// <summary>Add a new chapter.</summary>
+    /// <param name="s">media file handle</param>
+    /// <param name="id">unique ID for this chapter</param>
+    /// <param name="start">chapter start time in time_base units</param>
+    /// <param name="end">chapter end time in time_base units</param>
+    /// <param name="title">chapter title</param>
+    [DllImport(AVFORMAT, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern AVChapter* avpriv_new_chapter(AVFormatContext* s, long id, AVRational time_base, long start, long end, [MarshalAs(UnmanagedType.LPUTF8Str)] string title);
+    
     /// <summary>Set the time base and wrapping info for a given stream. This will be used to interpret the stream&apos;s timestamps. If the new time base is invalid (numerator or denominator are non-positive), it leaves the stream unchanged.</summary>
     /// <param name="st">stream</param>
     /// <param name="pts_wrap_bits">number of bits effectively used by the pts (used for wrap control)</param>
@@ -2145,6 +2154,15 @@ public unsafe static partial class Raw
     /// <param name="pts_den">time base denominator</param>
     [DllImport(AVFORMAT, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern void avpriv_set_pts_info(AVStream* st, int pts_wrap_bits, uint pts_num, uint pts_den);
+    
+    [DllImport(AVFORMAT, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern void avpriv_stream_set_need_parsing(AVStream* st, AVStreamParseType type);
+    
+    /// <summary>Update cur_dts of all streams based on the given timestamp and AVStream.</summary>
+    /// <param name="ref_st">reference stream giving time_base of param timestamp</param>
+    /// <param name="timestamp">new dts expressed in time_base of param ref_st</param>
+    [DllImport(AVFORMAT, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern void avpriv_update_cur_dts(AVFormatContext* s, AVStream* ref_st, long timestamp);
     
     /// <summary>Add two rationals.</summary>
     /// <param name="b">First rational</param>

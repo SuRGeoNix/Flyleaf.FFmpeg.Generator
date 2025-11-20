@@ -79,6 +79,48 @@ public unsafe struct double_array2
     }
 }
 
+public unsafe struct double_array2x399
+{
+    public const int Size = 2;
+    public double_array399 _0, _1;
+    
+    public double_array399 this[int i]
+    {
+        get
+        {
+            if (i < 0 || i >= Size) throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size}]");
+            fixed (double_array399* p0 = &_0)
+            {
+                return *(p0 + i);
+            }
+        }
+        set
+        {
+            if (i >= Size) throw new ArgumentOutOfRangeException($"i({i}) should < {Size}");
+            fixed (double_array399* p0 = &_0)
+            {
+                *(p0 + i) = value;
+            }
+        }
+    }
+    
+    public double_array399[] ToArray() => new [] { _0, _1 };
+    
+    public void UpdateFrom(double_array399[] array)
+    {
+        if (array.Length != Size)
+        {
+            throw new ArgumentOutOfRangeException($"array size({array.Length}) should == {Size}");
+        }
+        
+        fixed (double_array399* p = array)
+        {
+            _0 = p[0];
+            _1 = p[1];
+        }
+    }
+}
+
 public unsafe struct short_array2
 {
     public const int Size = 2;
@@ -1853,6 +1895,55 @@ public unsafe struct byte_array64
             _[61] = p[61];
             _[62] = p[62];
             _[63] = p[63];
+        }
+    }
+}
+
+public unsafe struct double_array399
+{
+    public const int Size = 399;
+    public fixed double _[399];
+    
+    public double this[int i]
+    {
+        get => i switch
+        {
+            >= 0 and < Size => _[i],
+            _ => throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size})"),
+        };
+        set => _[i] = i switch
+        {
+            >= 0 and < Size => value,
+            _ => throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size})"),
+        };
+    }
+    
+    public double[] ToArray()
+    {
+        fixed (double_array399* p = &this)
+        {
+            var a = new double[Size];
+            for (uint i = 0; i < Size; i++)
+            {
+                a[i] = p->_[i];
+            }
+            return a;
+        }
+    }
+    
+    public void UpdateFrom(double[] array)
+    {
+        if (array.Length != Size)
+        {
+            throw new ArgumentOutOfRangeException($"array size({array.Length}) should == {Size}");
+        }
+        
+        fixed (double* p = array)
+        {
+            for (int i = 0; i < Size; ++i)
+            {
+                _[i] = p[i];
+            }
         }
     }
 }

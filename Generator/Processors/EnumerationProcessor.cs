@@ -89,7 +89,7 @@ internal class EnumerationProcessor
             });
 
             // TBR: fix flags enums
-            if (name == "AVSideDataProps" || name == "AVClassStateFlags")
+            if (name == "AVSideDataProps" || name == "AVClassStateFlags" || name == "SwsFlags")
             {
                 isflags = true;
                 enumItems = [new() { Name = "None", RawName = $"None{MacroEnumPostProcessor.t01++}" , Value = "0"}, ..enumItems];

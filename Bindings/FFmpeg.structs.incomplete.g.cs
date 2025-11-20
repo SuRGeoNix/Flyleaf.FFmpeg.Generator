@@ -107,6 +107,3 @@ public unsafe struct AVAES {}
 /// <remarks>This struct is incomplete.</remarks>
 public unsafe struct URLContext {}
 
-/// <remarks>This struct is incomplete.</remarks>
-public unsafe struct FFStreamInfo {}
-

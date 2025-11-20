@@ -70,7 +70,7 @@ internal static class Program
         astProcessor.IgnoreUnitNames.Add("AVIndexEntry");
 
         // TODO: Extra headers to be included (should exclude functions as they are private* and enums/structs/macros should have a prefix of 'class' eg HLSPlaylist to avoid duplicates)
-        string extraRelease = "master";
+        string extraRelease = "8.0";
 
         string projectDir = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory)
             .Parent!.Parent!.Parent!.FullName;
@@ -82,10 +82,14 @@ internal static class Program
             [
             "libavformat/hls.h",        // HLS live seek
             "libavfilter/filters.h",    // AVFilterPad, FilterLink etc..
+            "libavformat/demux.h"       // Custom Demuxer
             ];
 
         DownloadExtraHeaders([
             "libavfilter/filters.h",
+
+            // Custom Demuxer
+            "libavformat/demux.h",
 
             // HLS requirements
             "libavformat/internal.h",

@@ -76,7 +76,6 @@ internal static class MacroEnumPostProcessor
             new("SLICE_FLAG_", "SliceFlags", IsFlags: true),
 
             new("SWS_CS_", "SwsCSFlags", IsFlags: true),
-            new("SWS_", "SwsFlags", IsFlags: true, Except: HashSet("SWS_MAX_REDUCE_CUTOFF")),
             
             new("FF_COMPLIANCE_", "StrictCompliance"), // flags?
 

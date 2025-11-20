@@ -413,4 +413,11 @@ public unsafe static partial class Raw
     // original body hash: tHWqhg7ptoT88zgKofm3eyVJ9J70h6X/T5UQVzf6VkE=
     
     
+    public static FFInputFormat* ffifmt(AVInputFormat* fmt)
+    {
+        return (FFInputFormat*)fmt;
+    }
+    // original body hash: R9BnhXgT/AdV01/uDO68p+l90dsiVEtE0QDwdqEG0A8=
+    
+    
 }

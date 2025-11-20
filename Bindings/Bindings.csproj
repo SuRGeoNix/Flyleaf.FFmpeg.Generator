@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+	<TargetFrameworks>net8.0;net10.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -9,7 +9,7 @@
     <RootNamespace>Flyleaf.FFmpeg</RootNamespace>
     <Title>FFmpeg Bindings for C#/.NET</Title>
     <Authors>SuRGeoNix</Authors>
-    <Version>8.0</Version>
+    <Version>8.0.1</Version>
     <Description>FFmpeg Bindings for C#/.NET</Description>
     <Copyright>SuRGeoNix © 2025</Copyright>
     <PackageTags>flyleaf;ffmpeg;bindings</PackageTags>

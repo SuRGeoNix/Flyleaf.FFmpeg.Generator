@@ -2211,6 +2211,38 @@ public unsafe struct FFFrac
     public long den;
 }
 
+public unsafe struct FFInputFormat
+{
+    /// <summary>The public AVInputFormat. See avformat.h for it.</summary>
+    public AVInputFormat p;
+    /// <summary>Raw demuxers store their codec ID here.</summary>
+    public AVCodecID raw_codec_id;
+    /// <summary>Size of private data so that it can be allocated in the wrapper.</summary>
+    public int priv_data_size;
+    /// <summary>Internal flags. See FF_INFMT_FLAG_* above and FF_FMT_FLAG_* in internal.h.</summary>
+    public int flags_internal;
+    /// <summary>Tell if a given file has a chance of being parsed as this format. The buffer provided is guaranteed to be AVPROBE_PADDING_SIZE bytes big so you do not have to check for that unless you need more.</summary>
+    public FFInputFormat_read_probe_func read_probe;
+    /// <summary>Read the format header and initialize the AVFormatContext structure. Return 0 if OK. &apos;avformat_new_stream&apos; should be called to create new streams.</summary>
+    public FFInputFormat_read_header_func read_header;
+    /// <summary>Read one packet and put it in &apos;pkt&apos;. pts and flags are also set. &apos;avformat_new_stream&apos; can be called only if the flag AVFMTCTX_NOHEADER is used and only in the calling thread (not in a background thread).</summary>
+    public FFInputFormat_read_packet_func read_packet;
+    /// <summary>Close the stream. The AVFormatContext and AVStreams are not freed by this function</summary>
+    public FFInputFormat_read_close_func read_close;
+    /// <summary>Seek to a given timestamp relative to the frames in stream component stream_index.</summary>
+    public FFInputFormat_read_seek_func read_seek;
+    /// <summary>Get the next timestamp in stream[stream_index].time_base units.</summary>
+    public FFInputFormat_read_timestamp_func read_timestamp;
+    /// <summary>Start/resume playing - only meaningful if using a network-based format (RTSP).</summary>
+    public FFInputFormat_read_play_func read_play;
+    /// <summary>Pause playing - only meaningful if using a network-based format (RTSP).</summary>
+    public FFInputFormat_read_pause_func read_pause;
+    /// <summary>Seek to timestamp ts. Seeking will be done so that the point from which all active streams can be presented successfully will be closest to ts and within min/max_ts. Active streams are all streams that have AVStream.discard &lt; AVDISCARD_ALL.</summary>
+    public FFInputFormat_read_seek2_func read_seek2;
+    /// <summary>Returns device list with it properties.</summary>
+    public FFInputFormat_get_device_list_func get_device_list;
+}
+
 public unsafe struct FFIOContext
 {
     public AVIOContext pub;
@@ -2322,6 +2354,26 @@ public unsafe struct FFStream_extract_extradata
 {
     public AVBSFContext* bsf;
     public int inited;
+}
+
+public unsafe struct FFStreamInfo
+{
+    public long last_dts;
+    public long duration_gcd;
+    public int duration_count;
+    public long rfps_duration_sum;
+    public double_array2x399* duration_error;
+    public long codec_info_duration;
+    public long codec_info_duration_fields;
+    public int frame_delay_evidence;
+    /// <summary>0 -&gt; decoder has not been searched for yet. &gt;0 -&gt; decoder found &lt;0 -&gt; decoder with codec_id == -found_decoder has not been found</summary>
+    public int found_decoder;
+    public long last_duration;
+    /// <summary>Those are used for average framerate estimation.</summary>
+    public long fps_first_dts;
+    public int fps_first_dts_idx;
+    public long fps_last_dts;
+    public int fps_last_dts_idx;
 }
 
 /// <summary>Link properties exposed to filter code, but not external callers.</summary>
