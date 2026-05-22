@@ -343,6 +343,16 @@ public unsafe static partial class Raw
     [DllImport(AVCODEC, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern void av_packet_side_data_free(ref AVPacketSideData* sd, int* nb_sd);
     
+    /// <summary>Add a new packet side data entry to an array based on existing frame side data, if a matching type exists for packet side data.</summary>
+    /// <param name="flags">Currently unused. Must be 0.</param>
+    [DllImport(AVCODEC, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern int av_packet_side_data_from_frame(AVPacketSideData** sd, int* nb_sd, AVFrameSideData* src, uint flags);
+    
+    /// <summary>Add a new packet side data entry to an array based on existing frame side data, if a matching type exists for packet side data.</summary>
+    /// <param name="flags">Currently unused. Must be 0.</param>
+    [DllImport(AVCODEC, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern int av_packet_side_data_from_frame(ref AVPacketSideData* sd, int* nb_sd, AVFrameSideData* src, uint flags);
+    
     /// <summary>Get side information from a side data array.</summary>
     /// <param name="sd">the array from which the side data should be fetched</param>
     /// <param name="nb_sd">value containing the number of entries in the array.</param>
@@ -374,6 +384,16 @@ public unsafe static partial class Raw
     /// <param name="type">side information type</param>
     [DllImport(AVCODEC, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern void av_packet_side_data_remove(AVPacketSideData* sd, int* nb_sd, AVPacketSideDataType type);
+    
+    /// <summary>Add a new frame side data entry to an array based on existing packet side data, if a matching type exists for frame side data.</summary>
+    /// <param name="flags">Some combination of AV_FRAME_SIDE_DATA_FLAG_* flags, or 0.</param>
+    [DllImport(AVCODEC, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern int av_packet_side_data_to_frame(AVFrameSideData*** sd, int* nb_sd, AVPacketSideData* src, uint flags);
+    
+    /// <summary>Add a new frame side data entry to an array based on existing packet side data, if a matching type exists for frame side data.</summary>
+    /// <param name="flags">Some combination of AV_FRAME_SIDE_DATA_FLAG_* flags, or 0.</param>
+    [DllImport(AVCODEC, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern int av_packet_side_data_to_frame(ref AVFrameSideData** sd, int* nb_sd, AVPacketSideData* src, uint flags);
     
     /// <summary>Unpack a dictionary from side_data.</summary>
     /// <param name="data">data from side_data</param>
@@ -677,11 +697,16 @@ public unsafe static partial class Raw
     [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ConstCharPtrMarshaler))]
     public static extern string avcodec_profile_name(AVCodecID codec_id, int profile);
     
+    /// <summary>Alias for `avcodec_receive_frame_flags(avctx, frame, 0)`.</summary>
+    [DllImport(AVCODEC, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern int avcodec_receive_frame(AVCodecContext* avctx, AVFrame* frame);
+    
     /// <summary>Return decoded output data from a decoder or encoder (when the AV_CODEC_FLAG_RECON_FRAME flag is used).</summary>
     /// <param name="avctx">codec context</param>
     /// <param name="frame">This will be set to a reference-counted video or audio frame (depending on the decoder type) allocated by the codec. Note that the function will always call av_frame_unref(frame) before doing anything else.</param>
+    /// <param name="flags">Combination of AV_CODEC_RECEIVE_FRAME_FLAG_* flags.</param>
     [DllImport(AVCODEC, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern int avcodec_receive_frame(AVCodecContext* avctx, AVFrame* frame);
+    public static extern int avcodec_receive_frame_flags(AVCodecContext* avctx, AVFrame* frame, uint flags);
     
     /// <summary>Read encoded data from the encoder.</summary>
     /// <param name="avctx">codec context</param>
@@ -825,6 +850,9 @@ public unsafe static partial class Raw
     public static extern uint avdevice_version();
     
     [DllImport(AVFILTER, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern AVAlphaMode av_buffersink_get_alpha_mode(AVFilterContext* ctx);
+    
+    [DllImport(AVFILTER, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern int av_buffersink_get_ch_layout(AVFilterContext* ctx, AVChannelLayout* ch_layout);
     
     [DllImport(AVFILTER, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
@@ -910,6 +938,10 @@ public unsafe static partial class Raw
     /// <summary>Get the number of failed requests.</summary>
     [DllImport(AVFILTER, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern uint av_buffersrc_get_nb_failed_requests(AVFilterContext* buffer_src);
+    
+    /// <summary>Returns 0 or a negative AVERROR code. Currently, this will only ever return AVERROR(EOF), to indicate that the buffer source has been closed, either as a result of av_buffersrc_close(), or because the downstream filter is no longer accepting new data.</summary>
+    [DllImport(AVFILTER, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern int av_buffersrc_get_status(AVFilterContext* ctx);
     
     /// <summary>Allocate a new AVBufferSrcParameters instance. It should be freed by the caller with av_free().</summary>
     [DllImport(AVFILTER, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
@@ -1436,6 +1468,13 @@ public unsafe static partial class Raw
     [DllImport(AVFORMAT, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern int av_match_ext([MarshalAs(UnmanagedType.LPUTF8Str)] string filename, [MarshalAs(UnmanagedType.LPUTF8Str)] string extensions);
     
+    /// <summary>Make a RFC 4281/6381 like string describing a codec for MIME types.</summary>
+    /// <param name="par">pointer to an AVCodecParameters struct describing the codec</param>
+    /// <param name="frame_rate">an AVRational for the frame rate, for deciding the right profile for video codecs. Pass an invalid AVRational (1/0) to indicate that it is unknown.</param>
+    /// <param name="out">the AVBPrint to write the output to</param>
+    [DllImport(AVFORMAT, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern int av_mime_codec_str(AVCodecParameters* par, AVRational frame_rate, AVBPrint* @out);
+    
     /// <summary>Iterate over all registered muxers.</summary>
     /// <param name="opaque">a pointer where libavformat will store the iteration state. Must point to NULL to start the iteration.</param>
     [DllImport(AVFORMAT, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
@@ -1751,6 +1790,20 @@ public unsafe static partial class Raw
     [DllImport(AVFORMAT, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern int avformat_queue_attached_pictures(AVFormatContext* s);
     
+    /// <summary>Receive a command reply from the demuxer</summary>
+    /// <param name="s">Format context, must be allocated with ::avformat_alloc_context.</param>
+    /// <param name="id">Identifier of type ::AVFormatCommandID, indicating the command for which to retrieve the reply.</param>
+    /// <param name="data_out">Pointee is set to the command reply, the actual type depends on the command. This is allocated by the muxer and must be freed with ::av_free. For details on the actual data set here, consult the documentation of the respective ::AVFormatCommandID.</param>
+    [DllImport(AVFORMAT, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern int avformat_receive_command_reply(AVFormatContext* s, AVFormatCommandID id, void** data_out);
+    
+    /// <summary>Receive a command reply from the demuxer</summary>
+    /// <param name="s">Format context, must be allocated with ::avformat_alloc_context.</param>
+    /// <param name="id">Identifier of type ::AVFormatCommandID, indicating the command for which to retrieve the reply.</param>
+    /// <param name="data_out">Pointee is set to the command reply, the actual type depends on the command. This is allocated by the muxer and must be freed with ::av_free. For details on the actual data set here, consult the documentation of the respective ::AVFormatCommandID.</param>
+    [DllImport(AVFORMAT, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern int avformat_receive_command_reply(AVFormatContext* s, AVFormatCommandID id, ref void* data_out);
+    
     /// <summary>Seek to timestamp ts. Seeking will be done so that the point from which all active streams can be presented successfully will be closest to ts and within min/max_ts. Active streams are all streams that have AVStream.discard &lt; AVDISCARD_ALL.</summary>
     /// <param name="s">media file handle</param>
     /// <param name="stream_index">index of the stream which is used as time base reference</param>
@@ -1760,6 +1813,13 @@ public unsafe static partial class Raw
     /// <param name="flags">flags</param>
     [DllImport(AVFORMAT, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern int avformat_seek_file(AVFormatContext* s, int stream_index, long min_ts, long ts, long max_ts, SeekFlags flags);
+    
+    /// <summary>Send a command to the demuxer</summary>
+    /// <param name="s">Format context, must be allocated with ::avformat_alloc_context.</param>
+    /// <param name="id">Identifier of type ::AVFormatCommandID, indicating the command to send.</param>
+    /// <param name="data">Command-specific data, allocated by the caller and ownership remains with the caller. For details what is expected here, consult the documentation of the respective ::AVFormatCommandID.</param>
+    [DllImport(AVFORMAT, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern int avformat_send_command(AVFormatContext* s, AVFormatCommandID id, void* data);
     
     /// <summary>Add an already allocated stream to a stream group.</summary>
     /// <param name="stg">stream group belonging to a media file.</param>
@@ -2177,6 +2237,15 @@ public unsafe static partial class Raw
     /// <param name="inc">Value to be added</param>
     [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern long av_add_stable(AVRational ts_tb, long ts, AVRational inc_tb, long inc);
+    
+    /// <summary>Returns the AVAlphaMode value for name or an AVError if not found.</summary>
+    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern AVAlphaMode av_alpha_mode_from_name([MarshalAs(UnmanagedType.LPUTF8Str)] string name);
+    
+    /// <summary>Returns the name for provided alpha mode or NULL if unknown.</summary>
+    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ConstCharPtrMarshaler))]
+    public static extern string av_alpha_mode_name(AVAlphaMode mode);
     
     /// <summary>Allocate an AVAudioFifo.</summary>
     /// <param name="sample_fmt">sample format</param>
@@ -2977,7 +3046,7 @@ public unsafe static partial class Raw
     [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern void av_frame_remove_side_data(AVFrame* frame, AVFrameSideDataType type);
     
-    /// <summary>Ensure the destination frame refers to the same data described by the source frame, either by creating a new reference for each AVBufferRef from src if they differ from those in dst, by allocating new buffers and copying data if src is not reference counted, or by unrefencing it if src is empty.</summary>
+    /// <summary>Ensure the destination frame refers to the same data described by the source frame, either by creating a new reference for each AVBufferRef from src if they differ from those in dst, by allocating new buffers and copying data if src is not reference counted, or by unreferencing it if src is empty.</summary>
     [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern int av_frame_replace(AVFrame* dst, AVFrame* src);
     
@@ -4499,6 +4568,14 @@ public unsafe static partial class Raw
     [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern AVVkFrame* av_vk_frame_alloc();
     
+    /// <summary>Returns an array of optional Vulkan device extensions that FFmpeg may use if enabled.</summary>
+    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern byte** av_vk_get_optional_device_extensions(int* count);
+    
+    /// <summary>Returns an array of optional Vulkan instance extensions that FFmpeg may use if enabled.</summary>
+    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern byte** av_vk_get_optional_instance_extensions(int* count);
+    
     /// <summary>Returns the optimal per-plane Vulkan format for a given sw_format, one for each plane. Returns NULL on unsupported formats.</summary>
     [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern int* av_vkfmt_from_pixfmt(AVPixelFormat p);
@@ -4757,7 +4834,7 @@ public unsafe static partial class Raw
     [DllImport(SWSCALE, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern int sws_frame_setup(SwsContext* ctx, AVFrame* dst, AVFrame* src);
     
-    /// <summary>Initialize the scaling process for a given pair of source/destination frames. Must be called before any calls to sws_send_slice() and sws_receive_slice(). Requires a context that has been previously been initialized with sws_init_context().</summary>
+    /// <summary>Initialize the scaling process for a given pair of source/destination frames. Must be called before any calls to sws_send_slice() and sws_receive_slice(). Requires a context that has previously been initialized with sws_init_context().</summary>
     /// <param name="c">The scaling context</param>
     /// <param name="dst">The destination frame.</param>
     /// <param name="src">The source frame. The data buffers must be allocated, but the frame data does not have to be ready at this point. Data availability is then signalled by sws_send_slice().</param>
@@ -4854,12 +4931,12 @@ public unsafe static partial class Raw
     [DllImport(SWSCALE, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern int sws_receive_slice(SwsContext* c, uint slice_start, uint slice_height);
     
-    /// <summary>Get the alignment required for slices. Requires a context that has been previously been initialized with sws_init_context().</summary>
+    /// <summary>Get the alignment required for slices. Requires a context that has previously been initialized with sws_init_context().</summary>
     /// <param name="c">The scaling context</param>
     [DllImport(SWSCALE, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern uint sws_receive_slice_alignment(SwsContext* c);
     
-    /// <summary>Scale the image slice in srcSlice and put the resulting scaled slice in the image in dst. A slice is a sequence of consecutive rows in an image. Requires a context that has been previously been initialized with sws_init_context().</summary>
+    /// <summary>Scale the image slice in srcSlice and put the resulting scaled slice in the image in dst. A slice is a sequence of consecutive rows in an image. Requires a context that has previously been initialized with sws_init_context().</summary>
     /// <param name="c">the scaling context previously created with sws_getContext()</param>
     /// <param name="srcSlice">the array containing the pointers to the planes of the source slice</param>
     /// <param name="srcStride">the array containing the strides for each plane of the source image</param>
@@ -4890,9 +4967,9 @@ public unsafe static partial class Raw
     /// <summary>Returns A negative error code on error, non negative otherwise. If `LIBSWSCALE_VERSION_MAJOR &lt; 7`, returns -1 if not supported.</summary>
     /// <param name="c">the scaling context</param>
     /// <param name="inv_table">the yuv2rgb coefficients describing the input yuv space, normally ff_yuv2rgb_coeffs[x]</param>
-    /// <param name="srcRange">flag indicating the while-black range of the input (1=jpeg / 0=mpeg)</param>
+    /// <param name="srcRange">flag indicating the white-black range of the input (1=jpeg / 0=mpeg)</param>
     /// <param name="table">the yuv2rgb coefficients describing the output yuv space, normally ff_yuv2rgb_coeffs[x]</param>
-    /// <param name="dstRange">flag indicating the while-black range of the output (1=jpeg / 0=mpeg)</param>
+    /// <param name="dstRange">flag indicating the white-black range of the output (1=jpeg / 0=mpeg)</param>
     /// <param name="brightness">16.16 fixed point brightness correction</param>
     /// <param name="contrast">16.16 fixed point contrast correction</param>
     /// <param name="saturation">16.16 fixed point saturation correction</param>
@@ -4902,9 +4979,9 @@ public unsafe static partial class Raw
     /// <summary>Returns A negative error code on error, non negative otherwise. If `LIBSWSCALE_VERSION_MAJOR &lt; 7`, returns -1 if not supported.</summary>
     /// <param name="c">the scaling context</param>
     /// <param name="inv_table">the yuv2rgb coefficients describing the input yuv space, normally ff_yuv2rgb_coeffs[x]</param>
-    /// <param name="srcRange">flag indicating the while-black range of the input (1=jpeg / 0=mpeg)</param>
+    /// <param name="srcRange">flag indicating the white-black range of the input (1=jpeg / 0=mpeg)</param>
     /// <param name="table">the yuv2rgb coefficients describing the output yuv space, normally ff_yuv2rgb_coeffs[x]</param>
-    /// <param name="dstRange">flag indicating the while-black range of the output (1=jpeg / 0=mpeg)</param>
+    /// <param name="dstRange">flag indicating the white-black range of the output (1=jpeg / 0=mpeg)</param>
     /// <param name="brightness">16.16 fixed point brightness correction</param>
     /// <param name="contrast">16.16 fixed point contrast correction</param>
     /// <param name="saturation">16.16 fixed point saturation correction</param>
@@ -4917,7 +4994,7 @@ public unsafe static partial class Raw
     [DllImport(SWSCALE, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern int sws_test_colorspace(AVColorSpace colorspace, int output);
     
-    /// <summary>Test if a given pixel format is supported.</summary>
+    /// <summary>Test if a given (software) pixel format is supported.</summary>
     /// <param name="format">The format to check.</param>
     /// <param name="output">If 0, test if compatible with the source/input frame; otherwise, with the destination/output frame.</param>
     [DllImport(SWSCALE, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
@@ -4926,6 +5003,11 @@ public unsafe static partial class Raw
     /// <summary>Helper function to run all sws_test_* against a frame, as well as testing the basic frame properties for sanity. Ignores irrelevant properties - for example, AVColorSpace is not checked for RGB frames.</summary>
     [DllImport(SWSCALE, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern int sws_test_frame(AVFrame* frame, int output);
+    
+    /// <summary>Test if a given hardware pixel format is supported.</summary>
+    /// <param name="format">The hardware format to check, or AV_PIX_FMT_NONE.</param>
+    [DllImport(SWSCALE, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern int sws_test_hw_format(AVPixelFormat format);
     
     /// <summary>Test if a given set of color primaries is supported.</summary>
     /// <param name="primaries">The color primaries to check.</param>

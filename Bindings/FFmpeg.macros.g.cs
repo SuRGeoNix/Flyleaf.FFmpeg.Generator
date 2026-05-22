@@ -2,10 +2,10 @@ namespace Flyleaf.FFmpeg;
 
 public unsafe static partial class Raw
 {
-    // public static attribute_deprecated = __declspec(deprecated);
+    // public static attribute_deprecated = __attribute__((deprecated));
     // public static av_alias = __attribute__((may_alias));
     // public static av_alloc_size = (...);
-    // public static av_always_inline = __forceinline;
+    // public static av_always_inline = __attribute__((always_inline)) inline;
     /// <summary>AV_BUFFER_FLAG_READONLY = (1 &lt;&lt; 0)</summary>
     public const int AV_BUFFER_FLAG_READONLY = 1 << 0;
     // public static av_builtin_constant_p = __builtin_constant_p;
@@ -115,6 +115,8 @@ public unsafe static partial class Raw
     public static readonly int AV_CODEC_ID_H266 = (int)AVCodecID.Vvc;
     /// <summary>AV_CODEC_ID_IFF_BYTERUN1 = AV_CODEC_ID_IFF_ILBM</summary>
     public static readonly int AV_CODEC_ID_IFF_BYTERUN1 = (int)AVCodecID.IffIlbm;
+    /// <summary>AV_CODEC_RECEIVE_FRAME_FLAG_SYNCHRONOUS = (1 &lt;&lt; 0)</summary>
+    public const int AV_CODEC_RECEIVE_FRAME_FLAG_SYNCHRONOUS = 1 << 0;
     // public static av_cold = __attribute__((cold));
     // public static av_const = __attribute__((const));
     /// <summary>AV_CUDA_USE_CURRENT_CONTEXT = (1 &lt;&lt; 1)</summary>
@@ -126,6 +128,7 @@ public unsafe static partial class Raw
     // public static av_extern_inline = inline;
     public const int AV_FOURCC_MAX_STRING_SIZE = 32;
     // public static av_fourcc2str = (fourcc) av_fourcc_make_string((char[AV_FOURCC_MAX_STRING_SIZE]){0}, fourcc);
+    public const int AV_FRAME_FILENAME_FLAGS_IGNORE_TRUNCATION = 2;
     public const int AV_FRAME_FILENAME_FLAGS_MULTIPLE = 1;
     // public static AV_GCC_VERSION_AT_LEAST = (x,y) 0;
     // public static AV_GCC_VERSION_AT_MOST = (x,y)  0;
@@ -134,7 +137,9 @@ public unsafe static partial class Raw
     /// <summary>AV_GET_ENCODE_BUFFER_FLAG_REF = (1 &lt;&lt; 0)</summary>
     public const int AV_GET_ENCODE_BUFFER_FLAG_REF = 1 << 0;
     // public static AV_GLUE = (a, b) a ## b;
+    // public static AV_HAS_ATTRIBUTE = (x) __has_attribute(x);
     // public static AV_HAS_BUILTIN = (x) __has_builtin(x);
+    // public static AV_HAS_STD_ATTRIBUTE = (x) 0;
     public const int AV_HAVE_BIGENDIAN = 0;
     public const int AV_HAVE_FAST_UNALIGNED = 1;
     public const int AV_HDR_PLUS_MAX_PAYLOAD_SIZE = 907;
@@ -147,7 +152,7 @@ public unsafe static partial class Raw
     // public static AV_LOG_C = (x) ((x) << 8);
     // public static av_mod_uintp2 = av_mod_uintp2_c;
     // public static AV_NE = (be, le) (le);
-    // public static av_noinline = __declspec(noinline);
+    // public static av_noinline = __attribute__((noinline));
     /// <summary>AV_NOPTS_VALUE = ((int64_t)UINT64_C(0x8000000000000000))</summary>
     public static readonly long AV_NOPTS_VALUE = unchecked((long)((ulong)0x8000000000000000));
     // public static av_noreturn = __attribute__((noreturn));
@@ -372,7 +377,8 @@ public unsafe static partial class Raw
     // public static av_popcount = av_popcount_c;
     // public static av_popcount64 = av_popcount64_c;
     // public static AV_PRAGMA = (s) _Pragma(#s);
-    // public static av_printf_format = (fmtpos, attrpos) __attribute__((__format__(__printf__, fmtpos, attrpos)));
+    // public static AV_PRINTF_FMT = __printf__;
+    // public static av_printf_format = (fmtpos, attrpos) __attribute__((format(AV_PRINTF_FMT, fmtpos, attrpos)));
     public const int AV_PROFILE_AAC_ELD = 38;
     public const int AV_PROFILE_AAC_HE = 4;
     public const int AV_PROFILE_AAC_HE_V2 = 28;
@@ -509,7 +515,8 @@ public unsafe static partial class Raw
     // public static av_sat_dsub32 = av_sat_dsub32_c;
     // public static av_sat_sub32 = av_sat_sub32_c;
     // public static av_sat_sub64 = av_sat_sub64_c;
-    // public static av_scanf_format = (fmtpos, attrpos) __attribute__((__format__(__scanf__, fmtpos, attrpos)));
+    // public static AV_SCANF_FMT = __scanf__;
+    // public static av_scanf_format = (fmtpos, attrpos) __attribute__((format(AV_SCANF_FMT, fmtpos, attrpos)));
     // public static AV_STRINGIFY = (s)         AV_TOSTRING(s);
     public const uint AV_SUBTITLE_FLAG_FORCED = 0x00000001;
     public const int AV_TIME_BASE = 1000000;
@@ -526,6 +533,7 @@ public unsafe static partial class Raw
     // public static AV_VERSION_MICRO = (a) ((a) & 0xFF);
     // public static AV_VERSION_MINOR = (a) (((a) & 0x00FF00) >> 8);
     public const int AV_VIDEO_MAX_PLANES = 4;
+    // public static av_warn_unused_result = __attribute__((warn_unused_result));
     // public static av_zero_extend = av_zero_extend_c;
     // public static AVERROR = (e) (-(e));
     /// <summary>AVERROR_BSF_NOT_FOUND = FFERRTAG(0xF8,&apos;B&apos;,&apos;S&apos;,&apos;F&apos;)</summary>
@@ -606,6 +614,8 @@ public unsafe static partial class Raw
     // public static dynarray_add = (tab, nb_ptr, elem)do {__typeof__(tab) _tab = (tab);__typeof__(elem) _elem = (elem);(void)sizeof(**_tab == _elem); /* check that types are compatible */av_dynarray_add(_tab, nb_ptr, _elem);} while(0);
     /// <summary>FF_API_ALSA_CHANNELS = (LIBAVDEVICE_VERSION_MAJOR &lt; 63)</summary>
     public const bool FF_API_ALSA_CHANNELS = LIBAVDEVICE_VERSION_MAJOR < 63;
+    /// <summary>FF_API_ASSERT_FPU = (LIBAVUTIL_VERSION_MAJOR &lt; 61)</summary>
+    public const bool FF_API_ASSERT_FPU = LIBAVUTIL_VERSION_MAJOR < 61;
     /// <summary>FF_API_BUFFERSINK_OPTS = (LIBAVFILTER_VERSION_MAJOR &lt; 12)</summary>
     public const bool FF_API_BUFFERSINK_OPTS = LIBAVFILTER_VERSION_MAJOR < 12;
     /// <summary>FF_API_CODEC_PROPS = (LIBAVCODEC_VERSION_MAJOR &lt; 63)</summary>
@@ -614,12 +624,20 @@ public unsafe static partial class Raw
     public const bool FF_API_COMPUTE_PKT_FIELDS2 = LIBAVFORMAT_VERSION_MAJOR < 63;
     /// <summary>FF_API_CONTEXT_PUBLIC = (LIBAVFILTER_VERSION_MAJOR &lt; 12)</summary>
     public const bool FF_API_CONTEXT_PUBLIC = LIBAVFILTER_VERSION_MAJOR < 12;
+    /// <summary>FF_API_CPU_FLAG_FORCE = (LIBAVUTIL_VERSION_MAJOR &lt; 61)</summary>
+    public const bool FF_API_CPU_FLAG_FORCE = LIBAVUTIL_VERSION_MAJOR < 61;
+    /// <summary>FF_API_DOVI_L11_INVALID_PROPS = (LIBAVUTIL_VERSION_MAJOR &lt; 61)</summary>
+    public const bool FF_API_DOVI_L11_INVALID_PROPS = LIBAVUTIL_VERSION_MAJOR < 61;
     /// <summary>FF_API_EXR_GAMMA = (LIBAVCODEC_VERSION_MAJOR &lt; 63)</summary>
     public const bool FF_API_EXR_GAMMA = LIBAVCODEC_VERSION_MAJOR < 63;
     /// <summary>FF_API_INIT_PACKET = (LIBAVCODEC_VERSION_MAJOR &lt; 63)</summary>
     public const bool FF_API_INIT_PACKET = LIBAVCODEC_VERSION_MAJOR < 63;
     /// <summary>FF_API_INTERNAL_TIMING = (LIBAVFORMAT_VERSION_MAJOR &lt; 63)</summary>
     public const bool FF_API_INTERNAL_TIMING = LIBAVFORMAT_VERSION_MAJOR < 63;
+    /// <summary>FF_API_INTRA_DC_PRECISION = (LIBAVCODEC_VERSION_MAJOR &lt; 63)</summary>
+    public const bool FF_API_INTRA_DC_PRECISION = LIBAVCODEC_VERSION_MAJOR < 63;
+    /// <summary>FF_API_LIBNPP_SUPPORT = (LIBAVFILTER_VERSION_MAJOR &lt; 12)</summary>
+    public const bool FF_API_LIBNPP_SUPPORT = LIBAVFILTER_VERSION_MAJOR < 12;
     /// <summary>FF_API_MOD_UINTP2 = (LIBAVUTIL_VERSION_MAJOR &lt; 61)</summary>
     public const bool FF_API_MOD_UINTP2 = LIBAVUTIL_VERSION_MAJOR < 61;
     /// <summary>FF_API_NO_DEFAULT_TLS_VERIFY = (LIBAVFORMAT_VERSION_MAJOR &lt; 63)</summary>
@@ -630,6 +648,10 @@ public unsafe static partial class Raw
     public const bool FF_API_OPT_INT_LIST = LIBAVUTIL_VERSION_MAJOR < 61;
     /// <summary>FF_API_OPT_PTR = (LIBAVUTIL_VERSION_MAJOR &lt; 61)</summary>
     public const bool FF_API_OPT_PTR = LIBAVUTIL_VERSION_MAJOR < 61;
+    /// <summary>FF_API_PARSER_CODECID = (LIBAVCODEC_VERSION_MAJOR &lt; 63)</summary>
+    public const bool FF_API_PARSER_CODECID = LIBAVCODEC_VERSION_MAJOR < 63;
+    /// <summary>FF_API_PARSER_PRIVATE = (LIBAVCODEC_VERSION_MAJOR &lt; 63)</summary>
+    public const bool FF_API_PARSER_PRIVATE = LIBAVCODEC_VERSION_MAJOR < 63;
     public const int FF_API_R_FRAME_RATE = 1;
     /// <summary>FF_API_RISCV_FD_ZBA = (LIBAVUTIL_VERSION_MAJOR &lt; 61)</summary>
     public const bool FF_API_RISCV_FD_ZBA = LIBAVUTIL_VERSION_MAJOR < 61;
@@ -637,6 +659,8 @@ public unsafe static partial class Raw
     public const bool FF_API_V408_CODECID = LIBAVCODEC_VERSION_MAJOR < 63;
     /// <summary>FF_API_VULKAN_FIXED_QUEUES = (LIBAVUTIL_VERSION_MAJOR &lt; 61)</summary>
     public const bool FF_API_VULKAN_FIXED_QUEUES = LIBAVUTIL_VERSION_MAJOR < 61;
+    /// <summary>FF_API_VULKAN_SYNC_QUEUES = (LIBAVUTIL_VERSION_MAJOR &lt; 62)</summary>
+    public const bool FF_API_VULKAN_SYNC_QUEUES = LIBAVUTIL_VERSION_MAJOR < 62;
     // public static FF_ARRAY_ELEMS = (a) (sizeof(a) / sizeof((a)[0]));
     // public static FF_CEIL_RSHIFT = AV_CEIL_RSHIFT;
     /// <summary>FF_CODEC_OMX = (LIBAVCODEC_VERSION_MAJOR &lt; 63)</summary>
@@ -708,8 +732,8 @@ public unsafe static partial class Raw
     // public static FILTER_SAMPLEFMTS_ARRAY = (array) .formats.samples_list = array, .formats_state        = FF_FILTER_FORMATS_SAMPLEFMTS_LIST;
     // public static FILTER_SINGLE_PIXFMT = (pix_fmt_)  .formats.pix_fmt = pix_fmt_,    .formats_state   = FF_FILTER_FORMATS_SINGLE_PIXFMT;
     // public static FILTER_SINGLE_SAMPLEFMT = (sample_fmt_) .formats.sample_fmt = sample_fmt_,   .formats_state      = FF_FILTER_FORMATS_SINGLE_SAMPLEFMT;
-    // public static GET_UTF16 = (val, GET_16BIT, ERROR)val = (GET_16BIT);{unsigned int hi = val - 0xD800;if (hi < 0x800) {val = (GET_16BIT) - 0xDC00;if (val > 0x3FFU || hi > 0x3FFU){ERROR}val += (hi<<10) + 0x10000;}};
-    // public static GET_UTF8 = (val, GET_BYTE, ERROR)val= (GET_BYTE);{uint32_t top = (val & 128) >> 1;if ((val & 0xc0) == 0x80 || val >= 0xFE){ERROR}while (val & top) {unsigned int tmp = (GET_BYTE) - 128;if(tmp>>6){ERROR}val= (val<<6) + tmp;top <<= 5;}val &= (top << 1) - 1;};
+    // public static GET_UTF16 = (val, GET_16BIT, ERROR)val = (uint16_t)(GET_16BIT);{unsigned int hi = val - 0xD800;if (hi < 0x800) {val = (uint16_t)(GET_16BIT) - 0xDC00;if (val > 0x3FFU || hi > 0x3FFU){ERROR}val += (hi<<10) + 0x10000;}};
+    // public static GET_UTF8 = (val, GET_BYTE, ERROR)val= (uint8_t)(GET_BYTE);{uint32_t top = (val & 128) >> 1;if ((val & 0xc0) == 0x80 || val >= 0xFE){ERROR}while (val & top) {unsigned int tmp = (uint8_t)(GET_BYTE) - 128;if(tmp>>6){ERROR}val= (val<<6) + tmp;top <<= 5;}val &= (top << 1) - 1;};
     // public static hex_dump_debug = (class, buf, size) do { if (0) av_hex_dump_log(class, AV_LOG_DEBUG, buf, size); } while(0);
     public const int HLS_MAX_AUDIO_SETUP_DATA_LEN = 10;
     public const int HLS_MAX_ID3_TAGS_DATA_LEN = 138;
@@ -728,16 +752,16 @@ public unsafe static partial class Raw
     public static readonly string LIBAVCODEC_VERSION = AV_VERSION(LIBAVCODEC_VERSION_MAJOR, LIBAVCODEC_VERSION_MINOR, LIBAVCODEC_VERSION_MICRO);
     public static readonly uint LIBAVCODEC_VERSION_INT = AV_VERSION_INT(LIBAVCODEC_VERSION_MAJOR, LIBAVCODEC_VERSION_MINOR, LIBAVCODEC_VERSION_MICRO);
     public const uint LIBAVCODEC_VERSION_MAJOR = 62;
-    public const uint LIBAVCODEC_VERSION_MICRO = 100;
-    public const uint LIBAVCODEC_VERSION_MINOR = 11;
+    public const uint LIBAVCODEC_VERSION_MICRO = 101;
+    public const uint LIBAVCODEC_VERSION_MINOR = 28;
     public static readonly uint LIBAVDEVICE_BUILD = LIBAVDEVICE_VERSION_INT;
     /// <summary>LIBAVDEVICE_IDENT = &quot;Lavd&quot; AV_STRINGIFY(LIBAVDEVICE_VERSION)</summary>
     public const string LIBAVDEVICE_IDENT = "Lavd" + "LIBAVDEVICE_VERSION";
     public static readonly string LIBAVDEVICE_VERSION = AV_VERSION(LIBAVDEVICE_VERSION_MAJOR, LIBAVDEVICE_VERSION_MINOR, LIBAVDEVICE_VERSION_MICRO);
     public static readonly uint LIBAVDEVICE_VERSION_INT = AV_VERSION_INT(LIBAVDEVICE_VERSION_MAJOR, LIBAVDEVICE_VERSION_MINOR, LIBAVDEVICE_VERSION_MICRO);
     public const uint LIBAVDEVICE_VERSION_MAJOR = 62;
-    public const uint LIBAVDEVICE_VERSION_MICRO = 100;
-    public const uint LIBAVDEVICE_VERSION_MINOR = 1;
+    public const uint LIBAVDEVICE_VERSION_MICRO = 101;
+    public const uint LIBAVDEVICE_VERSION_MINOR = 3;
     public static readonly uint LIBAVFILTER_BUILD = LIBAVFILTER_VERSION_INT;
     /// <summary>LIBAVFILTER_IDENT = &quot;Lavfi&quot; AV_STRINGIFY(LIBAVFILTER_VERSION)</summary>
     public const string LIBAVFILTER_IDENT = "Lavfi" + "LIBAVFILTER_VERSION";
@@ -745,8 +769,8 @@ public unsafe static partial class Raw
     public static readonly string LIBAVFILTER_VERSION = AV_VERSION(LIBAVFILTER_VERSION_MAJOR, LIBAVFILTER_VERSION_MINOR, LIBAVFILTER_VERSION_MICRO);
     public static readonly uint LIBAVFILTER_VERSION_INT = AV_VERSION_INT(LIBAVFILTER_VERSION_MAJOR, LIBAVFILTER_VERSION_MINOR, LIBAVFILTER_VERSION_MICRO);
     public const uint LIBAVFILTER_VERSION_MAJOR = 11;
-    public const uint LIBAVFILTER_VERSION_MICRO = 100;
-    public const uint LIBAVFILTER_VERSION_MINOR = 4;
+    public const uint LIBAVFILTER_VERSION_MICRO = 101;
+    public const uint LIBAVFILTER_VERSION_MINOR = 14;
     public static readonly uint LIBAVFORMAT_BUILD = LIBAVFORMAT_VERSION_INT;
     /// <summary>LIBAVFORMAT_IDENT = &quot;Lavf&quot; AV_STRINGIFY(LIBAVFORMAT_VERSION)</summary>
     public const string LIBAVFORMAT_IDENT = "Lavf" + "LIBAVFORMAT_VERSION";
@@ -754,8 +778,8 @@ public unsafe static partial class Raw
     public static readonly string LIBAVFORMAT_VERSION = AV_VERSION(LIBAVFORMAT_VERSION_MAJOR, LIBAVFORMAT_VERSION_MINOR, LIBAVFORMAT_VERSION_MICRO);
     public static readonly uint LIBAVFORMAT_VERSION_INT = AV_VERSION_INT(LIBAVFORMAT_VERSION_MAJOR, LIBAVFORMAT_VERSION_MINOR, LIBAVFORMAT_VERSION_MICRO);
     public const uint LIBAVFORMAT_VERSION_MAJOR = 62;
-    public const uint LIBAVFORMAT_VERSION_MICRO = 100;
-    public const uint LIBAVFORMAT_VERSION_MINOR = 3;
+    public const uint LIBAVFORMAT_VERSION_MICRO = 102;
+    public const uint LIBAVFORMAT_VERSION_MINOR = 12;
     public static readonly uint LIBAVUTIL_BUILD = LIBAVUTIL_VERSION_INT;
     /// <summary>LIBAVUTIL_IDENT = &quot;Lavu&quot; AV_STRINGIFY(LIBAVUTIL_VERSION)</summary>
     public const string LIBAVUTIL_IDENT = "Lavu" + "LIBAVUTIL_VERSION";
@@ -763,24 +787,24 @@ public unsafe static partial class Raw
     public static readonly string LIBAVUTIL_VERSION = AV_VERSION(LIBAVUTIL_VERSION_MAJOR, LIBAVUTIL_VERSION_MINOR, LIBAVUTIL_VERSION_MICRO);
     public static readonly uint LIBAVUTIL_VERSION_INT = AV_VERSION_INT(LIBAVUTIL_VERSION_MAJOR, LIBAVUTIL_VERSION_MINOR, LIBAVUTIL_VERSION_MICRO);
     public const uint LIBAVUTIL_VERSION_MAJOR = 60;
-    public const uint LIBAVUTIL_VERSION_MICRO = 100;
-    public const uint LIBAVUTIL_VERSION_MINOR = 8;
+    public const uint LIBAVUTIL_VERSION_MICRO = 101;
+    public const uint LIBAVUTIL_VERSION_MINOR = 26;
     public static readonly uint LIBSWRESAMPLE_BUILD = LIBSWRESAMPLE_VERSION_INT;
     /// <summary>LIBSWRESAMPLE_IDENT = &quot;SwR&quot; AV_STRINGIFY(LIBSWRESAMPLE_VERSION)</summary>
     public const string LIBSWRESAMPLE_IDENT = "SwR" + "LIBSWRESAMPLE_VERSION";
     public static readonly string LIBSWRESAMPLE_VERSION = AV_VERSION(LIBSWRESAMPLE_VERSION_MAJOR, LIBSWRESAMPLE_VERSION_MINOR, LIBSWRESAMPLE_VERSION_MICRO);
     public static readonly uint LIBSWRESAMPLE_VERSION_INT = AV_VERSION_INT(LIBSWRESAMPLE_VERSION_MAJOR, LIBSWRESAMPLE_VERSION_MINOR, LIBSWRESAMPLE_VERSION_MICRO);
     public const uint LIBSWRESAMPLE_VERSION_MAJOR = 6;
-    public const uint LIBSWRESAMPLE_VERSION_MICRO = 100;
-    public const uint LIBSWRESAMPLE_VERSION_MINOR = 1;
+    public const uint LIBSWRESAMPLE_VERSION_MICRO = 101;
+    public const uint LIBSWRESAMPLE_VERSION_MINOR = 3;
     public static readonly uint LIBSWSCALE_BUILD = LIBSWSCALE_VERSION_INT;
     /// <summary>LIBSWSCALE_IDENT = &quot;SwS&quot; AV_STRINGIFY(LIBSWSCALE_VERSION)</summary>
     public const string LIBSWSCALE_IDENT = "SwS" + "LIBSWSCALE_VERSION";
     public static readonly string LIBSWSCALE_VERSION = AV_VERSION(LIBSWSCALE_VERSION_MAJOR, LIBSWSCALE_VERSION_MINOR, LIBSWSCALE_VERSION_MICRO);
     public static readonly uint LIBSWSCALE_VERSION_INT = AV_VERSION_INT(LIBSWSCALE_VERSION_MAJOR, LIBSWSCALE_VERSION_MINOR, LIBSWSCALE_VERSION_MICRO);
     public const uint LIBSWSCALE_VERSION_MAJOR = 9;
-    public const uint LIBSWSCALE_VERSION_MICRO = 100;
-    public const uint LIBSWSCALE_VERSION_MINOR = 1;
+    public const uint LIBSWSCALE_VERSION_MICRO = 101;
+    public const uint LIBSWSCALE_VERSION_MINOR = 5;
     public const double M_1_PI = 0.31830988618379067154;
     public const float M_1_PIf = 0.31830988618379067154f;
     public const double M_2_PI = 0.63661977236758134308;

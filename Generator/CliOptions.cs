@@ -42,7 +42,7 @@ public class CliOptions
     public bool UsingObsoleteFunctions { get; set; }
 
     //[Option("ffmpeg-binary-url", Required = false, Default = "https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win64-gpl-shared.zip")]
-    [Option("ffmpeg-binary-url", Required = false, Default = "https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-n8.0-latest-win64-gpl-shared-8.0.zip")]
+    [Option("ffmpeg-binary-url", Required = false, Default = "https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-n8.1-latest-win64-gpl-shared-8.1.zip")]
     //[Option("ffmpeg-binary-url", Required = false, Default = "https://www.gyan.dev/ffmpeg/builds/packages/ffmpeg-7.1-full_build-shared.7z")]
     //[Option("ffmpeg-binary-url", Required = false, Default = "https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-n7.1-latest-win64-gpl-shared-7.1.zip")]
     public string FFmpegBinaryUrl { get; set; }

@@ -11,6 +11,19 @@ public enum AVActiveFormatDescription : int
     Sp_4_3 = 15,
 }
 
+/// <summary>Correlation between the alpha channel and color values.</summary>
+public enum AVAlphaMode : int
+{
+    /// <summary>Unknown alpha handling, or no alpha channel</summary>
+    Unspecified = 0,
+    /// <summary>Alpha channel is multiplied into color values</summary>
+    Premultiplied = 1,
+    /// <summary>Alpha channel is independent of color values</summary>
+    Straight = 2,
+    /// <summary>Not part of ABI</summary>
+    Nb = 3,
+}
+
 /// <summary>Message types used by avdevice_app_to_dev_control_message().</summary>
 public enum AVAppToDevMessageType : int
 {
@@ -232,6 +245,8 @@ public enum AVCodecConfig : int
     ColorRange = 5,
     /// <summary>AVColorSpace, terminated by AVCOL_SPC_UNSPECIFIED</summary>
     ColorSpace = 6,
+    /// <summary>AVAlphaMode, terminated by AVALPHA_MODE_UNSPECIFIED</summary>
+    AlphaMode = 7,
 }
 
 [Flags]
@@ -527,6 +542,7 @@ public enum AVCodecID : int
     JpegxlAnim = 272,
     Apv = 273,
     ProresRaw = 274,
+    Jpegxs = 275,
     /// <summary>A dummy id pointing at the start of audio codecs</summary>
     FirstAudio = 65536,
     PcmS16le = 65536,
@@ -620,6 +636,14 @@ public enum AVCodecID : int
     AdpcmXmd = 69683,
     AdpcmImaXbox = 69684,
     AdpcmSanyo = 69685,
+    AdpcmImaHvqm4 = 69686,
+    AdpcmImaPda = 69687,
+    AdpcmN64 = 69688,
+    AdpcmImaHvqm2 = 69689,
+    AdpcmImaMagix = 69690,
+    AdpcmPsxc = 69691,
+    AdpcmCircus = 69692,
+    AdpcmImaEscape = 69693,
     AmrNb = 73728,
     AmrWb = 73729,
     Ra_144 = 77824,
@@ -743,6 +767,7 @@ public enum AVCodecID : int
     Qoa = 86121,
     Lc3 = 86122,
     G728 = 86123,
+    Ahx = 86124,
     /// <summary>A dummy ID pointing at the start of subtitle codecs.</summary>
     FirstSubtitle = 94208,
     DvdSubtitle = 94208,
@@ -838,6 +863,10 @@ public enum AVColorPrimaries : int
     JedecP22 = 22,
     /// <summary>Not part of ABI</summary>
     Nb = 23,
+    ExtBase = 256,
+    VGamut = 256,
+    /// <summary>Not part of ABI</summary>
+    ExtNb = 257,
 }
 
 /// <summary>Visual content value range.</summary>
@@ -936,6 +965,18 @@ public enum AVColorTransferCharacteristic : int
     AribStdB67 = 18,
     /// <summary>Not part of ABI</summary>
     Nb = 19,
+    ExtBase = 256,
+    VLog = 256,
+    /// <summary>Not part of ABI</summary>
+    ExtNb = 257,
+}
+
+/// <summary>Define the behaviours of frame allocation.</summary>
+public enum AVD3D12VAFrameFlags : int
+{
+    None = 0,
+    /// <summary>Indicates that frame data should be allocated using a texture array resource.</summary>
+    TextureArray = 2,
 }
 
 /// <summary>Message types used by avdevice_dev_to_app_control_message().</summary>
@@ -1017,6 +1058,13 @@ public enum AVfilterAutoConvert : int
     None = -1,
 }
 
+/// <summary>Command IDs that can be sent to the demuxer</summary>
+public enum AVFormatCommandID : int
+{
+    /// <summary>Send a RTSP `SET_PARAMETER` request to the server</summary>
+    Parameter = 0,
+}
+
 /// <summary>Flags for frame cropping.</summary>
 [Flags]
 public enum AVFrameCrop : int
@@ -1091,6 +1139,8 @@ public enum AVFrameSideDataType : int
     ViewId = 29,
     /// <summary>This side data contains information about the reference display width(s) and reference viewing distance(s) as well as information about the corresponding reference stereo pair(s), i.e., the pair(s) of views to be displayed for the viewer&apos;s left and right eyes on the reference display at the reference viewing distance. The payload is the AV3DReferenceDisplaysInfo struct defined in libavutil/tdrdi.h.</summary>
     _3DReferenceDisplays = 30,
+    /// <summary>Extensible image file format metadata. The payload is a buffer containing EXIF metadata, starting with either 49 49 2a 00, or 4d 4d 00 2a.</summary>
+    Exif = 31,
 }
 
 /// <summary>Option for overlapping elliptical pixel selectors in an image.</summary>
@@ -1354,8 +1404,10 @@ public enum AVPacketSideDataType : int
     _3DReferenceDisplays = 38,
     /// <summary>Contains the last received RTCP SR (Sender Report) information in the form of the AVRTCPSenderReport struct.</summary>
     RtcpSr = 39,
+    /// <summary>Extensible image file format metadata. The payload is a buffer containing EXIF metadata, starting with either 49 49 2a 00, or 4d 4d 00 2a.</summary>
+    Exif = 40,
     /// <summary>The number of side data types. This is not part of the public API/ABI in the sense that it may change when new side data types are added. This must stay the last enum value. If its value becomes huge, some code using it needs to be updated as it assumes it to be smaller than other limits.</summary>
-    Nb = 40,
+    Nb = 41,
 }
 
 /// <summary>@{</summary>
@@ -2403,6 +2455,8 @@ public enum CodecPropFlags : int
     Reorder = 1 << 3,
     /// <summary>AV_CODEC_PROP_FIELDS</summary>
     Fields = 1 << 4,
+    /// <summary>AV_CODEC_PROP_ENHANCEMENT</summary>
+    Enhancement = 1 << 5,
     /// <summary>AV_CODEC_PROP_BITMAP_SUB</summary>
     BitmapSub = 1 << 16,
     /// <summary>AV_CODEC_PROP_TEXT_SUB</summary>
@@ -2487,6 +2541,8 @@ public enum CpuFlags : uint
     Sse42 = 0x0200,
     /// <summary>AV_CPU_FLAG_AESNI</summary>
     Aesni = 0x80000,
+    /// <summary>AV_CPU_FLAG_CLMUL</summary>
+    Clmul = 0x400000,
     /// <summary>AV_CPU_FLAG_AVX</summary>
     Avx = 0x4000,
     /// <summary>AV_CPU_FLAG_AVXSLOW</summary>
@@ -2541,6 +2597,14 @@ public enum CpuFlags : uint
     Sve = 1 << 10,
     /// <summary>AV_CPU_FLAG_SVE2</summary>
     Sve2 = 1 << 11,
+    /// <summary>AV_CPU_FLAG_SME</summary>
+    Sme = 1 << 12,
+    /// <summary>AV_CPU_FLAG_ARM_CRC</summary>
+    ArmCrc = 1 << 13,
+    /// <summary>AV_CPU_FLAG_SME2</summary>
+    Sme2 = 1 << 14,
+    /// <summary>AV_CPU_FLAG_SME_I16I64</summary>
+    SmeI16i64 = 1 << 15,
     /// <summary>AV_CPU_FLAG_SETEND</summary>
     Setend = 1 << 16,
     /// <summary>AV_CPU_FLAG_MMI</summary>
@@ -2577,6 +2641,27 @@ public enum CpuFlags : uint
     Rvb = 1 << 11,
     /// <summary>AV_CPU_FLAG_SIMD128</summary>
     Simd128 = 1 << 0,
+}
+
+public enum D3D12_HEAP_FLAGS : int
+{
+    None = 0,
+    Shared = 1,
+    DenyBuffers = 4,
+    AllowDisplay = 8,
+    SharedCrossAdapter = 32,
+    DenyRtDsTextures = 64,
+    DenyNonRtDsTextures = 128,
+    HardwareProtected = 256,
+    AllowWriteWatch = 512,
+    AllowShaderAtomics = 1024,
+    CreateNotResident = 2048,
+    CreateNotZeroed = 4096,
+    ToolsUseManualWriteTracking = 8192,
+    AllowAllBuffersAndTextures = 0,
+    AllowOnlyBuffers = 192,
+    AllowOnlyNonRtDsTextures = 68,
+    AllowOnlyRtDsTextures = 132,
 }
 
 public enum D3D12_RESOURCE_FLAGS : int
@@ -3527,6 +3612,7 @@ public enum SwsAlphaBlend : int
     Uniform = 1,
     Checkerboard = 2,
     Nb = 3,
+    MaxEnum = 2147483647,
 }
 
 /// <summary>Macro enum, prefix: SWS_CS_</summary>
@@ -3562,6 +3648,7 @@ public enum SwsDither : int
     ADither = 4,
     XDither = 5,
     Nb = 6,
+    MaxEnum = 2147483647,
 }
 
 [Flags]
@@ -3602,6 +3689,8 @@ public enum SwsFlags : int
     AccurateRnd = 262144,
     /// <summary>Force bit-exact output. This will prevent the use of platform-specific optimizations that may lead to slight difference in rounding, in favor of always maintaining exact bit output compatibility with the reference C code.</summary>
     Bitexact = 524288,
+    /// <summary>Allow using experimental new code paths. This may be faster, slower, or produce different output, with semantics subject to change at any point in time. For testing and debugging purposes only.</summary>
+    Unstable = 1048576,
     /// <summary>This flag has no effect</summary>
     DirectBgr = 32768,
     /// <summary>Set `SwsContext.dither` instead</summary>
