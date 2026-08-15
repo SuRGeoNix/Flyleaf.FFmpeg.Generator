@@ -423,126 +423,124 @@ public enum AVCodecID : int
     BmvVideo = 153,
     Vble = 154,
     Dxtory = 155,
-    V410 = 156,
-    Xwd = 157,
-    Cdxl = 158,
-    Xbm = 159,
-    Zerocodec = 160,
-    Mss1 = 161,
-    Msa1 = 162,
-    Tscc2 = 163,
-    Mts2 = 164,
-    Cllc = 165,
-    Mss2 = 166,
-    Vp9 = 167,
-    Aic = 168,
-    Escape130 = 169,
-    G2m = 170,
-    Webp = 171,
-    Hnm4Video = 172,
-    Hevc = 173,
-    Fic = 174,
-    AliasPix = 175,
-    BrenderPix = 176,
-    PafVideo = 177,
-    Exr = 178,
-    Vp7 = 179,
-    Sanm = 180,
-    Sgirle = 181,
-    Mvc1 = 182,
-    Mvc2 = 183,
-    Hqx = 184,
-    Tdsc = 185,
-    HqHqa = 186,
-    Hap = 187,
-    Dds = 188,
-    Dxv = 189,
-    Screenpresso = 190,
-    Rscc = 191,
-    Avs2 = 192,
-    Pgx = 193,
-    Avs3 = 194,
-    Msp2 = 195,
-    Vvc = 196,
-    Y41p = 197,
-    Avrp = 198,
-    _012V = 199,
-    Avui = 200,
-    TargaY216 = 201,
-    V308 = 202,
-    V408 = 203,
-    Yuv4 = 204,
-    Avrn = 205,
-    Cpia = 206,
-    Xface = 207,
-    Snow = 208,
-    Smvjpeg = 209,
-    Apng = 210,
-    Daala = 211,
-    Cfhd = 212,
-    Truemotion2rt = 213,
-    M101 = 214,
-    Magicyuv = 215,
-    Sheervideo = 216,
-    Ylc = 217,
-    Psd = 218,
-    Pixlet = 219,
-    Speedhq = 220,
-    Fmvc = 221,
-    Scpr = 222,
-    Clearvideo = 223,
-    Xpm = 224,
-    Av1 = 225,
-    Bitpacked = 226,
-    Mscc = 227,
-    Srgc = 228,
-    Svg = 229,
-    Gdv = 230,
-    Fits = 231,
-    Imm4 = 232,
-    Prosumer = 233,
-    Mwsc = 234,
-    Wcmv = 235,
-    Rasc = 236,
-    Hymt = 237,
-    Arbc = 238,
-    Agm = 239,
-    Lscr = 240,
-    Vp4 = 241,
-    Imm5 = 242,
-    Mvdv = 243,
-    Mvha = 244,
-    Cdtoons = 245,
-    Mv30 = 246,
-    Notchlc = 247,
-    Pfm = 248,
-    Mobiclip = 249,
-    Photocd = 250,
-    Ipu = 251,
-    Argo = 252,
-    Cri = 253,
-    SimbiosisImx = 254,
-    SgaVideo = 255,
-    Gem = 256,
-    Vbn = 257,
-    Jpegxl = 258,
-    Qoi = 259,
-    Phm = 260,
-    RadianceHdr = 261,
-    Wbmp = 262,
-    Media100 = 263,
-    Vqc = 264,
-    Pdv = 265,
-    Evc = 266,
-    Rtv1 = 267,
-    Vmix = 268,
-    Lead = 269,
-    Dnxuc = 270,
-    Rv60 = 271,
-    JpegxlAnim = 272,
-    Apv = 273,
-    ProresRaw = 274,
-    Jpegxs = 275,
+    Xwd = 156,
+    Cdxl = 157,
+    Xbm = 158,
+    Zerocodec = 159,
+    Mss1 = 160,
+    Msa1 = 161,
+    Tscc2 = 162,
+    Mts2 = 163,
+    Cllc = 164,
+    Mss2 = 165,
+    Vp9 = 166,
+    Aic = 167,
+    Escape130 = 168,
+    G2m = 169,
+    Webp = 170,
+    Hnm4Video = 171,
+    Hevc = 172,
+    Fic = 173,
+    AliasPix = 174,
+    BrenderPix = 175,
+    PafVideo = 176,
+    Exr = 177,
+    Vp7 = 178,
+    Sanm = 179,
+    Sgirle = 180,
+    Mvc1 = 181,
+    Mvc2 = 182,
+    Hqx = 183,
+    Tdsc = 184,
+    HqHqa = 185,
+    Hap = 186,
+    Dds = 187,
+    Dxv = 188,
+    Screenpresso = 189,
+    Rscc = 190,
+    Avs2 = 191,
+    Pgx = 192,
+    Avs3 = 193,
+    Msp2 = 194,
+    Vvc = 195,
+    Y41p = 196,
+    Avrp = 197,
+    _012V = 198,
+    Avui = 199,
+    TargaY216 = 200,
+    Yuv4 = 201,
+    Avrn = 202,
+    Cpia = 203,
+    Xface = 204,
+    Snow = 205,
+    Smvjpeg = 206,
+    Apng = 207,
+    Daala = 208,
+    Cfhd = 209,
+    Truemotion2rt = 210,
+    M101 = 211,
+    Magicyuv = 212,
+    Sheervideo = 213,
+    Ylc = 214,
+    Psd = 215,
+    Pixlet = 216,
+    Speedhq = 217,
+    Fmvc = 218,
+    Scpr = 219,
+    Clearvideo = 220,
+    Xpm = 221,
+    Av1 = 222,
+    Bitpacked = 223,
+    Mscc = 224,
+    Srgc = 225,
+    Svg = 226,
+    Gdv = 227,
+    Fits = 228,
+    Imm4 = 229,
+    Prosumer = 230,
+    Mwsc = 231,
+    Wcmv = 232,
+    Rasc = 233,
+    Hymt = 234,
+    Arbc = 235,
+    Agm = 236,
+    Lscr = 237,
+    Vp4 = 238,
+    Imm5 = 239,
+    Mvdv = 240,
+    Mvha = 241,
+    Cdtoons = 242,
+    Mv30 = 243,
+    Notchlc = 244,
+    Pfm = 245,
+    Mobiclip = 246,
+    Photocd = 247,
+    Ipu = 248,
+    Argo = 249,
+    Cri = 250,
+    SimbiosisImx = 251,
+    SgaVideo = 252,
+    Gem = 253,
+    Vbn = 254,
+    Jpegxl = 255,
+    Qoi = 256,
+    Phm = 257,
+    RadianceHdr = 258,
+    Wbmp = 259,
+    Media100 = 260,
+    Vqc = 261,
+    Pdv = 262,
+    Evc = 263,
+    Rtv1 = 264,
+    Vmix = 265,
+    Lead = 266,
+    Dnxuc = 267,
+    Rv60 = 268,
+    JpegxlAnim = 269,
+    Apv = 270,
+    ProresRaw = 271,
+    Jpegxs = 272,
+    WebpAnim = 273,
     /// <summary>A dummy id pointing at the start of audio codecs</summary>
     FirstAudio = 65536,
     PcmS16le = 65536,
@@ -768,6 +766,7 @@ public enum AVCodecID : int
     Lc3 = 86122,
     G728 = 86123,
     Ahx = 86124,
+    AppleApac = 86125,
     /// <summary>A dummy ID pointing at the start of subtitle codecs.</summary>
     FirstSubtitle = 94208,
     DvdSubtitle = 94208,
@@ -1139,8 +1138,18 @@ public enum AVFrameSideDataType : int
     ViewId = 29,
     /// <summary>This side data contains information about the reference display width(s) and reference viewing distance(s) as well as information about the corresponding reference stereo pair(s), i.e., the pair(s) of views to be displayed for the viewer&apos;s left and right eyes on the reference display at the reference viewing distance. The payload is the AV3DReferenceDisplaysInfo struct defined in libavutil/tdrdi.h.</summary>
     _3DReferenceDisplays = 30,
-    /// <summary>Extensible image file format metadata. The payload is a buffer containing EXIF metadata, starting with either 49 49 2a 00, or 4d 4d 00 2a.</summary>
+    /// <summary>Exchangeable image file format metadata. The payload is a buffer containing EXIF metadata, starting with either 49 49 2a 00, or 4d 4d 00 2a. These four bytes signify the endianness, and occur as the first part of the TIFF header.</summary>
     Exif = 31,
+    /// <summary>HDR dynamic metadata associated with a video frame. The payload is an AVDynamicHDRSmpte2094App5 type and contains information for color volume transform as specified in the SMPTE 2094-50 standard.</summary>
+    DynamicHdrSmpte_2094App5 = 32,
+    /// <summary>IAMF Mix Gain Parameter Data associated with the audio frame. This metadata is in the form of the AVIAMFParamDefinition struct and contains information defined in sections 3.6.1 and 3.8.1 of the Immersive Audio Model and Formats standard.</summary>
+    IamfMixGainParam = 33,
+    /// <summary>IAMF Demixing Info Parameter Data associated with the audio frame. This metadata is in the form of the AVIAMFParamDefinition struct and contains information defined in sections 3.6.1 and 3.8.2 of the Immersive Audio Model and Formats standard.</summary>
+    IamfDemixingInfoParam = 34,
+    /// <summary>IAMF Recon Gain Info Parameter Data associated with the audio frame. This metadata is in the form of the AVIAMFParamDefinition struct and contains information defined in sections 3.6.1 and 3.8.3 of the Immersive Audio Model and Formats standard.</summary>
+    IamfReconGainInfoParam = 35,
+    /// <summary>Color information from a RAW camera codecs, needed to correctly process the video data. The payload is an AVRawColorParams struct defined in libavutil/raw_color_params.h.</summary>
+    RawColorParams = 36,
 }
 
 /// <summary>Option for overlapping elliptical pixel selectors in an image.</summary>
@@ -1406,8 +1415,12 @@ public enum AVPacketSideDataType : int
     RtcpSr = 39,
     /// <summary>Extensible image file format metadata. The payload is a buffer containing EXIF metadata, starting with either 49 49 2a 00, or 4d 4d 00 2a.</summary>
     Exif = 40,
+    /// <summary>HDR dynamic metadata associated with a video frame. The payload is an AVDynamicHDRSmpte2094App5 type and contains information for color volume transform as specified in the SMPTE 2094-50 standard.</summary>
+    DynamicHdrSmpte_2094App5 = 41,
+    /// <summary>Dolby Vision enhancement-layer HEVC decoder configuration. Parsed from the hvcE box in ISOM-based containers or the corresponding BlockAdditionMapping in Matroska. The data is a raw HEVCDecoderConfigurationRecord as defined in ISO 14496-15.</summary>
+    HevcConf = 42,
     /// <summary>The number of side data types. This is not part of the public API/ABI in the sense that it may change when new side data types are added. This must stay the last enum value. If its value becomes huge, some code using it needs to be updated as it assumes it to be smaller than other limits.</summary>
-    Nb = 41,
+    Nb = 43,
 }
 
 /// <summary>@{</summary>
@@ -2068,6 +2081,8 @@ public enum AVStreamGroupParamsType : int
     IamfMixPresentation = 2,
     TileGrid = 3,
     Lcevc = 4,
+    Tref = 5,
+    DolbyVision = 6,
 }
 
 /// <summary>@}</summary>
@@ -2096,14 +2111,6 @@ public enum AVSubtitleType : int
     Text = 2,
     /// <summary>Formatted text, the ass field must be set by the decoder and is authoritative. pict and text fields may contain approximations.</summary>
     Ass = 3,
-}
-
-public enum AVTimebaseSource : int
-{
-    Auto = -1,
-    Decoder = 0,
-    Demuxer = 1,
-    RFramerate = 2,
 }
 
 public enum AVTimecodeFlag : int
@@ -2415,6 +2422,8 @@ public enum CodecFlags2 : uint
     Chunks = 1 << 15,
     /// <summary>AV_CODEC_FLAG2_IGNORE_CROP</summary>
     IgnoreCrop = 1 << 16,
+    /// <summary>AV_CODEC_FLAG2_FIXED_FRAME_SIZE</summary>
+    FixedFrameSize = 1 << 17,
     /// <summary>AV_CODEC_FLAG2_SHOW_ALL</summary>
     ShowAll = 1 << 22,
     /// <summary>AV_CODEC_FLAG2_EXPORT_MVS</summary>
@@ -2425,19 +2434,6 @@ public enum CodecFlags2 : uint
     RoFlushNoop = 1 << 30,
     /// <summary>AV_CODEC_FLAG2_ICC_PROFILES</summary>
     IccProfiles = 1U << 31,
-}
-
-/// <summary>Macro enum, prefix: FF_CODEC_PROPERTY_</summary>
-[Flags]
-public enum CodecPropertyFlags : uint
-{
-    None = 0,
-    /// <summary>FF_CODEC_PROPERTY_LOSSLESS</summary>
-    Lossless = 0x00000001,
-    /// <summary>FF_CODEC_PROPERTY_CLOSED_CAPTIONS</summary>
-    ClosedCaptions = 0x00000002,
-    /// <summary>FF_CODEC_PROPERTY_FILM_GRAIN</summary>
-    FilmGrain = 0x00000004,
 }
 
 /// <summary>Macro enum, prefix: AV_CODEC_PROP_</summary>
@@ -2607,6 +2603,10 @@ public enum CpuFlags : uint
     SmeI16i64 = 1 << 15,
     /// <summary>AV_CPU_FLAG_SETEND</summary>
     Setend = 1 << 16,
+    /// <summary>AV_CPU_FLAG_PMULL</summary>
+    Pmull = 1 << 17,
+    /// <summary>AV_CPU_FLAG_EOR3</summary>
+    Eor3 = 1 << 18,
     /// <summary>AV_CPU_FLAG_MMI</summary>
     Mmi = 1 << 0,
     /// <summary>AV_CPU_FLAG_MSA</summary>
@@ -2617,10 +2617,6 @@ public enum CpuFlags : uint
     Lasx = 1 << 1,
     /// <summary>AV_CPU_FLAG_RVI</summary>
     Rvi = 1 << 0,
-    /// <summary>AV_CPU_FLAG_RVF</summary>
-    Rvf = 1 << 1,
-    /// <summary>AV_CPU_FLAG_RVD</summary>
-    Rvd = 1 << 2,
     /// <summary>AV_CPU_FLAG_RVV_I32</summary>
     RvvI32 = 1 << 3,
     /// <summary>AV_CPU_FLAG_RVV_F32</summary>
@@ -2631,8 +2627,6 @@ public enum CpuFlags : uint
     RvvF64 = 1 << 6,
     /// <summary>AV_CPU_FLAG_RVB_BASIC</summary>
     RvbBasic = 1 << 7,
-    /// <summary>AV_CPU_FLAG_RVB_ADDR</summary>
-    RvbAddr = 1 << 8,
     /// <summary>AV_CPU_FLAG_RV_ZVBB</summary>
     RvZvbb = 1 << 9,
     /// <summary>AV_CPU_FLAG_RV_MISALIGNED</summary>
@@ -2995,6 +2989,20 @@ public enum FFFormatContext_avoid_negative_ts_status : int
     Known = 1,
 }
 
+/// <summary>Command handling options Different options influencing the behaviour of the FFInputFormat::handle_command callback.</summary>
+public enum FFInputFormatCommandOption : int
+{
+    Submit = 0,
+    GetReply = 1,
+}
+
+/// <summary>Input format stream state The stream states to be used for FFInputFormat::read_set_state</summary>
+public enum FFInputFormatStreamState : int
+{
+    Play = 0,
+    Pause = 1,
+}
+
 /// <summary>Macro enum, prefix: AVFILTER_CMD_FLAG_</summary>
 [Flags]
 public enum FilterCmdFlags : int
@@ -3122,6 +3130,8 @@ public enum FmtFlags : uint
     TsNonstrict = 0x20000,
     /// <summary>AVFMT_TS_NEGATIVE</summary>
     TsNegative = 0x40000,
+    /// <summary>AVFMT_FIXED_FRAMESIZE</summary>
+    FixedFramesize = 0x80000,
     /// <summary>AVFMT_SEEK_TO_PTS</summary>
     SeekToPts = 0x4000000,
 }
@@ -3159,6 +3169,19 @@ public enum FmtFlags2 : uint
     FastSeek = 0x80000,
     /// <summary>AVFMT_FLAG_AUTO_BSF</summary>
     AutoBsf = 0x200000,
+}
+
+/// <summary>Macro enum, prefix: AVFMT_PROGCOPY_</summary>
+[Flags]
+public enum FmtProgCopyFlags : int
+{
+    None = 0,
+    /// <summary>AVFMT_PROGCOPY_MATCH_BY_ID</summary>
+    MatchById = 1 << 0,
+    /// <summary>AVFMT_PROGCOPY_MATCH_BY_INDEX</summary>
+    MatchByIndex = 1 << 1,
+    /// <summary>AVFMT_PROGCOPY_OVERWRITE</summary>
+    Overwrite = 1 << 8,
 }
 
 /// <summary>Macro enum, prefix: AV_FRAME_FLAG_</summary>
@@ -3615,6 +3638,27 @@ public enum SwsAlphaBlend : int
     MaxEnum = 2147483647,
 }
 
+public enum SwsBackend : int
+{
+    /// <summary>Legacy bespoke format-specific code</summary>
+    Legacy = 1,
+    Stable = 1,
+    /// <summary>Template-based C reference implementation</summary>
+    C = 2,
+    /// <summary>Fast path using libc memcpy() / memset()</summary>
+    Memcpy = 4,
+    /// <summary>Chained x86 SIMD kernels</summary>
+    X86 = 8,
+    /// <summary>Chained AArch64 NEON kernels</summary>
+    Aarch64 = 16,
+    /// <summary>Vulkan SPIR-V backend</summary>
+    Spirv = 32,
+    Unstable = 62,
+    All = 63,
+    /// <summary>force size to 32 bits, not a valid backend</summary>
+    MaxEnum = 2147483647,
+}
+
 /// <summary>Macro enum, prefix: SWS_CS_</summary>
 [Flags]
 public enum SwsCSFlags : int
@@ -3655,6 +3699,24 @@ public enum SwsDither : int
 public enum SwsFlags : int
 {
     None = 0,
+    /// <summary>Return an error on underspecified conversions. Without this flag, unspecified fields are defaulted to sensible values.</summary>
+    Strict = 2048,
+    /// <summary>Emit verbose log of scaling parameters.</summary>
+    PrintInfo = 4096,
+    /// <summary>Perform full chroma upsampling when upscaling to RGB.</summary>
+    FullChrHInt = 8192,
+    /// <summary>Perform full chroma interpolation when downscaling RGB sources.</summary>
+    FullChrHInp = 16384,
+    /// <summary>Force bit-exact output. This will prevent the use of platform-specific optimizations that may lead to slight difference in rounding, in favor of always maintaining exact bit output compatibility with the reference C code.</summary>
+    AccurateRnd = 262144,
+    /// <summary>Force bit-exact output. This will prevent the use of platform-specific optimizations that may lead to slight difference in rounding, in favor of always maintaining exact bit output compatibility with the reference C code.</summary>
+    Bitexact = 524288,
+    /// <summary>Allow/prefer using experimental new code paths. This may be faster, slower, or produce different output, with semantics subject to change at any point in time. For testing and debugging purposes only.</summary>
+    Unstable = 1048576,
+    /// <summary>This flag has no effect</summary>
+    DirectBgr = 32768,
+    /// <summary>Set `SwsContext.dither` instead</summary>
+    ErrorDiffusion = 8388608,
     /// <summary>fast bilinear filtering</summary>
     FastBilinear = 1,
     /// <summary>bilinear filtering</summary>
@@ -3675,26 +3737,8 @@ public enum SwsFlags : int
     Sinc = 256,
     /// <summary>3-tap sinc/sinc</summary>
     Lanczos = 512,
-    /// <summary>cubic Keys spline</summary>
+    /// <summary>unwindowed natural cubic spline</summary>
     Spline = 1024,
-    /// <summary>Return an error on underspecified conversions. Without this flag, unspecified fields are defaulted to sensible values.</summary>
-    Strict = 2048,
-    /// <summary>Emit verbose log of scaling parameters.</summary>
-    PrintInfo = 4096,
-    /// <summary>Perform full chroma upsampling when upscaling to RGB.</summary>
-    FullChrHInt = 8192,
-    /// <summary>Perform full chroma interpolation when downscaling RGB sources.</summary>
-    FullChrHInp = 16384,
-    /// <summary>Force bit-exact output. This will prevent the use of platform-specific optimizations that may lead to slight difference in rounding, in favor of always maintaining exact bit output compatibility with the reference C code.</summary>
-    AccurateRnd = 262144,
-    /// <summary>Force bit-exact output. This will prevent the use of platform-specific optimizations that may lead to slight difference in rounding, in favor of always maintaining exact bit output compatibility with the reference C code.</summary>
-    Bitexact = 524288,
-    /// <summary>Allow using experimental new code paths. This may be faster, slower, or produce different output, with semantics subject to change at any point in time. For testing and debugging purposes only.</summary>
-    Unstable = 1048576,
-    /// <summary>This flag has no effect</summary>
-    DirectBgr = 32768,
-    /// <summary>Set `SwsContext.dither` instead</summary>
-    ErrorDiffusion = 8388608,
 }
 
 public enum SwsIntent : int
@@ -3709,6 +3753,31 @@ public enum SwsIntent : int
     AbsoluteColorimetric = 3,
     /// <summary>not part of the ABI</summary>
     Nb = 4,
+}
+
+public enum SwsScaler : int
+{
+    Auto = 0,
+    /// <summary>bilinear filtering</summary>
+    Bilinear = 1,
+    /// <summary>2-tap cubic BC-spline</summary>
+    Bicubic = 2,
+    /// <summary>nearest neighbor (point sampling)</summary>
+    Point = 3,
+    /// <summary>area averaging</summary>
+    Area = 4,
+    /// <summary>2-tap gaussian approximation</summary>
+    Gaussian = 5,
+    /// <summary>unwindowed sinc</summary>
+    Sinc = 6,
+    /// <summary>3-tap sinc/sinc</summary>
+    Lanczos = 7,
+    /// <summary>unwindowned natural cubic spline</summary>
+    Spline = 8,
+    /// <summary>not part of the ABI</summary>
+    Nb = 9,
+    /// <summary>force size to 32 bits, not a valid filter type</summary>
+    MaxEnum = 2147483647,
 }
 
 /// <summary>Macro enum, prefix: FF_THREAD_</summary>

@@ -172,7 +172,7 @@ public unsafe static partial class Raw
     [DllImport(AVCODEC, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern int av_get_audio_frame_duration(AVCodecContext* avctx, int frame_bytes);
     
-    /// <summary>This function is the same as av_get_audio_frame_duration(), except it works with AVCodecParameters instead of an AVCodecContext.</summary>
+    /// <summary>This function is the same as ::av_get_audio_frame_duration(), except it works with ::AVCodecParameters instead of an ::AVCodecContext.</summary>
     [DllImport(AVCODEC, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern int av_get_audio_frame_duration2(AVCodecParameters* par, int frame_bytes);
     
@@ -418,7 +418,7 @@ public unsafe static partial class Raw
     public static extern void av_parser_close(AVCodecParserContext* s);
     
     [DllImport(AVCODEC, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern AVCodecParserContext* av_parser_init(int codec_id);
+    public static extern AVCodecParserContext* av_parser_init(AVCodecID codec_id);
     
     /// <summary>Iterate over all registered codec parsers.</summary>
     /// <param name="opaque">a pointer where libavcodec will store the iteration state. Must point to NULL to start the iteration.</param>
@@ -662,7 +662,7 @@ public unsafe static partial class Raw
     [DllImport(AVCODEC, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern int avcodec_open2(AVCodecContext* avctx, AVCodec* codec, ref AVDictionary* options);
     
-    /// <summary>Allocate a new AVCodecParameters and set its fields to default values (unknown/invalid/0). The returned struct must be freed with avcodec_parameters_free().</summary>
+    /// <summary>Allocate a new AVCodecParameters and set its fields to default values (unknown/invalid/0). The returned struct must be freed with ::avcodec_parameters_free().</summary>
     [DllImport(AVCODEC, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern AVCodecParameters* avcodec_parameters_alloc();
     
@@ -670,11 +670,11 @@ public unsafe static partial class Raw
     [DllImport(AVCODEC, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern int avcodec_parameters_copy(AVCodecParameters* dst, AVCodecParameters* src);
     
-    /// <summary>Free an AVCodecParameters instance and everything associated with it and write NULL to the supplied pointer.</summary>
+    /// <summary>Free an AVCodecParameters instance and everything associated with it and write `NULL` to the supplied pointer.</summary>
     [DllImport(AVCODEC, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern void avcodec_parameters_free(AVCodecParameters** par);
     
-    /// <summary>Free an AVCodecParameters instance and everything associated with it and write NULL to the supplied pointer.</summary>
+    /// <summary>Free an AVCodecParameters instance and everything associated with it and write `NULL` to the supplied pointer.</summary>
     [DllImport(AVCODEC, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern void avcodec_parameters_free(ref AVCodecParameters* par);
     
@@ -733,22 +733,6 @@ public unsafe static partial class Raw
     /// <summary>Return the LIBAVCODEC_VERSION_INT constant.</summary>
     [DllImport(AVCODEC, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern uint avcodec_version();
-    
-    /// <summary>Wipe the list and unref all the packets in it.</summary>
-    [DllImport(AVCODEC, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern void avpriv_packet_list_free(PacketList* list);
-    
-    /// <summary>Remove the oldest AVPacket in the list and return it.</summary>
-    /// <param name="pkt">Pointer to an AVPacket struct</param>
-    [DllImport(AVCODEC, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern int avpriv_packet_list_get(PacketList* list, AVPacket* pkt);
-    
-    /// <summary>Append an AVPacket to the list.</summary>
-    /// <param name="list">A PacketList</param>
-    /// <param name="pkt">The packet being appended. The data described in it will be made reference counted if it isn&apos;t already.</param>
-    /// <param name="copy">A callback to copy the contents of the packet to the list. May be null, in which case the packet&apos;s reference will be moved to the list.</param>
-    [DllImport(AVCODEC, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern int avpriv_packet_list_put(PacketList* list, AVPacket* pkt, avpriv_packet_list_put_copy_func copy, int flags);
     
     /// <summary>Free all allocated data in the given subtitle struct.</summary>
     /// <param name="sub">AVSubtitle to free.</param>
@@ -1555,6 +1539,21 @@ public unsafe static partial class Raw
     [DllImport(AVFORMAT, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern void av_program_add_stream_index(AVFormatContext* ac, int progid, uint idx);
     
+    /// <summary>Add the supplied index of a stream to the AVProgram with matching id.</summary>
+    /// <param name="ac">the format context which contains the target AVProgram</param>
+    /// <param name="progid">the ID of the AVProgram whose stream index is to be updated</param>
+    /// <param name="idx">the index of the stream to be added</param>
+    [DllImport(AVFORMAT, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern int av_program_add_stream_index2(AVFormatContext* ac, int progid, uint idx);
+    
+    /// <summary>Copy an AVProgram from one AVFormatContext to another.</summary>
+    /// <param name="dst">pointer to the target muxer context</param>
+    /// <param name="src">pointer to the source muxer context</param>
+    /// <param name="progid">ID of the program to be copied</param>
+    /// <param name="flags">combination of flags which determine how streams are matched and whether pre-existing AVProgram in target is overwritten. If no match condition is set, streams will be matched by ids if all source stream ids are non-zero and unique, else by index.</param>
+    [DllImport(AVFORMAT, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern int av_program_copy(AVFormatContext* dst, AVFormatContext* src, int progid, FmtProgCopyFlags flags);
+    
     /// <summary>Return the next frame of a stream. This function returns what is stored in the file, and does not validate that what is there are valid frames for the decoder. It will split what is stored in the file into frames and return one for each call. It will not omit invalid data between valid frames so as to give the decoder the maximum information possible for decoding.</summary>
     [DllImport(AVFORMAT, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern int av_read_frame(AVFormatContext* s, AVPacket* pkt);
@@ -1594,7 +1593,6 @@ public unsafe static partial class Raw
     /// <summary>Get the AVClass for AVStream. It can be used in combination with AV_OPT_SEARCH_FAKE_OBJ for examining options.</summary>
     [DllImport(AVFORMAT, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern AVClass* av_stream_get_class();
-    
     
     [DllImport(AVFORMAT, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern AVCodecParserContext* av_stream_get_parser(AVStream* s);
@@ -1841,7 +1839,6 @@ public unsafe static partial class Raw
     [DllImport(AVFORMAT, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ConstCharPtrMarshaler))]
     public static extern string avformat_stream_group_name(AVStreamGroupParamsType type);
-    
     
     /// <summary>Return the LIBAVFORMAT_VERSION_INT constant.</summary>
     [DllImport(AVFORMAT, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
@@ -2870,6 +2867,36 @@ public unsafe static partial class Raw
     [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern int av_dynamic_hdr_plus_to_t35(AVDynamicHDRPlus* s, ref byte* data, ulong* size);
     
+    /// <summary>Allocate an AVDynamicHDRSmpte2094App5 structure and set its fields to default values. The resulting struct can be freed using av_freep().</summary>
+    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern AVDynamicHDRSmpte2094App5* av_dynamic_hdr_smpte2094_app5_alloc(ulong* size);
+    
+    /// <summary>Allocate a complete AVDynamicHDRSmpte2094App5 and add it to the frame.</summary>
+    /// <param name="frame">The frame which side data is added to.</param>
+    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern AVDynamicHDRSmpte2094App5* av_dynamic_hdr_smpte2094_app5_create_side_data(AVFrame* frame);
+    
+    /// <summary>Parse the user data formatted as ITU-T T.35 message to AVDynamicHDRSmpte2094App5.</summary>
+    /// <param name="s">A pointer containing the decoded AVDynamicHDRSmpte2094App5 structure.</param>
+    /// <param name="data">The byte array containing the raw ITU-T T.35 data.</param>
+    /// <param name="size">Size of the data array in bytes.</param>
+    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern int av_dynamic_hdr_smpte2094_app5_from_t35(AVDynamicHDRSmpte2094App5* s, byte* data, nuint size);
+    
+    /// <summary>Serialize dynamic SMPTE-2094-50 metadata to a ITU-T T.35 message. Excluding the country_code, provider_code and provider_oriented_code.</summary>
+    /// <param name="s">A pointer containing the AVDynamicHDRSmpte2094App5 data.</param>
+    /// <param name="data">A pointer to pointer to a byte buffer to be filled with the serialized metadata. If *data is NULL, a buffer be will be allocated and a pointer to it stored in its place. The caller assumes ownership of the buffer. May be NULL, in which case the function will only store the required buffer size in *size.</param>
+    /// <param name="size">A pointer to a size to be set to the returned buffer&apos;s size. If *data is not NULL, *size must contain the size of the input buffer. May be NULL only if *data is NULL.</param>
+    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern int av_dynamic_hdr_smpte2094_app5_to_t35(AVDynamicHDRSmpte2094App5* s, byte** data, ulong* size);
+    
+    /// <summary>Serialize dynamic SMPTE-2094-50 metadata to a ITU-T T.35 message. Excluding the country_code, provider_code and provider_oriented_code.</summary>
+    /// <param name="s">A pointer containing the AVDynamicHDRSmpte2094App5 data.</param>
+    /// <param name="data">A pointer to pointer to a byte buffer to be filled with the serialized metadata. If *data is NULL, a buffer be will be allocated and a pointer to it stored in its place. The caller assumes ownership of the buffer. May be NULL, in which case the function will only store the required buffer size in *size.</param>
+    /// <param name="size">A pointer to a size to be set to the returned buffer&apos;s size. If *data is not NULL, *size must contain the size of the input buffer. May be NULL only if *data is NULL.</param>
+    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern int av_dynamic_hdr_smpte2094_app5_to_t35(AVDynamicHDRSmpte2094App5* s, ref byte* data, ulong* size);
+    
     /// <summary>Add the pointer to an element to a dynamic array.</summary>
     /// <param name="tab_ptr">Pointer to the array to grow</param>
     /// <param name="nb_ptr">Pointer to the number of elements in the array</param>
@@ -3685,7 +3712,6 @@ public unsafe static partial class Raw
     [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern int av_image_get_linesize(AVPixelFormat pix_fmt, int width, int plane);
     
-    
     /// <summary>Send the specified message to the log if the level is less than or equal to the current av_log_level. By default, all logging messages are sent to stderr. This behavior can be altered by setting a different logging callback function.</summary>
     /// <param name="avcl">A pointer to an arbitrary struct of which the first field is a pointer to an AVClass struct or NULL if general log.</param>
     /// <param name="level">The importance level of the message expressed using a &quot;Logging Constant&quot;.</param>
@@ -4002,7 +4028,6 @@ public unsafe static partial class Raw
     /// <param name="prev">result of the previous call to av_opt_next() on this object or NULL</param>
     [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern AVOption* av_opt_next(void* obj, AVOption* prev);
-    
     
     /// <summary>Get a list of allowed ranges for the given option.</summary>
     /// <param name="flags">is a bitmask of flags, undefined flags should not be set and should be ignored AV_OPT_SEARCH_FAKE_OBJ indicates that the obj is a double pointer to a AVClass instead of a full instance AV_OPT_MULTI_COMPONENT_RANGE indicates that function may return more than one component,</param>
@@ -4568,14 +4593,6 @@ public unsafe static partial class Raw
     [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern AVVkFrame* av_vk_frame_alloc();
     
-    /// <summary>Returns an array of optional Vulkan device extensions that FFmpeg may use if enabled.</summary>
-    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern byte** av_vk_get_optional_device_extensions(int* count);
-    
-    /// <summary>Returns an array of optional Vulkan instance extensions that FFmpeg may use if enabled.</summary>
-    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern byte** av_vk_get_optional_instance_extensions(int* count);
-    
     /// <summary>Returns the optimal per-plane Vulkan format for a given sw_format, one for each plane. Returns NULL on unsupported formats.</summary>
     [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern int* av_vkfmt_from_pixfmt(AVPixelFormat p);
@@ -4994,7 +5011,7 @@ public unsafe static partial class Raw
     [DllImport(SWSCALE, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern int sws_test_colorspace(AVColorSpace colorspace, int output);
     
-    /// <summary>Test if a given (software) pixel format is supported.</summary>
+    /// <summary>Test if a given (software) pixel format is supported by any backend, excluding unstable backends.</summary>
     /// <param name="format">The format to check.</param>
     /// <param name="output">If 0, test if compatible with the source/input frame; otherwise, with the destination/output frame.</param>
     [DllImport(SWSCALE, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
@@ -5004,7 +5021,7 @@ public unsafe static partial class Raw
     [DllImport(SWSCALE, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern int sws_test_frame(AVFrame* frame, int output);
     
-    /// <summary>Test if a given hardware pixel format is supported.</summary>
+    /// <summary>Test if a given hardware pixel format is supported by any backend, excluding unstable backends.</summary>
     /// <param name="format">The hardware format to check, or AV_PIX_FMT_NONE.</param>
     [DllImport(SWSCALE, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern int sws_test_hw_format(AVPixelFormat format);

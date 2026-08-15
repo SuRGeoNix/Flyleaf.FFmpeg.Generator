@@ -91,6 +91,13 @@ internal class StructureProcessor
             //if (field.Type is PointerType ptype && ptype.Pointee is PointerType && field.DebugText.Contains("struct"))
             //    Console.WriteLine($"Unfixed Array: {name} - {field.Name}");
 
+            // Empty field names (mainly for unions)
+            if (string.IsNullOrEmpty(field.Name))
+            {
+                if (field.Class.Name == "AVStreamGroupLayeredVideo")
+                    field.Name = "index";
+            }
+
             var typeName = $"{field.Class.Name}_{field.Name}";
             fields.Add(new StructureField
             {
@@ -317,7 +324,7 @@ internal class StructureProcessor
 
         if (pointee is FunctionType functionType)
             return _context.FunctionProcessor.GetDelegateType(functionType, name);
-
+        
         var pointerTypeDefinition = GetTypeDefinition(pointee, name);
         return new TypeDefinition { Name = $"{pointerTypeDefinition.Name}*" };
     }

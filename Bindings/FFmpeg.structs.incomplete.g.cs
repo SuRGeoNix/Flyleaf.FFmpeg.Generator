@@ -93,9 +93,6 @@ public unsafe struct _iobuf {}
 public unsafe struct AVIODirContext {}
 
 /// <remarks>This struct is incomplete.</remarks>
-public unsafe struct AVFilterCommand {}
-
-/// <remarks>This struct is incomplete.</remarks>
 public unsafe struct AVFilterFormats {}
 
 /// <remarks>This struct is incomplete.</remarks>

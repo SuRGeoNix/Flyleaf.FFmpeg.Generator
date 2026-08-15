@@ -235,13 +235,25 @@ internal class Generator
         {
             Verbose         = false,
             ASTContext      = new CppSharp.Parser.AST.ASTContext(),
-            LanguageVersion = LanguageVersion.C99_GNU
+            LanguageVersion = LanguageVersion.C99_GNU,
+            //TargetTriple    = "x86_64-pc-windows-msvc",
+            //NoBuiltinIncludes = true,
+            //SkipFunctionBodies = false,
+            NoStandardIncludes = true,
         };
-
+        
         parserOptions.SetupMSVC(VisualStudioVersion.VS2022);
+        parserOptions.AddSystemIncludeDirs(@"C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include");
+        //parserOptions.AddSystemIncludeDirs(@"C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\VS\include");
+        parserOptions.AddSystemIncludeDirs(@"C:\Program Files (x86)\Windows Kits\10\include\10.0.26100.0\ucrt");
+        parserOptions.AddSystemIncludeDirs(@"C:\Program Files (x86)\Windows Kits\10\\include\10.0.26100.0\um");
+        parserOptions.AddSystemIncludeDirs(@"C:\Program Files (x86)\Windows Kits\10\\include\10.0.26100.0\shared");
+        //parserOptions.AddSystemIncludeDirs(@"C:\Program Files (x86)\Windows Kits\10\\include\10.0.26100.0\winrt");
+        //parserOptions.AddSystemIncludeDirs(@"C:\Program Files (x86)\Windows Kits\10\\include\10.0.26100.0\cppwinrt");
+        //parserOptions.AddSystemIncludeDirs(@"C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um");
 
         foreach (var includeDir in IncludeDirs) parserOptions.AddIncludeDirs(includeDir);
-
+        
         foreach (var define in Defines) parserOptions.AddDefines(define);
         var result = ClangParser.ParseSourceFiles(sourceFiles, parserOptions);
         OnSourceFileParsed(sourceFiles, result);

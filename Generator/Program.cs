@@ -10,9 +10,9 @@ internal static class Program
 {
     /* NOTES
      * REQUIRES Windows 10 SDK (CppSharp)
+     * Latest CppSharp has issue with parameters (messes with references to other parameters? not easy to spot!)
      * 
      * TODO
-     * Re-coding and clean up
      * Don't marshal all strings by default (eg. av log overhead with format that we might not be used)
      * PixelFormat enum (big/little endian)
      * Any reason to use LibraryImport instead (possible check vectors too)?
@@ -70,7 +70,8 @@ internal static class Program
         astProcessor.IgnoreUnitNames.Add("AVIndexEntry");
 
         // TODO: Extra headers to be included (should exclude functions as they are private* and enums/structs/macros should have a prefix of 'class' eg HLSPlaylist to avoid duplicates)
-        string extraRelease = "8.0";
+        string extraRelease = "9.0";
+        //string extraRelease = "master";
 
         string projectDir = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory)
             .Parent!.Parent!.Parent!.FullName;
@@ -90,6 +91,7 @@ internal static class Program
 
             // Custom Demuxer
             "libavformat/demux.h",
+            "libavformat/packet_internal.h",
 
             // HLS requirements
             "libavformat/internal.h",

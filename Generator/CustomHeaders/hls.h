@@ -61,6 +61,7 @@ struct playlist {
     uint8_t* read_buffer;
     AVIOContext *input;
     int input_read_done;
+    int input_reuse;
     AVIOContext *input_next;
     int input_next_requested;
     AVFormatContext *parent;
@@ -114,6 +115,9 @@ struct playlist {
 
     HLSAudioSetupInfo audio_setup_info;
 
+    /* Constant offset of this playlist's DTS baseline relative to
+     * c->first_timestamp. */
+    int64_t ts_offset;
     int64_t seek_timestamp;
     int seek_flags;
     int seek_stream_index; /* into subdemuxer stream array */
@@ -130,6 +134,14 @@ struct playlist {
     int n_init_sections;
     struct segment **init_sections;
     int is_subtitle; /* Indicates if it's a subtitle playlist */
+
+    /* Some HLS streams repeat the current timed-ID3 metadata at every segment
+     * boundary so late-joining clients get a fresh copy. Track the last seen
+     * value to avoid raising AVSTREAM_EVENT_FLAG_METADATA_UPDATED spuriously
+     * on those duplicates. timed_id3_stream_index is the subdemuxer stream
+     * index of the first timed-ID3 stream seen; -1 if none. */
+    AVDictionary *timed_id3_metadata;
+    int timed_id3_stream_index;
 };
 
 /*
@@ -175,6 +187,7 @@ typedef struct HLSContext {
     int prefer_x_start;
     int first_packet;
     int64_t first_timestamp;
+    struct playlist *first_timestamp_pls;
     int64_t cur_timestamp;
     AVIOInterruptCB *interrupt_callback;
     AVDictionary *avio_opts;

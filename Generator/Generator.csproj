@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <PlatformTarget>x64</PlatformTarget>
     <LangVersion>preview</LangVersion>
     <Nullable>enable</Nullable>
@@ -17,9 +17,9 @@
 
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
-    <PackageReference Include="CppSharp" Version="1.1.5.3168" />
-    <PackageReference Include="FParsec" Version="1.1.1" />
-    <PackageReference Include="FParsec.CSharp" Version="12.2.0" />
+	<PackageReference Include="CppSharp" Version="1.1.5.3168" />
+	<PackageReference Include="FParsec" Version="2.0.0-beta2" />
+	<PackageReference Include="FParsec.CSharp" Version="12.6.0" />
   </ItemGroup>
 
 </Project>

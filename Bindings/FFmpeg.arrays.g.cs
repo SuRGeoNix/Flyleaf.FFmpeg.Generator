@@ -461,6 +461,50 @@ public unsafe struct byte_array4
     }
 }
 
+public unsafe struct byte_array4x6
+{
+    public const int Size = 4;
+    public byte_array6 _0, _1, _2, _3;
+    
+    public byte_array6 this[int i]
+    {
+        get
+        {
+            if (i < 0 || i >= Size) throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size}]");
+            fixed (byte_array6* p0 = &_0)
+            {
+                return *(p0 + i);
+            }
+        }
+        set
+        {
+            if (i >= Size) throw new ArgumentOutOfRangeException($"i({i}) should < {Size}");
+            fixed (byte_array6* p0 = &_0)
+            {
+                *(p0 + i) = value;
+            }
+        }
+    }
+    
+    public byte_array6[] ToArray() => new [] { _0, _1, _2, _3 };
+    
+    public void UpdateFrom(byte_array6[] array)
+    {
+        if (array.Length != Size)
+        {
+            throw new ArgumentOutOfRangeException($"array size({array.Length}) should == {Size}");
+        }
+        
+        fixed (byte_array6* p = array)
+        {
+            _0 = p[0];
+            _1 = p[1];
+            _2 = p[2];
+            _3 = p[3];
+        }
+    }
+}
+
 public unsafe struct byte_ptrArray4
 {
     public const int Size = 4;
@@ -716,12 +760,12 @@ public unsafe struct uint_array4
     }
 }
 
-public unsafe struct int_array7
+public unsafe struct ushort_array4
 {
-    public const int Size = 7;
-    public fixed int _[7];
+    public const int Size = 4;
+    public fixed ushort _[4];
     
-    public int this[int i]
+    public ushort this[int i]
     {
         get => i switch
         {
@@ -735,17 +779,144 @@ public unsafe struct int_array7
         };
     }
     
-    public int[] ToArray() => new [] { _[0], _[1], _[2], _[3], _[4], _[5], _[6] };
+    public ushort[] ToArray() => new [] { _[0], _[1], _[2], _[3] };
     
     
-    public void UpdateFrom(int[] array)
+    public void UpdateFrom(ushort[] array)
     {
         if (array.Length != Size)
         {
             throw new ArgumentOutOfRangeException($"array size({array.Length}) should == {Size}");
         }
         
-        fixed (int* p = array)
+        fixed (ushort* p = array)
+        {
+            _[0] = p[0];
+            _[1] = p[1];
+            _[2] = p[2];
+            _[3] = p[3];
+        }
+    }
+}
+
+public unsafe struct ushort_array4x32
+{
+    public const int Size = 4;
+    public ushort_array32 _0, _1, _2, _3;
+    
+    public ushort_array32 this[int i]
+    {
+        get
+        {
+            if (i < 0 || i >= Size) throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size}]");
+            fixed (ushort_array32* p0 = &_0)
+            {
+                return *(p0 + i);
+            }
+        }
+        set
+        {
+            if (i >= Size) throw new ArgumentOutOfRangeException($"i({i}) should < {Size}");
+            fixed (ushort_array32* p0 = &_0)
+            {
+                *(p0 + i) = value;
+            }
+        }
+    }
+    
+    public ushort_array32[] ToArray() => new [] { _0, _1, _2, _3 };
+    
+    public void UpdateFrom(ushort_array32[] array)
+    {
+        if (array.Length != Size)
+        {
+            throw new ArgumentOutOfRangeException($"array size({array.Length}) should == {Size}");
+        }
+        
+        fixed (ushort_array32* p = array)
+        {
+            _0 = p[0];
+            _1 = p[1];
+            _2 = p[2];
+            _3 = p[3];
+        }
+    }
+}
+
+public unsafe struct ushort_array4x6
+{
+    public const int Size = 4;
+    public ushort_array6 _0, _1, _2, _3;
+    
+    public ushort_array6 this[int i]
+    {
+        get
+        {
+            if (i < 0 || i >= Size) throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size}]");
+            fixed (ushort_array6* p0 = &_0)
+            {
+                return *(p0 + i);
+            }
+        }
+        set
+        {
+            if (i >= Size) throw new ArgumentOutOfRangeException($"i({i}) should < {Size}");
+            fixed (ushort_array6* p0 = &_0)
+            {
+                *(p0 + i) = value;
+            }
+        }
+    }
+    
+    public ushort_array6[] ToArray() => new [] { _0, _1, _2, _3 };
+    
+    public void UpdateFrom(ushort_array6[] array)
+    {
+        if (array.Length != Size)
+        {
+            throw new ArgumentOutOfRangeException($"array size({array.Length}) should == {Size}");
+        }
+        
+        fixed (ushort_array6* p = array)
+        {
+            _0 = p[0];
+            _1 = p[1];
+            _2 = p[2];
+            _3 = p[3];
+        }
+    }
+}
+
+public unsafe struct byte_array6
+{
+    public const int Size = 6;
+    public fixed byte _[6];
+    
+    public byte this[int i]
+    {
+        get => i switch
+        {
+            >= 0 and < Size => _[i],
+            _ => throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size})"),
+        };
+        set => _[i] = i switch
+        {
+            >= 0 and < Size => value,
+            _ => throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size})"),
+        };
+    }
+    
+    public byte[] ToArray() => new [] { _[0], _[1], _[2], _[3], _[4], _[5] };
+    
+    
+    public void UpdateFrom(byte[] array)
+    {
+        if (array.Length != Size)
+        {
+            throw new ArgumentOutOfRangeException($"array size({array.Length}) should == {Size}");
+        }
+        
+        fixed (byte* p = array)
         {
             _[0] = p[0];
             _[1] = p[1];
@@ -753,7 +924,94 @@ public unsafe struct int_array7
             _[3] = p[3];
             _[4] = p[4];
             _[5] = p[5];
-            _[6] = p[6];
+        }
+    }
+}
+
+public unsafe struct ushort_array6
+{
+    public const int Size = 6;
+    public fixed ushort _[6];
+    
+    public ushort this[int i]
+    {
+        get => i switch
+        {
+            >= 0 and < Size => _[i],
+            _ => throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size})"),
+        };
+        set => _[i] = i switch
+        {
+            >= 0 and < Size => value,
+            _ => throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size})"),
+        };
+    }
+    
+    public ushort[] ToArray() => new [] { _[0], _[1], _[2], _[3], _[4], _[5] };
+    
+    
+    public void UpdateFrom(ushort[] array)
+    {
+        if (array.Length != Size)
+        {
+            throw new ArgumentOutOfRangeException($"array size({array.Length}) should == {Size}");
+        }
+        
+        fixed (ushort* p = array)
+        {
+            _[0] = p[0];
+            _[1] = p[1];
+            _[2] = p[2];
+            _[3] = p[3];
+            _[4] = p[4];
+            _[5] = p[5];
+        }
+    }
+}
+
+public unsafe struct AVCodecID_array7
+{
+    public const int Size = 7;
+    public AVCodecID _0, _1, _2, _3, _4, _5, _6;
+    
+    public AVCodecID this[int i]
+    {
+        get
+        {
+            if (i < 0 || i >= Size) throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size}]");
+            fixed (AVCodecID* p0 = &_0)
+            {
+                return *(p0 + i);
+            }
+        }
+        set
+        {
+            if (i >= Size) throw new ArgumentOutOfRangeException($"i({i}) should < {Size}");
+            fixed (AVCodecID* p0 = &_0)
+            {
+                *(p0 + i) = value;
+            }
+        }
+    }
+    
+    public AVCodecID[] ToArray() => new [] { _0, _1, _2, _3, _4, _5, _6 };
+    
+    public void UpdateFrom(AVCodecID[] array)
+    {
+        if (array.Length != Size)
+        {
+            throw new ArgumentOutOfRangeException($"array size({array.Length}) should == {Size}");
+        }
+        
+        fixed (AVCodecID* p = array)
+        {
+            _0 = p[0];
+            _1 = p[1];
+            _2 = p[2];
+            _3 = p[3];
+            _4 = p[4];
+            _5 = p[5];
+            _6 = p[6];
         }
     }
 }
@@ -1078,6 +1336,49 @@ public unsafe struct ulong_array8
         }
         
         fixed (ulong* p = array)
+        {
+            _[0] = p[0];
+            _[1] = p[1];
+            _[2] = p[2];
+            _[3] = p[3];
+            _[4] = p[4];
+            _[5] = p[5];
+            _[6] = p[6];
+            _[7] = p[7];
+        }
+    }
+}
+
+public unsafe struct ushort_array8
+{
+    public const int Size = 8;
+    public fixed ushort _[8];
+    
+    public ushort this[int i]
+    {
+        get => i switch
+        {
+            >= 0 and < Size => _[i],
+            _ => throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size})"),
+        };
+        set => _[i] = i switch
+        {
+            >= 0 and < Size => value,
+            _ => throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size})"),
+        };
+    }
+    
+    public ushort[] ToArray() => new [] { _[0], _[1], _[2], _[3], _[4], _[5], _[6], _[7] };
+    
+    
+    public void UpdateFrom(ushort[] array)
+    {
+        if (array.Length != Size)
+        {
+            throw new ArgumentOutOfRangeException($"array size({array.Length}) should == {Size}");
+        }
+        
+        fixed (ushort* p = array)
         {
             _[0] = p[0];
             _[1] = p[1];
@@ -1614,6 +1915,73 @@ public unsafe struct byte_array32
         }
         
         fixed (byte* p = array)
+        {
+            _[0] = p[0];
+            _[1] = p[1];
+            _[2] = p[2];
+            _[3] = p[3];
+            _[4] = p[4];
+            _[5] = p[5];
+            _[6] = p[6];
+            _[7] = p[7];
+            _[8] = p[8];
+            _[9] = p[9];
+            _[10] = p[10];
+            _[11] = p[11];
+            _[12] = p[12];
+            _[13] = p[13];
+            _[14] = p[14];
+            _[15] = p[15];
+            _[16] = p[16];
+            _[17] = p[17];
+            _[18] = p[18];
+            _[19] = p[19];
+            _[20] = p[20];
+            _[21] = p[21];
+            _[22] = p[22];
+            _[23] = p[23];
+            _[24] = p[24];
+            _[25] = p[25];
+            _[26] = p[26];
+            _[27] = p[27];
+            _[28] = p[28];
+            _[29] = p[29];
+            _[30] = p[30];
+            _[31] = p[31];
+        }
+    }
+}
+
+public unsafe struct ushort_array32
+{
+    public const int Size = 32;
+    public fixed ushort _[32];
+    
+    public ushort this[int i]
+    {
+        get => i switch
+        {
+            >= 0 and < Size => _[i],
+            _ => throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size})"),
+        };
+        set => _[i] = i switch
+        {
+            >= 0 and < Size => value,
+            _ => throw new ArgumentOutOfRangeException($"i({i}) should in [0, {Size})"),
+        };
+    }
+    
+    public ushort[] ToArray() => new [] { _[0], _[1], _[2], _[3], _[4], _[5], _[6], _[7], _[8], _[9], _[10], _[11], _[12], _[13], _[14], _[15], _[16], _[17], _[18], _[19], _[20], _[21], _[22], _[23], _[24], _[25], _[26], _[27], _[28], _[29], _[30], _[31] };
+    
+    
+    public void UpdateFrom(ushort[] array)
+    {
+        if (array.Length != Size)
+        {
+            throw new ArgumentOutOfRangeException($"array size({array.Length}) should == {Size}");
+        }
+        
+        fixed (ushort* p = array)
         {
             _[0] = p[0];
             _[1] = p[1];

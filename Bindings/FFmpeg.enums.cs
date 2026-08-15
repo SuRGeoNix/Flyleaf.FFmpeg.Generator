@@ -47,10 +47,11 @@ public enum MuxerFlags : uint
 public enum DemuxerSpecFlags : uint
 {
     /**
-      * Can use flags: AVFMT_NOFILE, AVFMT_NEEDNUMBER, AVFMT_SHOW_IDS,
-      * AVFMT_NOTIMESTAMPS, AVFMT_GENERIC_INDEX, AVFMT_TS_DISCONT, AVFMT_NOBINSEARCH,
-      * AVFMT_NOGENSEARCH, AVFMT_NO_BYTE_SEEK, AVFMT_SEEK_TO_PTS.
-      */
+     * Can use flags: AVFMT_NOFILE, AVFMT_NEEDNUMBER, AVFMT_EXPERIMENTAL,
+     * AVFMT_SHOW_IDS, AVFMT_NOTIMESTAMPS, AVFMT_GENERIC_INDEX,
+     * AVFMT_TS_DISCONT, AVFMT_NOBINSEARCH, AVFMT_NOGENSEARCH,
+     * AVFMT_NO_BYTE_SEEK, AVFMT_SEEK_TO_PTS.
+     */
     None = FmtFlags.None,
     /// <summary>The muxer/demuxer is experimental and should be used with caution. For demuxer, will not be selected automatically by probing, must be specified explicitly</summary>
     Experimental    = FmtFlags.Experimental,
@@ -83,11 +84,11 @@ public enum DemuxerSpecFlags : uint
 public enum MuxerSpecFlags : uint
 {
     /**
-      * can use flags: AVFMT_NOFILE, AVFMT_NEEDNUMBER,
-      * AVFMT_GLOBALHEADER, AVFMT_NOTIMESTAMPS, AVFMT_VARIABLE_FPS,
-      * AVFMT_NODIMENSIONS, AVFMT_NOSTREAMS, AVFMT_ALLOW_FLUSH,
-      * AVFMT_TS_NONSTRICT, AVFMT_TS_NEGATIVE
-      */
+     * can use flags: AVFMT_NOFILE, AVFMT_NEEDNUMBER, AVFMT_EXPERIMENTAL,
+     * AVFMT_GLOBALHEADER, AVFMT_NOTIMESTAMPS, AVFMT_VARIABLE_FPS,
+     * AVFMT_NODIMENSIONS, AVFMT_NOSTREAMS,
+     * AVFMT_TS_NONSTRICT, AVFMT_TS_NEGATIVE, AVFMT_FIXED_FRAMESIZE
+     */
     None = FmtFlags.None,
     /// <summary>The muxer/demuxer is experimental and should be used with caution. For demuxer, will not be selected automatically by probing, must be specified explicitly</summary>
     Experimental    = FmtFlags.Experimental,
@@ -109,6 +110,8 @@ public enum MuxerSpecFlags : uint
     TsNonStrict     = FmtFlags.TsNonstrict,
     /// <summary>Format allows variable fps</summary>
     VariableFps     = FmtFlags.VariableFps,
+    /// <summary>Format wants @ref AVCodecParameters.frame_size "fixed size audio frames."</summary>
+    FixedFramesize  = FmtFlags.FixedFramesize
 }
 #endregion
 
@@ -128,7 +131,6 @@ public enum AudioEncoderFlags : uint
     // E VAS
     FrameDuration   = CodecFlags.FrameDuration,
     ReconFrame      = CodecFlags.ReconFrame,
-
 }
 [Flags]
 public enum AudioDecoderFlags : uint
@@ -222,6 +224,14 @@ public enum AudioDecoderFlags2 : uint
     None = CodecFlags2.None,
 
     SkipManual      = CodecFlags2.SkipManual
+}
+
+[Flags]
+public enum AudioEncoderFlags2 : uint
+{
+    None = CodecFlags2.None,
+
+    FixedFrameSize  = CodecFlags2.FixedFrameSize
 }
 
 [Flags]

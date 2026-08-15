@@ -37,6 +37,7 @@ internal static class MacroEnumPostProcessor
             new("AVFMT_EVENT_FLAG_", "FmtEventFlags", IsFlags: true),
             new("AVFMT_AVOID_NEG_TS_", "AvoidNegTSFlags", IsFlags: true),
             new("AVFMTCTX_", "FmtCtxFlags", IsFlags: true),
+            new("AVFMT_PROGCOPY_", "FmtProgCopyFlags", IsFlags: true),
             new("AVFMT_", "FmtFlags", IsFlags: true, Except: HashSet("AVFMT_EVENT_FLAG_METADATA_UPDATED")),
             new("AV_FRAME_FLAG_", "FrameFlags", IsFlags: true),
             new("AV_FRAME_SIDE_DATA_FLAG_", "FrameSideDataFlags", IsFlags: true),

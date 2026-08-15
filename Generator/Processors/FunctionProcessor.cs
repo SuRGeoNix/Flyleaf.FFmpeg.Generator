@@ -185,6 +185,9 @@ internal class FunctionProcessor
             if (functionName == "av_hwframe_map")
                 return new() { Name = "AVHWframeMap" }; // unamed enum
 
+            if (functionName == "av_program_copy")
+                return new() { Name = "FmtProgCopyFlags" };  // unamed enum
+
             return null;
         }
         

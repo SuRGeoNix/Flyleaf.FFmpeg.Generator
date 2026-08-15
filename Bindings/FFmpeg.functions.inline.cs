@@ -260,14 +260,6 @@ public unsafe static partial class Raw
     // original body hash: IAPYNNcg3GX0PGxINeLQhb41dH921lPVKcnqxCk7ERA=
     
     
-    [Obsolete("")]
-    public static uint av_mod_uintp2_c(uint a, uint p)
-    {
-        return av_zero_extend_c(a, p);
-    }
-    // original body hash: MfDd5KRKGNiwvccdrrbME05wNKCRzGTF1T24OggAyp0=
-    
-    
     public static int av_parity_c(uint v)
     {
         return av_popcount_c(v) & 1;
@@ -404,6 +396,14 @@ public unsafe static partial class Raw
         return avio_seek(s, 0, IOSeekFlags.Current);
     }
     // original body hash: o18c3ypeh9EsmYaplTel2ssgM2PZKTTDfMjsqEopycw=
+    
+    
+    /// <summary>Compute the boundary index for a slice when work of size total is split into nb_jobs slices. Returns the first index of slice jobnr, so the slice jobnr covers [ff_slice_pos(total, jobnr, nb_jobs), ff_slice_pos(total, jobnr + 1, nb_jobs)).</summary>
+    public static int ff_slice_pos(int total, int jobnr, int nb_jobs)
+    {
+        return (int)((long)total * jobnr / nb_jobs);
+    }
+    // original body hash: z5JxHBDggHk70i9kIhNGQJyILQzKBUzd6upaf7hn2To=
     
     
     public static FFFilter* fffilter(AVFilter* f)

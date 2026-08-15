@@ -332,50 +332,6 @@ public unsafe record struct AVCodecContext_get_encode_buffer_func(IntPtr Pointer
 }
 
 [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-public unsafe delegate int AVCodecParser_parser_init (AVCodecParserContext* s);
-public unsafe record struct AVCodecParser_parser_init_func(IntPtr Pointer)
-{
-    public static implicit operator AVCodecParser_parser_init_func(AVCodecParser_parser_init func) => new(func switch
-    {
-        null => IntPtr.Zero,
-        _ => GetFunctionPointerForDelegate(func)
-    });
-}
-
-[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-public unsafe delegate int AVCodecParser_parser_parse (AVCodecParserContext* s, AVCodecContext* avctx, byte** poutbuf, int* poutbuf_size, byte* buf, int buf_size);
-public unsafe record struct AVCodecParser_parser_parse_func(IntPtr Pointer)
-{
-    public static implicit operator AVCodecParser_parser_parse_func(AVCodecParser_parser_parse func) => new(func switch
-    {
-        null => IntPtr.Zero,
-        _ => GetFunctionPointerForDelegate(func)
-    });
-}
-
-[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-public unsafe delegate void AVCodecParser_parser_close (AVCodecParserContext* s);
-public unsafe record struct AVCodecParser_parser_close_func(IntPtr Pointer)
-{
-    public static implicit operator AVCodecParser_parser_close_func(AVCodecParser_parser_close func) => new(func switch
-    {
-        null => IntPtr.Zero,
-        _ => GetFunctionPointerForDelegate(func)
-    });
-}
-
-[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-public unsafe delegate int AVCodecParser_split (AVCodecContext* avctx, byte* buf, int buf_size);
-public unsafe record struct AVCodecParser_split_func(IntPtr Pointer)
-{
-    public static implicit operator AVCodecParser_split_func(AVCodecParser_split func) => new(func switch
-    {
-        null => IntPtr.Zero,
-        _ => GetFunctionPointerForDelegate(func)
-    });
-}
-
-[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 public unsafe delegate int avcodec_default_execute_func (AVCodecContext* c2, void* arg2);
 public unsafe record struct avcodec_default_execute_func_func(IntPtr Pointer)
 {
@@ -585,17 +541,6 @@ public unsafe record struct FFIOContext_short_seek_get_func(IntPtr Pointer)
 }
 
 [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-public unsafe delegate int avpriv_packet_list_put_copy (AVPacket* dst, AVPacket* src);
-public unsafe record struct avpriv_packet_list_put_copy_func(IntPtr Pointer)
-{
-    public static implicit operator avpriv_packet_list_put_copy_func(avpriv_packet_list_put_copy func) => new(func switch
-    {
-        null => IntPtr.Zero,
-        _ => GetFunctionPointerForDelegate(func)
-    });
-}
-
-[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 public unsafe delegate int FFFilter_preinit (AVFilterContext* ctx);
 public unsafe record struct FFFilter_preinit_func(IntPtr Pointer)
 {
@@ -794,10 +739,10 @@ public unsafe record struct FFInputFormat_read_timestamp_func(IntPtr Pointer)
 }
 
 [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-public unsafe delegate int FFInputFormat_read_play (AVFormatContext* p0);
-public unsafe record struct FFInputFormat_read_play_func(IntPtr Pointer)
+public unsafe delegate int FFInputFormat_read_set_state (AVFormatContext* p0, FFInputFormatStreamState state);
+public unsafe record struct FFInputFormat_read_set_state_func(IntPtr Pointer)
 {
-    public static implicit operator FFInputFormat_read_play_func(FFInputFormat_read_play func) => new(func switch
+    public static implicit operator FFInputFormat_read_set_state_func(FFInputFormat_read_set_state func) => new(func switch
     {
         null => IntPtr.Zero,
         _ => GetFunctionPointerForDelegate(func)
@@ -805,10 +750,10 @@ public unsafe record struct FFInputFormat_read_play_func(IntPtr Pointer)
 }
 
 [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-public unsafe delegate int FFInputFormat_read_pause (AVFormatContext* p0);
-public unsafe record struct FFInputFormat_read_pause_func(IntPtr Pointer)
+public unsafe delegate int FFInputFormat_handle_command (AVFormatContext* p0, FFInputFormatCommandOption opt, AVFormatCommandID id, void* data);
+public unsafe record struct FFInputFormat_handle_command_func(IntPtr Pointer)
 {
-    public static implicit operator FFInputFormat_read_pause_func(FFInputFormat_read_pause func) => new(func switch
+    public static implicit operator FFInputFormat_handle_command_func(FFInputFormat_handle_command func) => new(func switch
     {
         null => IntPtr.Zero,
         _ => GetFunctionPointerForDelegate(func)
