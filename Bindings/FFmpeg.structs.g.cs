@@ -72,7 +72,7 @@ public unsafe struct AVBufferSrcParameters
 public unsafe struct AVChannelCustom
 {
     public AVChannel id;
-    public byte_array16 name;
+    public Array16<byte> name;
     public void* opaque;
 }
 
@@ -111,6 +111,13 @@ public unsafe struct AVChapter
     /// <summary>chapter start/end time in time_base units</summary>
     public long end;
     public AVDictionary* metadata;
+}
+
+/// <summary>Struct containing chromaticity x and y values for the standard CIE 1931 chromaticity definition.</summary>
+public unsafe struct AVCIExy
+{
+    public AVRational x;
+    public AVRational y;
 }
 
 /// <summary>Describe the class of an AVClass context structure. That is an arbitrary struct of which the first field is a pointer to an AVClass struct (e.g. AVCodecContext, AVFormatContext etc.).</summary>
@@ -383,7 +390,7 @@ public unsafe struct AVCodecContext
     /// <summary>Video decoding only. Sets the number of extra hardware frames which the decoder will allocate for use by the caller. This must be set before avcodec_open2() is called.</summary>
     public int extra_hw_frames;
     /// <summary>error - encoding: Set by libavcodec if flags &amp; AV_CODEC_FLAG_PSNR. - decoding: unused</summary>
-    public ulong_array8 error;
+    public Array8<ulong> error;
     /// <summary>DCT algorithm, see FF_DCT_* below - encoding: Set by user. - decoding: unused</summary>
     public DCTAlgo dct_algo;
     /// <summary>IDCT algorithm, see FF_IDCT_* below. - encoding: Set by user. - decoding: Set by user.</summary>
@@ -554,7 +561,7 @@ public unsafe struct AVCodecParameters
 
 public unsafe struct AVCodecParser
 {
-    public AVCodecID_array7 codec_ids;
+    public Array7<AVCodecID> codec_ids;
 }
 
 public unsafe struct AVCodecParserContext
@@ -573,13 +580,13 @@ public unsafe struct AVCodecParserContext
     public long last_dts;
     public int fetch_timestamp;
     public int cur_frame_start_index;
-    public long_array4 cur_frame_offset;
-    public long_array4 cur_frame_pts;
-    public long_array4 cur_frame_dts;
+    public Array4<long> cur_frame_offset;
+    public Array4<long> cur_frame_pts;
+    public Array4<long> cur_frame_dts;
     public int flags;
     /// <summary>byte offset from starting packet start</summary>
     public long offset;
-    public long_array4 cur_frame_end;
+    public Array4<long> cur_frame_end;
     /// <summary>Set by parser to 1 for key frames and 0 for non-key frames. It is initialized to -1, so if the parser doesn&apos;t set this flag, old-style fallback using AV_PICTURE_TYPE_I picture type as key frames will be used.</summary>
     public int key_frame;
     /// <summary>Synchronization point for start of timestamp generation.</summary>
@@ -589,7 +596,7 @@ public unsafe struct AVCodecParserContext
     /// <summary>Presentation delay of current frame in units of AVCodecContext.time_base.</summary>
     public int pts_dts_delta;
     /// <summary>Position of the packet in file.</summary>
-    public long_array4 cur_frame_pos;
+    public Array4<long> cur_frame_pos;
     /// <summary>Byte position of currently parsed frame in stream.</summary>
     public long pos;
     /// <summary>Previous frame byte position.</summary>
@@ -616,6 +623,13 @@ public unsafe struct AVCodecTag
 {
     public AVCodecID id;
     public uint tag;
+}
+
+/// <summary>Struct that contains both white point location and primaries location, providing the complete description of a color gamut.</summary>
+public unsafe struct AVColorPrimariesDesc
+{
+    public AVCIExy wp;
+    public AVPrimaryCoefficients prim;
 }
 
 public unsafe struct AVComponentDescriptor
@@ -806,6 +820,250 @@ public unsafe struct AVDictionaryEntry
     public byte* value;
 }
 
+/// <summary>Dolby Vision RPU colorspace metadata parameters.</summary>
+public unsafe struct AVDOVIColorMetadata
+{
+    public byte dm_metadata_id;
+    public byte scene_refresh_flag;
+    /// <summary>Coefficients of the custom Dolby Vision IPT-PQ matrices. These are to be used instead of the matrices indicated by the frame&apos;s colorspace tags. The output of rgb_to_lms_matrix is to be fed into a BT.2020 LMS-&gt;RGB matrix based on a Hunt-Pointer-Estevez transform, but without any crosstalk. (See the definition of the ICtCp colorspace for more information.)</summary>
+    public Array9<AVRational> ycc_to_rgb_matrix;
+    public Array3<AVRational> ycc_to_rgb_offset;
+    public Array9<AVRational> rgb_to_lms_matrix;
+    /// <summary>Extra signal metadata (see Dolby patents for more info).</summary>
+    public ushort signal_eotf;
+    public ushort signal_eotf_param0;
+    public ushort signal_eotf_param1;
+    public uint signal_eotf_param2;
+    public byte signal_bit_depth;
+    public byte signal_color_space;
+    public byte signal_chroma_format;
+    public byte signal_full_range_flag;
+    public ushort source_min_pq;
+    public ushort source_max_pq;
+    public ushort source_diagonal;
+}
+
+/// <summary>Dolby Vision RPU data mapping parameters.</summary>
+public unsafe struct AVDOVIDataMapping
+{
+    public byte vdr_rpu_id;
+    public byte mapping_color_space;
+    public byte mapping_chroma_format_idc;
+    public Array3<AVDOVIReshapingCurve> curves;
+    public AVDOVINLQMethod nlq_method_idc;
+    public uint num_x_partitions;
+    public uint num_y_partitions;
+    public Array3<AVDOVINLQParams> nlq;
+    public Array2<ushort> nlq_pivots;
+}
+
+public unsafe struct AVDOVIDecoderConfigurationRecord
+{
+    public byte dv_version_major;
+    public byte dv_version_minor;
+    public byte dv_profile;
+    public byte dv_level;
+    public byte rpu_present_flag;
+    public byte el_present_flag;
+    public byte bl_present_flag;
+    public byte dv_bl_signal_compatibility_id;
+    public byte dv_md_compression;
+}
+
+/// <summary>Dolby Vision metadata extension block. Dynamic extension blocks may change from frame to frame, while static blocks are constant throughout the entire sequence.</summary>
+public unsafe struct AVDOVIDmData
+{
+    public byte level;
+    public AVDOVIDmData_union0 union0;
+}
+
+[StructLayout(LayoutKind.Explicit)]
+public unsafe struct AVDOVIDmData_union0
+{
+    [FieldOffset(0)]
+    public AVDOVIDmLevel1 l1;
+    [FieldOffset(0)]
+    public AVDOVIDmLevel2 l2;
+    [FieldOffset(0)]
+    public AVDOVIDmLevel3 l3;
+    [FieldOffset(0)]
+    public AVDOVIDmLevel4 l4;
+    [FieldOffset(0)]
+    public AVDOVIDmLevel5 l5;
+    [FieldOffset(0)]
+    public AVDOVIDmLevel6 l6;
+    [FieldOffset(0)]
+    public AVDOVIDmLevel8 l8;
+    [FieldOffset(0)]
+    public AVDOVIDmLevel9 l9;
+    [FieldOffset(0)]
+    public AVDOVIDmLevel10 l10;
+    [FieldOffset(0)]
+    public AVDOVIDmLevel11 l11;
+    [FieldOffset(0)]
+    public AVDOVIDmLevel254 l254;
+    [FieldOffset(0)]
+    public AVDOVIDmLevel255 l255;
+}
+
+public unsafe struct AVDOVIDmLevel1
+{
+    public ushort min_pq;
+    public ushort max_pq;
+    public ushort avg_pq;
+}
+
+public unsafe struct AVDOVIDmLevel10
+{
+    public byte target_display_index;
+    public ushort target_max_pq;
+    public ushort target_min_pq;
+    public byte target_primary_index;
+    public AVColorPrimariesDesc target_display_primaries;
+}
+
+public unsafe struct AVDOVIDmLevel11
+{
+    public byte content_type;
+    public byte whitepoint;
+    public byte reference_mode_flag;
+    public byte sharpness;
+    public byte noise_reduction;
+    public byte mpeg_noise_reduction;
+    public byte frame_rate_conversion;
+    public byte brightness;
+    public byte color;
+}
+
+public unsafe struct AVDOVIDmLevel2
+{
+    public ushort target_max_pq;
+    public ushort trim_slope;
+    public ushort trim_offset;
+    public ushort trim_power;
+    public ushort trim_chroma_weight;
+    public ushort trim_saturation_gain;
+    public short ms_weight;
+}
+
+public unsafe struct AVDOVIDmLevel254
+{
+    public byte dm_mode;
+    public byte dm_version_index;
+}
+
+public unsafe struct AVDOVIDmLevel255
+{
+    public byte dm_run_mode;
+    public byte dm_run_version;
+    public Array4<byte> dm_debug;
+}
+
+public unsafe struct AVDOVIDmLevel3
+{
+    public ushort min_pq_offset;
+    public ushort max_pq_offset;
+    public ushort avg_pq_offset;
+}
+
+public unsafe struct AVDOVIDmLevel4
+{
+    public ushort anchor_pq;
+    public ushort anchor_power;
+}
+
+public unsafe struct AVDOVIDmLevel5
+{
+    public ushort left_offset;
+    public ushort right_offset;
+    public ushort top_offset;
+    public ushort bottom_offset;
+}
+
+public unsafe struct AVDOVIDmLevel6
+{
+    public ushort max_luminance;
+    public ushort min_luminance;
+    public ushort max_cll;
+    public ushort max_fall;
+}
+
+public unsafe struct AVDOVIDmLevel8
+{
+    public byte target_display_index;
+    public ushort trim_slope;
+    public ushort trim_offset;
+    public ushort trim_power;
+    public ushort trim_chroma_weight;
+    public ushort trim_saturation_gain;
+    public ushort ms_weight;
+    public ushort target_mid_contrast;
+    public ushort clip_trim;
+    public Array6<byte> saturation_vector_field;
+    public Array6<byte> hue_vector_field;
+}
+
+public unsafe struct AVDOVIDmLevel9
+{
+    public byte source_primary_index;
+    public AVColorPrimariesDesc source_display_primaries;
+}
+
+/// <summary>Combined struct representing a combination of header, mapping and color metadata, for attaching to frames as side data.</summary>
+public unsafe struct AVDOVIMetadata
+{
+    /// <summary>Offset in bytes from the beginning of this structure at which the respective structs start.</summary>
+    public nuint header_offset;
+    public nuint mapping_offset;
+    public nuint color_offset;
+    public nuint ext_block_offset;
+    public nuint ext_block_size;
+    public int num_ext_blocks;
+}
+
+/// <summary>Coefficients of the non-linear inverse quantization. For the interpretation of these, see ETSI GS CCM 001.</summary>
+public unsafe struct AVDOVINLQParams
+{
+    public ushort nlq_offset;
+    public ulong vdr_in_max;
+    public ulong linear_deadzone_slope;
+    public ulong linear_deadzone_threshold;
+}
+
+public unsafe struct AVDOVIReshapingCurve
+{
+    public byte num_pivots;
+    public Array9<ushort> pivots;
+    public Array8<AVDOVIMappingMethod> mapping_idc;
+    public Array8<byte> poly_order;
+    public Array8<Array3<long>> poly_coef;
+    public Array8<byte> mmr_order;
+    public Array8<long> mmr_constant;
+    public Array8<Array3<Array7<long>>> mmr_coef;
+}
+
+/// <summary>Dolby Vision RPU data header.</summary>
+public unsafe struct AVDOVIRpuDataHeader
+{
+    public byte rpu_type;
+    public ushort rpu_format;
+    public byte vdr_rpu_profile;
+    public byte vdr_rpu_level;
+    public byte chroma_resampling_explicit_filter_flag;
+    public byte coef_data_type;
+    public byte coef_log2_denom;
+    public byte vdr_rpu_normalized_idc;
+    public byte bl_video_full_range_flag;
+    public byte bl_bit_depth;
+    public byte el_bit_depth;
+    public byte vdr_bit_depth;
+    public byte spatial_resampling_filter_flag;
+    public byte el_spatial_resampling_filter_flag;
+    public byte disable_residual_flag;
+    public byte ext_mapping_idc_0_4;
+    public byte ext_mapping_idc_5_7;
+}
+
 /// <summary>This struct is allocated as AVHWDeviceContext.hwctx</summary>
 public unsafe struct AVDXVA2DeviceContext
 {
@@ -834,7 +1092,7 @@ public unsafe struct AVDynamicHDRPlus
     /// <summary>The number of processing windows. The value shall be in the range of 1 to 3, inclusive.</summary>
     public byte num_windows;
     /// <summary>The color transform parameters for every processing window.</summary>
-    public AVHDRPlusColorTransformParams_array3 @params;
+    public Array3<AVHDRPlusColorTransformParams> @params;
     /// <summary>The nominal maximum display luminance of the targeted system display, in units of 0.0001 candelas per square metre. The value shall be in the range of 0 to 10000, inclusive.</summary>
     public AVRational targeted_system_display_maximum_luminance;
     /// <summary>This flag shall be equal to 0 in bit streams conforming to this version of this Specification. The value 1 is reserved for future use.</summary>
@@ -844,7 +1102,7 @@ public unsafe struct AVDynamicHDRPlus
     /// <summary>The number of columns in the targeted_system_display_actual_peak_luminance array. The value shall be in the range of 2 to 25, inclusive.</summary>
     public byte num_cols_targeted_system_display_actual_peak_luminance;
     /// <summary>The normalized actual peak luminance of the targeted system display. The values should be in the range of 0 to 1, inclusive and in multiples of 1/15.</summary>
-    public AVRational_array25x25 targeted_system_display_actual_peak_luminance;
+    public Array25<Array25<AVRational>> targeted_system_display_actual_peak_luminance;
     /// <summary>This flag shall be equal to 0 in bitstreams conforming to this version of this Specification. The value 1 is reserved for future use.</summary>
     public byte mastering_display_actual_peak_luminance_flag;
     /// <summary>The number of rows in the mastering_display_actual_peak_luminance array. The value shall be in the range of 2 to 25, inclusive.</summary>
@@ -852,7 +1110,7 @@ public unsafe struct AVDynamicHDRPlus
     /// <summary>The number of columns in the mastering_display_actual_peak_luminance array. The value shall be in the range of 2 to 25, inclusive.</summary>
     public byte num_cols_mastering_display_actual_peak_luminance;
     /// <summary>The normalized actual peak luminance of the mastering display used for mastering the image essence. The values should be in the range of 0 to 1, inclusive and in multiples of 1/15.</summary>
-    public AVRational_array25x25 mastering_display_actual_peak_luminance;
+    public Array25<Array25<AVRational>> mastering_display_actual_peak_luminance;
 }
 
 /// <summary>This struct represents dynamic metadata for color volume transform as specified in the SMPTE 2094-50 standard.</summary>
@@ -872,18 +1130,18 @@ public unsafe struct AVDynamicHDRSmpte2094App5
     public byte gain_application_space_chromaticities_flag;
     public byte has_common_component_mix_params_flag;
     public byte has_common_curve_params_flag;
-    public ushort_array8 gain_application_space_chromaticities;
-    public ushort_array4 alternate_hdr_headrooms;
+    public Array8<ushort> gain_application_space_chromaticities;
+    public Array4<ushort> alternate_hdr_headrooms;
     /// <summary>Section C.2.4 smpte_st_2094_50_component_mixing()</summary>
-    public byte_array4 component_mixing_type;
-    public byte_array4x6 has_component_mixing_coefficient_flag;
-    public ushort_array4x6 component_mixing_coefficient;
+    public Array4<byte> component_mixing_type;
+    public Array4<Array6<byte>> has_component_mixing_coefficient_flag;
+    public Array4<Array6<ushort>> component_mixing_coefficient;
     /// <summary>Section C.2.5 smpte_st_2094_50_gain_curve()</summary>
-    public byte_array4 gain_curve_num_control_points_minus_1;
-    public byte_array4 gain_curve_use_pchip_slope_flag;
-    public ushort_array4x32 gain_curve_control_points_x;
-    public ushort_array4x32 gain_curve_control_points_y;
-    public ushort_array4x32 gain_curve_control_points_theta;
+    public Array4<byte> gain_curve_num_control_points_minus_1;
+    public Array4<byte> gain_curve_use_pchip_slope_flag;
+    public Array4<Array32<ushort>> gain_curve_control_points_x;
+    public Array4<Array32<ushort>> gain_curve_control_points_y;
+    public Array4<Array32<ushort>> gain_curve_control_points_theta;
 }
 
 /// <summary>Filter definition. This defines the pads a filter contains, and all the callback functions used to interact with the filter.</summary>
@@ -1257,9 +1515,9 @@ public unsafe struct AVFormatContext
 public unsafe struct AVFrame
 {
     /// <summary>pointer to the picture/channel planes. This might be different from the first allocated byte. For video, it could even point to the end of the image data.</summary>
-    public byte_ptrArray8 data;
+    public Array8<nint> data;
     /// <summary>For video, a positive or negative value, which is typically indicating the size in bytes of each picture line, but it can also be: - the negative byte size of lines for vertical flipping (with data[n] pointing to the end of the data - a positive or negative multiple of the byte size as for accessing even and odd fields of a frame (possibly flipped)</summary>
-    public int_array8 linesize;
+    public Array8<int> linesize;
     /// <summary>pointers to the data planes/channels.</summary>
     public byte** extended_data;
     /// <summary>Video frames only. The coded dimensions (in pixels) of the video frame, i.e. the size of the rectangle that contains some well-defined values.</summary>
@@ -1289,7 +1547,7 @@ public unsafe struct AVFrame
     /// <summary>Sample rate of the audio data.</summary>
     public int sample_rate;
     /// <summary>AVBuffer references backing the data for this frame. All the pointers in data and extended_data must point inside one of the buffers in buf or extended_buf. This array must be filled contiguously -- if buf[i] is non-NULL then buf[j] must also be non-NULL for all j &lt; i.</summary>
-    public AVBufferRef_ptrArray8 buf;
+    public Array8<nint> buf;
     /// <summary>For planar audio which requires more than AV_NUM_DATA_POINTERS AVBufferRef pointers, this array will hold all the references which cannot fit into AVFrame.buf.</summary>
     public AVBufferRef** extended_buf;
     /// <summary>Number of elements in extended_buf.</summary>
@@ -1366,13 +1624,13 @@ public unsafe struct AVHDRPlusColorTransformParams
     /// <summary>Overlap process option indicates one of the two methods of combining rendered pixels in the processing window in an image with at least one elliptical pixel selector. For overlapping elliptical pixel selectors in an image, overlap_process_option shall have the same value.</summary>
     public AVHDRPlusOverlapProcessOption overlap_process_option;
     /// <summary>The maximum of the color components of linearized RGB values in the processing window in the scene. The values should be in the range of 0 to 1, inclusive and in multiples of 0.00001. maxscl[ 0 ], maxscl[ 1 ], and maxscl[ 2 ] are corresponding to R, G, B color components respectively.</summary>
-    public AVRational_array3 maxscl;
+    public Array3<AVRational> maxscl;
     /// <summary>The average of linearized maxRGB values in the processing window in the scene. The value should be in the range of 0 to 1, inclusive and in multiples of 0.00001.</summary>
     public AVRational average_maxrgb;
     /// <summary>The number of linearized maxRGB values at given percentiles in the processing window in the scene. The maximum value shall be 15.</summary>
     public byte num_distribution_maxrgb_percentiles;
     /// <summary>The linearized maxRGB values at given percentiles in the processing window in the scene.</summary>
-    public AVHDRPlusPercentile_array15 distribution_maxrgb;
+    public Array15<AVHDRPlusPercentile> distribution_maxrgb;
     /// <summary>The fraction of selected pixels in the image that contains the brightest pixel in the scene. The value shall be in the range of 0 to 1, inclusive and in multiples of 0.001.</summary>
     public AVRational fraction_bright_pixels;
     /// <summary>This flag indicates that the metadata for the tone mapping function in the processing window is present (for value of 1).</summary>
@@ -1384,7 +1642,7 @@ public unsafe struct AVHDRPlusColorTransformParams
     /// <summary>The number of the intermediate anchor parameters of the tone mapping function in the processing window. The maximum value shall be 15.</summary>
     public byte num_bezier_curve_anchors;
     /// <summary>The intermediate anchor parameters of the tone mapping function in the processing window in the scene. The values should be in the range of 0 to 1, inclusive and in multiples of 1/1023.</summary>
-    public AVRational_array15 bezier_curve_anchors;
+    public Array15<AVRational> bezier_curve_anchors;
     /// <summary>This flag shall be equal to 0 in bitstreams conforming to this version of this Specification. Other values are reserved for future use.</summary>
     public byte color_saturation_mapping_flag;
     /// <summary>The color saturation gain in the processing window in the scene. The value shall be in the range of 0 to 63/8, inclusive and in multiples of 1/8. The default value shall be 1.</summary>
@@ -1579,13 +1837,21 @@ public unsafe struct AVIOInterruptCB
     public void* opaque;
 }
 
+/// <summary>Struct containing luma coefficients to be used for RGB to YUV/YCoCg, or similar calculations.</summary>
+public unsafe struct AVLumaCoefficients
+{
+    public AVRational cr;
+    public AVRational cg;
+    public AVRational cb;
+}
+
 /// <summary>Mastering display metadata capable of representing the color volume of the display used to master the content (SMPTE 2086:2014).</summary>
 public unsafe struct AVMasteringDisplayMetadata
 {
     /// <summary>CIE 1931 xy chromaticity coords of color primaries (r, g, b order).</summary>
-    public AVRational_array3x2 display_primaries;
+    public Array3<Array2<AVRational>> display_primaries;
     /// <summary>CIE 1931 xy chromaticity coords of white point.</summary>
-    public AVRational_array2 white_point;
+    public Array2<AVRational> white_point;
     /// <summary>Min luminance of mastering display (cd/m^2).</summary>
     public AVRational min_luminance;
     /// <summary>Max luminance of mastering display (cd/m^2).</summary>
@@ -1619,7 +1885,7 @@ public unsafe struct AVOpenCLFrameDescriptor
     /// <summary>Number of planes in the frame.</summary>
     public int nb_planes;
     /// <summary>OpenCL image2d objects for each plane of the frame.</summary>
-    public int_array8 planes;
+    public Array8<int> planes;
 }
 
 /// <summary>OpenCL-specific data associated with a frame pool.</summary>
@@ -1775,7 +2041,7 @@ public unsafe struct AVPanScan
     public int width;
     public int height;
     /// <summary>position of the top left corner in 1/16 pel for up to 3 fields/frames - encoding: Set by user. - decoding: Set by libavcodec.</summary>
-    public short_array3x2 position;
+    public Array3<Array2<short>> position;
 }
 
 /// <summary>Descriptor that unambiguously describes how the bits of a pixel are stored in the up to 4 data planes of an image. It also stores the subsampling factors and number of components.</summary>
@@ -1791,9 +2057,17 @@ public unsafe struct AVPixFmtDescriptor
     /// <summary>Combination of AV_PIX_FMT_FLAG_... flags.</summary>
     public PixFmtFlags flags;
     /// <summary>Parameters that describe how pixels are packed. If the format has 1 or 2 components, then luma is 0. If the format has 3 or 4 components: if the RGB flag is set then 0 is red, 1 is green and 2 is blue; otherwise 0 is luma, 1 is chroma-U and 2 is chroma-V.</summary>
-    public AVComponentDescriptor_array4 comp;
+    public Array4<AVComponentDescriptor> comp;
     /// <summary>Alternative comma-separated names.</summary>
     public byte* alias;
+}
+
+/// <summary>Struct defining the red, green, and blue primary locations in terms of CIE 1931 chromaticity x and y.</summary>
+public unsafe struct AVPrimaryCoefficients
+{
+    public AVCIExy r;
+    public AVCIExy g;
+    public AVCIExy b;
 }
 
 /// <summary>This structure contains the data a format has to probe a file.</summary>
@@ -1991,7 +2265,7 @@ public unsafe struct AVStreamGroup_params
 public unsafe struct AVStreamGroupLayeredVideo
 {
     public AVClass* av_class;
-    public AVStreamGroupLayeredVideo_index index;
+    public AVStreamGroupLayeredVideo_union0 union0;
     /// <summary>Width of the final stream for presentation.</summary>
     public int width;
     /// <summary>Height of the final image for presentation.</summary>
@@ -1999,7 +2273,7 @@ public unsafe struct AVStreamGroupLayeredVideo
 }
 
 [StructLayout(LayoutKind.Explicit)]
-public unsafe struct AVStreamGroupLayeredVideo_index
+public unsafe struct AVStreamGroupLayeredVideo_union0
 {
     [FieldOffset(0)]
     public uint el_index;
@@ -2020,7 +2294,7 @@ public unsafe struct AVStreamGroupTileGrid
     public int coded_height;
     public AVStreamGroupTileGrid_offsets* offsets;
     /// <summary>The pixel value per channel in RGBA format used if no pixel of any tile is located at a particular pixel location.</summary>
-    public byte_array4 background;
+    public Array4<byte> background;
     /// <summary>Offset in pixels from the left edge of the canvas where the actual image meant for presentation starts.</summary>
     public int horizontal_offset;
     /// <summary>Offset in pixels from the top edge of the canvas where the actual image meant for presentation starts.</summary>
@@ -2078,8 +2352,8 @@ public unsafe struct AVSubtitleRect
     /// <summary>number of colors in pict, undefined when pict is not set</summary>
     public int nb_colors;
     /// <summary>data+linesize for the bitmap of this subtitle. Can be set for text/ass as well once they are rendered.</summary>
-    public byte_ptrArray4 data;
-    public int_array4 linesize;
+    public Array4<nint> data;
+    public Array4<int> linesize;
     public int flags;
     public AVSubtitleType type;
     /// <summary>0 terminated plain UTF-8 text</summary>
@@ -2103,25 +2377,25 @@ public unsafe struct AVTimecode
 public unsafe struct AVVkFrame
 {
     /// <summary>Vulkan images to which the memory is bound to. May be one for multiplane formats, or multiple.</summary>
-    public int_array8 img;
+    public Array8<int> img;
     /// <summary>Tiling for the frame.</summary>
     public int tiling;
     /// <summary>Memory backing the images. Either one, or as many as there are planes in the sw_format. In case of having multiple VkImages, but one memory, the offset field will indicate the bound offset for each image.</summary>
-    public int_array8 mem;
-    public nuint_array8 size;
+    public Array8<int> mem;
+    public Array8<nuint> size;
     /// <summary>OR&apos;d flags for all memory allocated</summary>
     public int flags;
     /// <summary>Updated after every barrier. One per VkImage.</summary>
-    public int_array8 access;
-    public int_array8 layout;
+    public Array8<int> access;
+    public Array8<int> layout;
     /// <summary>Synchronization timeline semaphores, one for each VkImage. Must not be freed manually. Must be waited on at every submission using the value in sem_value, and must be signalled at every submission, using an incremented value.</summary>
-    public int_array8 sem;
+    public Array8<int> sem;
     /// <summary>Up to date semaphore value at which each image becomes accessible. One per VkImage. Clients must wait on this value when submitting a command queue, and increment it when signalling.</summary>
-    public ulong_array8 sem_value;
+    public Array8<ulong> sem_value;
     /// <summary>Describes the binding offset of each image to the VkDeviceMemory. One per VkImage.</summary>
-    public nint_array8 offset;
+    public Array8<nint> offset;
     /// <summary>Queue family of the images. Must be VK_QUEUE_FAMILY_IGNORED if the image was allocated with the CONCURRENT concurrency option. One per VkImage.</summary>
-    public uint_array8 queue_family;
+    public Array8<uint> queue_family;
     /// <summary>Internal data. Not to be accessed by users in any way.</summary>
     public AVVkFrameInternal* @internal;
 }
@@ -2152,7 +2426,7 @@ public unsafe struct AVVulkanDeviceContext
     /// <summary>Similar to lock_queue(), unlocks a queue. Must only be called after locking.</summary>
     public AVVulkanDeviceContext_unlock_queue_func unlock_queue;
     /// <summary>Queue families used. Must be preferentially ordered. List may contain duplicates.</summary>
-    public AVVulkanDeviceQueueFamily_array64 qf;
+    public Array64<AVVulkanDeviceQueueFamily> qf;
     public int nb_qf;
     public int queue_flags;
 }
@@ -2175,13 +2449,13 @@ public unsafe struct AVVulkanFramesContext
     /// <summary>Extension data for image creation. If DRM tiling is used, a VkImageDrmFormatModifierListCreateInfoEXT structure can be added to specify the exact modifier to use.</summary>
     public void* create_pnext;
     /// <summary>Extension data for memory allocation. Must have as many entries as the number of planes of the sw_format. This will be chained to VkExportMemoryAllocateInfo, which is used to make all pool images exportable to other APIs if the necessary extensions are present in enabled_dev_extensions.</summary>
-    public void_ptrArray8 alloc_pnext;
+    public Array8<nint> alloc_pnext;
     /// <summary>A combination of AVVkFrameFlags. Unless AV_VK_FRAME_FLAG_NONE is set, autodetected flags will be OR&apos;d based on the device and tiling during av_hwframe_ctx_init().</summary>
     public AVVkFrameFlags flags;
     /// <summary>Flags to set during image creation. If unset, defaults to VK_IMAGE_CREATE_ALIAS_BIT.</summary>
     public int img_flags;
     /// <summary>Vulkan format for each image. MUST be compatible with the pixel format. If unset, will be automatically set. There are at most two compatible formats for a frame - a multiplane format, and a single-plane multi-image format.</summary>
-    public int_array8 format;
+    public Array8<int> format;
     /// <summary>Number of layers each image will have.</summary>
     public int nb_layers;
     /// <summary>Locks a frame, preventing other threads from changing frame properties. Users SHOULD only ever lock just before command submission in order to get accurate frame properties, and unlock immediately after command submission without waiting for it to finish.</summary>
@@ -2192,7 +2466,7 @@ public unsafe struct AVVulkanFramesContext
 
 public unsafe struct CodecMime
 {
-    public byte_array32 str;
+    public Array32<byte> str;
     public AVCodecID id;
 }
 
@@ -2384,9 +2658,9 @@ public unsafe struct FFStream
     /// <summary>Internal data to prevent doing update_initial_durations() twice</summary>
     public int update_initial_durations_done;
     /// <summary>Internal data to generate dts from pts</summary>
-    public long_array17 pts_reorder_error;
-    public byte_array17 pts_reorder_error_count;
-    public long_array17 pts_buffer;
+    public Array17<long> pts_reorder_error;
+    public Array17<byte> pts_reorder_error_count;
+    public Array17<long> pts_buffer;
     /// <summary>Internal data to analyze DTS and detect faulty mpeg streams</summary>
     public long last_dts_for_order_check;
     public byte dts_ordered;
@@ -2426,7 +2700,7 @@ public unsafe struct FFStreamInfo
     public long duration_gcd;
     public int duration_count;
     public long rfps_duration_sum;
-    public double_array2x399* duration_error;
+    public Array2<Array399<double>>* duration_error;
     public long codec_info_duration;
     public long codec_info_duration_fields;
     public int frame_delay_evidence;
@@ -2475,7 +2749,7 @@ public unsafe struct HLSAudioSetupInfo
     public ushort priming;
     public byte version;
     public byte setup_data_length;
-    public byte_array74 setup_data;
+    public Array74<byte> setup_data;
 }
 
 public unsafe struct HLSContext
@@ -2495,6 +2769,7 @@ public unsafe struct HLSContext
     public int first_packet;
     public long first_timestamp;
     public playlist* first_timestamp_pls;
+    public int first_timestamp_locked;
     public long cur_timestamp;
     public AVIOInterruptCB* interrupt_callback;
     public AVDictionary* avio_opts;
@@ -2514,8 +2789,8 @@ public unsafe struct HLSContext
 public unsafe struct HLSCryptoContext
 {
     public AVAES* aes_ctx;
-    public byte_array16 key;
-    public byte_array16 iv;
+    public Array16<byte> key;
+    public Array16<byte> iv;
 }
 
 public unsafe struct ID3v2EncContext
@@ -2594,7 +2869,7 @@ public unsafe struct PacketListEntry
 
 public unsafe struct playlist
 {
-    public byte_array4096 url;
+    public Array4096<byte> url;
     public FFIOContext pb;
     public byte* read_buffer;
     public AVIOContext* input;
@@ -2621,6 +2896,7 @@ public unsafe struct playlist
     public int broken;
     public long cur_seq_no;
     public long last_seq_no;
+    public long first_read_seq_no;
     public int m3u8_hold_counters;
     public long cur_seg_offset;
     public long last_load_time;
@@ -2629,8 +2905,8 @@ public unsafe struct playlist
     public uint init_sec_buf_size;
     public uint init_sec_data_len;
     public uint init_sec_buf_read_offset;
-    public byte_array4096 key_url;
-    public byte_array16 key;
+    public Array4096<byte> key_url;
+    public Array16<byte> key;
     public int is_id3_timestamped;
     public long id3_mpegts_timestamp;
     public long id3_offset;
@@ -2666,9 +2942,9 @@ public unsafe struct rendition
 {
     public AVMediaType type;
     public playlist* playlist;
-    public byte_array64 group_id;
-    public byte_array64 language;
-    public byte_array64 name;
+    public Array64<byte> group_id;
+    public Array64<byte> language;
+    public Array64<byte> name;
     public int disposition;
 }
 
@@ -2680,7 +2956,7 @@ public unsafe struct segment
     public byte* url;
     public byte* key;
     public KeyType key_type;
-    public byte_array16 iv;
+    public Array16<byte> iv;
     public segment* init_section;
 }
 
@@ -2692,7 +2968,7 @@ public unsafe struct SwsContext
     public void* opaque;
     /// <summary>Bitmask of SWS_*. See `SwsFlags` for details.</summary>
     public uint flags;
-    public double_array2 scaler_params;
+    public Array2<double> scaler_params;
     /// <summary>How many threads to use for processing, or 0 for automatic selection.</summary>
     public int threads;
     /// <summary>Dither mode.</summary>
@@ -2756,8 +3032,8 @@ public unsafe struct variant
     public int bandwidth;
     public int n_playlists;
     public playlist** playlists;
-    public byte_array64 audio_group;
-    public byte_array64 video_group;
-    public byte_array64 subtitles_group;
+    public Array64<byte> audio_group;
+    public Array64<byte> video_group;
+    public Array64<byte> subtitles_group;
 }
 

@@ -152,6 +152,7 @@ internal class Generator
         WriteInternal(outputFile,
             (units, writer) =>
             {
+                writer.WriteLine("#pragma warning disable IDE1006");
                 writer.WriteLine($"public unsafe static partial class {ClassName}");
                 using (writer.BeginBlock())
                     units.OfType<InlineFunctionDefinition>()
@@ -162,7 +163,6 @@ internal class Generator
                         .ForEach(x =>
                         {
                             writer.WriteFunction(x);
-                            writer.WriteLine();
                         });
             });
 
@@ -185,6 +185,7 @@ internal class Generator
         WriteInternal(outputFile,
             (units, writer) =>
             {
+                writer.WriteLine("using System.Runtime.CompilerServices;\r\n");
                 units.OfType<FixedArrayDefinition>()
                     .OrderBy(x => x.Size)
                     .ThenBy(x => x.Name)

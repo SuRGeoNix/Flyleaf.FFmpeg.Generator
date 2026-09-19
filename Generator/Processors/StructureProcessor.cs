@@ -66,6 +66,7 @@ internal class StructureProcessor
         var bitFieldComments = new List<string>();
         long bitCounter = 0;
         var fields = new List<StructureField>();
+        var anonymousFieldCount = 0;
 
         // IsBitField (Currently only AVIndexEntry but we should review new ones if any)
         foreach (var field in @class.Fields)
@@ -87,33 +88,30 @@ internal class StructureProcessor
                 continue;
             }
 
-            // Keep an eye on those (might just be a pointer to pointer and not a pointer to unfixed struct array)
-            //if (field.Type is PointerType ptype && ptype.Pointee is PointerType && field.DebugText.Contains("struct"))
-            //    Console.WriteLine($"Unfixed Array: {name} - {field.Name}");
+            // Anonymous struct/union members carry no name in C; C# has no equivalent,
+            // so they are exposed as a regular nested field under a synthesized name.
+            var fieldName = string.IsNullOrEmpty(field.Name)
+                ? $"{(IsUnion(field.Type) ? "union" : "struct")}{anonymousFieldCount++}"
+                : field.Name;
 
-            // Empty field names (mainly for unions)
-            if (string.IsNullOrEmpty(field.Name))
-            {
-                if (field.Class.Name == "AVStreamGroupLayeredVideo")
-                    field.Name = "index";
-            }
-
-            var typeName = $"{field.Class.Name}_{field.Name}";
+            var typeName = $"{field.Class.Name}_{fieldName}";
             fields.Add(new StructureField
             {
-                Name = field.Name == "GetType" ? "GetType2" : field.Name, // TBR: Changes names
-                FieldType = FixFlagTypes(field.Class.Name, field.Name) ?? GetTypeDefinition(field.Type, typeName), // Changes types
+                Name        = fieldName == "GetType" ? "GetType2" : fieldName, // TBR: Changes names
+                FieldType   = FixFlagTypes(field.Class.Name, fieldName) ?? GetTypeDefinition(field.Type, typeName), // Changes types
                 XmlDocument = field.Comment?.BriefText,
-                Obsoletion = ObsoletionHelper.CreateObsoletion(field)
+                Obsoletion  = ObsoletionHelper.CreateObsoletion(field)
             });
         }
 
-        if (bitFieldNames.Any() || bitCounter > 0) throw new InvalidOperationException();
+        if (bitFieldNames.Count != 0 || bitCounter > 0) throw new InvalidOperationException();
 
         definition.Fields = fields.ToArray();
     }
 
-    private TypeDefinition FixFlagTypes(string className, string fieldName)
+    private static bool IsUnion(Type type) => type.TryGetClass(out var @class) && @class.IsUnion;
+
+    private static TypeDefinition FixFlagTypes(string className, string fieldName)
     {
         if (fieldName == "flags")
         {
@@ -346,43 +344,32 @@ internal class StructureProcessor
         }
     }
 
-
     private TypeDefinition GetFieldTypeForFixedArray(ArrayType arrayType)
     {
         var elementType = arrayType.Type;
         var elementTypeDefinition = GetTypeDefinition(elementType);
 
-        var fixedSize = (int) arrayType.Size;
+        var fixedSize = arrayType.Size;
 
-        var name = $"{elementTypeDefinition.Name}_array{fixedSize}";
+        if (elementType is ArrayType elArray)
+            fixedSize /= elArray.Size;
 
-        if (elementType.IsPointer())
-            name = $"{TypeHelper.GetTypeName(elementType.GetPointee())}_ptrArray{fixedSize}";
+        string arrayName = $"Array{fixedSize}";
+        string name =
+            elementType.IsPointer() ?
+            $"{arrayName}<nint>" :
+            $"{arrayName}<{elementTypeDefinition.Name}>";
 
-        if (elementType is ArrayType elementArrayType)
+        if (_context.IsKnownUnitName(arrayName))
+            return new() { Name = name };
+
+        _context.AddUnit(new FixedArrayDefinition
         {
-            if (elementArrayType.SizeType == ArrayType.ArraySize.Constant)
-            {
-                fixedSize /= (int) elementArrayType.Size;
-                name = $"{TypeHelper.GetTypeName(elementArrayType.Type)}_array{fixedSize}x{elementArrayType.Size}";
-            }
-            else
-                name = $"{TypeHelper.GetTypeName(elementArrayType.Type)}_arrayOfArray{fixedSize}";
-        }
+            Name        = $"Array{fixedSize}",
+            Size        = (int)fixedSize,
+            ElementType = elementTypeDefinition
+        });
 
-        if (_context.IsKnownUnitName(name))
-            return new TypeDefinition { Name = name, ByReference = !arrayType.QualifiedType.Qualifiers.IsConst };
-
-        var fixedArray = new FixedArrayDefinition
-        {
-            Name = name,
-            Size = fixedSize,
-            ElementType = elementTypeDefinition,
-            IsPrimitive = elementType.IsPrimitiveType() && !name.StartsWith("nint") && !name.StartsWith("nuint"), // TBR: nint changed with ptrdiff_t / size_t
-            ByReference = !arrayType.QualifiedType.Qualifiers.IsConst
-        };
-        _context.AddUnit(fixedArray);
-
-        return fixedArray;
+        return new() { Name = name };
     }
 }

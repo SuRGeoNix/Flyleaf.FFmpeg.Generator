@@ -1023,6 +1023,26 @@ public enum AVDiscard : int
     All = 48,
 }
 
+public enum AVDOVICompression : int
+{
+    None = 0,
+    Limited = 1,
+    Reserved = 2,
+    Extended = 3,
+}
+
+public enum AVDOVIMappingMethod : int
+{
+    Polynomial = 0,
+    Mmr = 1,
+}
+
+public enum AVDOVINLQMethod : int
+{
+    None = -1,
+    LinearDz = 0,
+}
+
 /// <summary>The duration of a video can be estimated through various ways, and this enum can be used to know how the duration was estimated.</summary>
 public enum AVDurationEstimationMethod : int
 {

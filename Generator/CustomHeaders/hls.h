@@ -87,6 +87,7 @@ struct playlist {
     int broken;
     int64_t cur_seq_no;
     int64_t last_seq_no;
+    int64_t first_read_seq_no;
     int m3u8_hold_counters;
     int64_t cur_seg_offset;
     int64_t last_load_time;
@@ -188,6 +189,7 @@ typedef struct HLSContext {
     int first_packet;
     int64_t first_timestamp;
     struct playlist *first_timestamp_pls;
+    int first_timestamp_locked;
     int64_t cur_timestamp;
     AVIOInterruptCB *interrupt_callback;
     AVDictionary *avio_opts;

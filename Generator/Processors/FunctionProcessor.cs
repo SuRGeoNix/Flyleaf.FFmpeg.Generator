@@ -30,8 +30,8 @@ internal class FunctionProcessor
                 ProcessFunction(function, true, false);
 
             // add a duplicate/overload that uses ptr-style arguments for fixed arrays
-            if (function.Parameters.Any(v => IsTypeFixedArray(v.Type)))
-                ProcessFunction(function, false, false);
+            //if (function.Parameters.Any(v => IsTypeFixedArray(v.Type)))
+            //    ProcessFunction(function, false, false);
         }
     }
 
@@ -241,6 +241,9 @@ internal class FunctionProcessor
 
     private TypeDefinition GetParameterType(Type type, string name, bool useByRefForDoubleIndirection = false, bool useWrapperForFixedArray = true)
     {
+        if (type is ArrayType array)
+            return new() { Name = $"{TypeHelper.GetTypeName(array.Type)}*" };
+
         // if argument is double indirection (void** ptr), rewrite to use "ref void* ptr"
         if (useByRefForDoubleIndirection && type is PointerType { Pointee: PointerType t })
         {
@@ -274,12 +277,12 @@ internal class FunctionProcessor
         }
 
         // edge case when type is array of pointers to none builtin type (type[]* -> type**)
-        if (useWrapperForFixedArray && type is ArrayType arrayType &&
-            arrayType.SizeType == ArrayType.ArraySize.Incomplete &&
-            arrayType.Type is PointerType arrayPointerType &&
-            !(arrayPointerType.Pointee is BuiltinType || arrayPointerType.Pointee is TypedefType typedefType &&
-                typedefType.Declaration.Type is BuiltinType))
-            return new TypeDefinition { Name = $"{TypeHelper.GetTypeName(arrayPointerType)}*" };
+        //if (useWrapperForFixedArray && type is ArrayType arrayType &&
+        //    arrayType.SizeType == ArrayType.ArraySize.Incomplete &&
+        //    arrayType.Type is PointerType arrayPointerType &&
+        //    !(arrayPointerType.Pointee is BuiltinType || arrayPointerType.Pointee is TypedefType typedefType &&
+        //        typedefType.Declaration.Type is BuiltinType))
+        //    return new TypeDefinition { Name = $"{TypeHelper.GetTypeName(arrayPointerType)}*" };
 
         return _context.StructureProcessor.GetTypeDefinition(type, name, useWrapperForFixedArray);
     }

@@ -68,6 +68,50 @@ public unsafe record struct av_log_set_callback_callback_func(IntPtr Pointer)
 }
 
 [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+public unsafe delegate double av_csp_trc_func_from_id (double p0);
+public unsafe record struct av_csp_trc_func_from_id_func(IntPtr Pointer)
+{
+    public static implicit operator av_csp_trc_func_from_id_func(av_csp_trc_func_from_id func) => new(func switch
+    {
+        null => IntPtr.Zero,
+        _ => GetFunctionPointerForDelegate(func)
+    });
+}
+
+[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+public unsafe delegate double av_csp_trc_func_inv_from_id (double p0);
+public unsafe record struct av_csp_trc_func_inv_from_id_func(IntPtr Pointer)
+{
+    public static implicit operator av_csp_trc_func_inv_from_id_func(av_csp_trc_func_inv_from_id func) => new(func switch
+    {
+        null => IntPtr.Zero,
+        _ => GetFunctionPointerForDelegate(func)
+    });
+}
+
+[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+public unsafe delegate void av_csp_itu_eotf (double Lw, double Lb, double* c);
+public unsafe record struct av_csp_itu_eotf_func(IntPtr Pointer)
+{
+    public static implicit operator av_csp_itu_eotf_func(av_csp_itu_eotf func) => new(func switch
+    {
+        null => IntPtr.Zero,
+        _ => GetFunctionPointerForDelegate(func)
+    });
+}
+
+[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+public unsafe delegate void av_csp_itu_eotf_inv (double Lw, double Lb, double* c);
+public unsafe record struct av_csp_itu_eotf_inv_func(IntPtr Pointer)
+{
+    public static implicit operator av_csp_itu_eotf_inv_func(av_csp_itu_eotf_inv func) => new(func switch
+    {
+        null => IntPtr.Zero,
+        _ => GetFunctionPointerForDelegate(func)
+    });
+}
+
+[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 public unsafe delegate void av_buffer_create_free (void* opaque, byte* data);
 public unsafe record struct av_buffer_create_free_func(IntPtr Pointer)
 {
@@ -266,7 +310,7 @@ public unsafe record struct AVVulkanFramesContext_unlock_frame_func(IntPtr Point
 }
 
 [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-public unsafe delegate void AVCodecContext_draw_horiz_band (AVCodecContext* s, AVFrame* src, ref int_array8 offset, int y, int type, int height);
+public unsafe delegate void AVCodecContext_draw_horiz_band (AVCodecContext* s, AVFrame* src, int* offset, int y, int type, int height);
 public unsafe record struct AVCodecContext_draw_horiz_band_func(IntPtr Pointer)
 {
     public static implicit operator AVCodecContext_draw_horiz_band_func(AVCodecContext_draw_horiz_band func) => new(func switch

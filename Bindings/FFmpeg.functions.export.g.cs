@@ -474,10 +474,6 @@ public unsafe static partial class Raw
     
     /// <summary>Modify width and height values so that they will result in a memory buffer that is acceptable for the codec if you also ensure that all line sizes are a multiple of the respective linesize_align[i].</summary>
     [DllImport(AVCODEC, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern void avcodec_align_dimensions2(AVCodecContext* s, int* width, int* height, ref int_array8 linesize_align);
-    
-    /// <summary>Modify width and height values so that they will result in a memory buffer that is acceptable for the codec if you also ensure that all line sizes are a multiple of the respective linesize_align[i].</summary>
-    [DllImport(AVCODEC, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern void avcodec_align_dimensions2(AVCodecContext* s, int* width, int* height, int* linesize_align);
     
     /// <summary>Allocate an AVCodecContext and set its fields to default values. The resulting struct should be freed with avcodec_free_context().</summary>
@@ -1574,14 +1570,6 @@ public unsafe static partial class Raw
     [DllImport(AVFORMAT, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern int av_sdp_create(AVFormatContext** ac, int n_files, byte* buf, int size);
     
-    /// <summary>Generate an SDP for an RTP session.</summary>
-    /// <param name="ac">array of AVFormatContexts describing the RTP streams. If the array is composed by only one context, such context can contain multiple AVStreams (one AVStream per RTP stream). Otherwise, all the contexts in the array (an AVCodecContext per RTP stream) must contain only one AVStream.</param>
-    /// <param name="n_files">number of AVCodecContexts contained in ac</param>
-    /// <param name="buf">buffer where the SDP will be stored (must be allocated by the caller)</param>
-    /// <param name="size">the size of the buffer</param>
-    [DllImport(AVFORMAT, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern int av_sdp_create(AVFormatContext*[] ac, int n_files, byte* buf, int size);
-    
     /// <summary>Seek to the keyframe at timestamp. &apos;timestamp&apos; in &apos;stream_index&apos;.</summary>
     /// <param name="s">media file handle</param>
     /// <param name="stream_index">If stream_index is (-1), a default stream is selected, and timestamp is automatically converted from AV_TIME_BASE units to the stream specific time_base.</param>
@@ -2056,7 +2044,7 @@ public unsafe static partial class Raw
     
     /// <summary>Write a NULL terminated array of strings to the context. Usually you don&apos;t need to use this function directly but its macro wrapper, avio_print.</summary>
     [DllImport(AVFORMAT, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern void avio_print_string_array(AVIOContext* s, byte*[] strings);
+    public static extern void avio_print_string_array(AVIOContext* s, byte** strings);
     
     /// <summary>Writes a formatted string to the context.</summary>
     [DllImport(AVFORMAT, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
@@ -2688,6 +2676,45 @@ public unsafe static partial class Raw
     [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern nuint av_cpu_max_align();
     
+    /// <summary>Determine a suitable EOTF &apos;gamma&apos; value to match the supplied AVColorTransferCharacteristic.</summary>
+    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern double av_csp_approximate_eotf_gamma(AVColorTransferCharacteristic trc);
+    
+    /// <summary>Determine a suitable &apos;gamma&apos; value to match the supplied AVColorTransferCharacteristic.</summary>
+    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern double av_csp_approximate_trc_gamma(AVColorTransferCharacteristic trc);
+    
+    /// <summary>Returns the ITU EOTF corresponding to a given TRC. This converts from the signal level [0,1] to the raw output display luminance in nits (cd/m^2). This is done per channel in RGB space, except for AVCOL_TRC_SMPTE428, which assumes CIE XYZ in- and output.</summary>
+    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern av_csp_itu_eotf_func av_csp_itu_eotf(AVColorTransferCharacteristic trc);
+    
+    /// <summary>Returns the mathematical inverse of the corresponding EOTF.</summary>
+    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern av_csp_itu_eotf_inv_func av_csp_itu_eotf_inv(AVColorTransferCharacteristic trc);
+    
+    /// <summary>Retrieves the Luma coefficients necessary to construct a conversion matrix from an enum constant describing the colorspace.</summary>
+    /// <param name="csp">An enum constant indicating YUV or similar colorspace.</param>
+    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern AVLumaCoefficients* av_csp_luma_coeffs_from_avcsp(AVColorSpace csp);
+    
+    /// <summary>Retrieves a complete gamut description from an enum constant describing the color primaries.</summary>
+    /// <param name="prm">An enum constant indicating primaries</param>
+    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern AVColorPrimariesDesc* av_csp_primaries_desc_from_id(AVColorPrimaries prm);
+    
+    /// <summary>Detects which enum AVColorPrimaries constant corresponds to the given complete gamut description.</summary>
+    /// <param name="prm">A description of the colorspace gamut</param>
+    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern AVColorPrimaries av_csp_primaries_id_from_desc(AVColorPrimariesDesc* prm);
+    
+    /// <summary>Determine the function needed to apply the given AVColorTransferCharacteristic to linear input.</summary>
+    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern av_csp_trc_func_from_id_func av_csp_trc_func_from_id(AVColorTransferCharacteristic trc);
+    
+    /// <summary>Returns the mathematical inverse of the corresponding TRC function.</summary>
+    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern av_csp_trc_func_inv_from_id_func av_csp_trc_func_inv_from_id(AVColorTransferCharacteristic trc);
+    
     /// <summary>Convert a double precision floating point number to a rational.</summary>
     /// <param name="d">`double` to convert</param>
     /// <param name="max">Maximum allowed numerator and denominator</param>
@@ -2800,30 +2827,12 @@ public unsafe static partial class Raw
     /// <param name="hflip">whether the matrix should be flipped horizontally</param>
     /// <param name="vflip">whether the matrix should be flipped vertically</param>
     [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern void av_display_matrix_flip(ref int_array9 matrix, int hflip, int vflip);
-    
-    /// <summary>Flip the input matrix horizontally and/or vertically.</summary>
-    /// <param name="matrix">a transformation matrix</param>
-    /// <param name="hflip">whether the matrix should be flipped horizontally</param>
-    /// <param name="vflip">whether the matrix should be flipped vertically</param>
-    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern void av_display_matrix_flip(int* matrix, int hflip, int vflip);
     
     /// <summary>Extract the rotation component of the transformation matrix.</summary>
     /// <param name="matrix">the transformation matrix</param>
     [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern double av_display_rotation_get(int_array9 matrix);
-    
-    /// <summary>Extract the rotation component of the transformation matrix.</summary>
-    /// <param name="matrix">the transformation matrix</param>
-    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern double av_display_rotation_get(int* matrix);
-    
-    /// <summary>Initialize a transformation matrix describing a pure clockwise rotation by the specified angle (in degrees).</summary>
-    /// <param name="matrix">a transformation matrix (will be fully overwritten by this function)</param>
-    /// <param name="angle">rotation angle in degrees.</param>
-    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern void av_display_rotation_set(ref int_array9 matrix, double angle);
     
     /// <summary>Initialize a transformation matrix describing a pure clockwise rotation by the specified angle (in degrees).</summary>
     /// <param name="matrix">a transformation matrix (will be fully overwritten by this function)</param>
@@ -2836,6 +2845,19 @@ public unsafe static partial class Raw
     /// <param name="c">Second rational</param>
     [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern AVRational av_div_q(AVRational b, AVRational c);
+    
+    /// <summary>Allocate a AVDOVIDecoderConfigurationRecord structure and initialize its fields to default values.</summary>
+    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern AVDOVIDecoderConfigurationRecord* av_dovi_alloc(ulong* size);
+    
+    /// <summary>Find an extension block with a given level, or NULL. In the case of multiple extension blocks, only the first is returned.</summary>
+    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern AVDOVIDmData* av_dovi_find_level(AVDOVIMetadata* data, byte level);
+    
+    /// <summary>Allocate an AVDOVIMetadata structure and initialize its fields to default values.</summary>
+    /// <param name="size">If this parameter is non-NULL, the size in bytes of the allocated struct will be written here on success</param>
+    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern AVDOVIMetadata* av_dovi_metadata_alloc(ulong* size);
     
     /// <summary>Allocate an AVDynamicHDRPlus structure and set its fields to default values. The resulting struct can be freed using av_freep().</summary>
     [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
@@ -3470,16 +3492,6 @@ public unsafe static partial class Raw
     /// <param name="pix_fmt">the AVPixelFormat of the image</param>
     /// <param name="align">the value to use for buffer size alignment</param>
     [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern int av_image_alloc(ref byte_ptrArray4 pointers, ref int_array4 linesizes, int w, int h, AVPixelFormat pix_fmt, int align);
-    
-    /// <summary>Allocate an image with size w and h and pixel format pix_fmt, and fill pointers and linesizes accordingly. The allocated image buffer has to be freed by using av_freep(&amp;pointers[0]).</summary>
-    /// <param name="pointers">array to be filled with the pointer for each image plane</param>
-    /// <param name="linesizes">the array filled with the linesize for each plane</param>
-    /// <param name="w">width of the image in pixels</param>
-    /// <param name="h">height of the image in pixels</param>
-    /// <param name="pix_fmt">the AVPixelFormat of the image</param>
-    /// <param name="align">the value to use for buffer size alignment</param>
-    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern int av_image_alloc(byte** pointers, int* linesizes, int w, int h, AVPixelFormat pix_fmt, int align);
     
     /// <summary>Check if the given sample aspect ratio of an image is valid.</summary>
@@ -3516,17 +3528,6 @@ public unsafe static partial class Raw
     /// <param name="width">width of the image in pixels</param>
     /// <param name="height">height of the image in pixels</param>
     [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern void av_image_copy(byte_ptrArray4 dst_data, int_array4 dst_linesizes, byte_ptrArray4 src_data, int_array4 src_linesizes, AVPixelFormat pix_fmt, int width, int height);
-    
-    /// <summary>Copy image in src_data to dst_data.</summary>
-    /// <param name="dst_data">destination image data buffer to copy to</param>
-    /// <param name="dst_linesizes">linesizes for the image in dst_data</param>
-    /// <param name="src_data">source image data buffer to copy from</param>
-    /// <param name="src_linesizes">linesizes for the image in src_data</param>
-    /// <param name="pix_fmt">the AVPixelFormat of the image</param>
-    /// <param name="width">width of the image in pixels</param>
-    /// <param name="height">height of the image in pixels</param>
-    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern void av_image_copy(byte** dst_data, int* dst_linesizes, byte** src_data, int* src_linesizes, AVPixelFormat pix_fmt, int width, int height);
     
     /// <summary>Copy image plane from src to dst. That is, copy &quot;height&quot; number of lines of &quot;bytewidth&quot; bytes each. The first byte of each successive line is separated by *_linesize bytes.</summary>
@@ -3552,38 +3553,11 @@ public unsafe static partial class Raw
     /// <param name="height">the height of the source image in pixels</param>
     /// <param name="align">the assumed linesize alignment for dst</param>
     [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern int av_image_copy_to_buffer(byte* dst, int dst_size, byte_ptrArray4 src_data, int_array4 src_linesize, AVPixelFormat pix_fmt, int width, int height, int align);
-    
-    /// <summary>Copy image data from an image into a buffer.</summary>
-    /// <param name="dst">a buffer into which picture data will be copied</param>
-    /// <param name="dst_size">the size in bytes of dst</param>
-    /// <param name="src_data">pointers containing the source image data</param>
-    /// <param name="src_linesize">linesizes for the image in src_data</param>
-    /// <param name="pix_fmt">the pixel format of the source image</param>
-    /// <param name="width">the width of the source image in pixels</param>
-    /// <param name="height">the height of the source image in pixels</param>
-    /// <param name="align">the assumed linesize alignment for dst</param>
-    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern int av_image_copy_to_buffer(byte* dst, int dst_size, byte** src_data, int* src_linesize, AVPixelFormat pix_fmt, int width, int height, int align);
     
     /// <summary>Copy image data located in uncacheable (e.g. GPU mapped) memory. Where available, this function will use special functionality for reading from such memory, which may result in greatly improved performance compared to plain av_image_copy().</summary>
     [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern void av_image_copy_uc_from(byte_ptrArray4 dst_data, nint_array4 dst_linesizes, byte_ptrArray4 src_data, nint_array4 src_linesizes, AVPixelFormat pix_fmt, int width, int height);
-    
-    /// <summary>Copy image data located in uncacheable (e.g. GPU mapped) memory. Where available, this function will use special functionality for reading from such memory, which may result in greatly improved performance compared to plain av_image_copy().</summary>
-    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern void av_image_copy_uc_from(byte** dst_data, nint* dst_linesizes, byte** src_data, nint* src_linesizes, AVPixelFormat pix_fmt, int width, int height);
-    
-    /// <summary>Setup the data pointers and linesizes based on the specified image parameters and the provided array.</summary>
-    /// <param name="dst_data">data pointers to be filled in</param>
-    /// <param name="dst_linesize">linesizes for the image in dst_data to be filled in</param>
-    /// <param name="src">buffer which will contain or contains the actual image data, can be NULL</param>
-    /// <param name="pix_fmt">the pixel format of the image</param>
-    /// <param name="width">the width of the image in pixels</param>
-    /// <param name="height">the height of the image in pixels</param>
-    /// <param name="align">the value used in src for linesize alignment</param>
-    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern int av_image_fill_arrays(ref byte_ptrArray4 dst_data, ref int_array4 dst_linesize, byte* src, AVPixelFormat pix_fmt, int width, int height, int align);
     
     /// <summary>Setup the data pointers and linesizes based on the specified image parameters and the provided array.</summary>
     /// <param name="dst_data">data pointers to be filled in</param>
@@ -3604,28 +3578,7 @@ public unsafe static partial class Raw
     /// <param name="width">the width of the image in pixels</param>
     /// <param name="height">the height of the image in pixels</param>
     [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern int av_image_fill_black(byte_ptrArray4 dst_data, nint_array4 dst_linesize, AVPixelFormat pix_fmt, AVColorRange range, int width, int height);
-    
-    /// <summary>Overwrite the image data with black. This is suitable for filling a sub-rectangle of an image, meaning the padding between the right most pixel and the left most pixel on the next line will not be overwritten. For some formats, the image size might be rounded up due to inherent alignment.</summary>
-    /// <param name="dst_data">data pointers to destination image</param>
-    /// <param name="dst_linesize">linesizes for the destination image</param>
-    /// <param name="pix_fmt">the pixel format of the image</param>
-    /// <param name="range">the color range of the image (important for colorspaces such as YUV)</param>
-    /// <param name="width">the width of the image in pixels</param>
-    /// <param name="height">the height of the image in pixels</param>
-    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern int av_image_fill_black(byte** dst_data, nint* dst_linesize, AVPixelFormat pix_fmt, AVColorRange range, int width, int height);
-    
-    /// <summary>Overwrite the image data with a color. This is suitable for filling a sub-rectangle of an image, meaning the padding between the right most pixel and the left most pixel on the next line will not be overwritten. For some formats, the image size might be rounded up due to inherent alignment.</summary>
-    /// <param name="dst_data">data pointers to destination image</param>
-    /// <param name="dst_linesize">linesizes for the destination image</param>
-    /// <param name="pix_fmt">the pixel format of the image</param>
-    /// <param name="color">the color components to be used for the fill</param>
-    /// <param name="width">the width of the image in pixels</param>
-    /// <param name="height">the height of the image in pixels</param>
-    /// <param name="flags">currently unused</param>
-    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern int av_image_fill_color(byte_ptrArray4 dst_data, nint_array4 dst_linesize, AVPixelFormat pix_fmt, uint_array4 color, int width, int height, int flags);
     
     /// <summary>Overwrite the image data with a color. This is suitable for filling a sub-rectangle of an image, meaning the padding between the right most pixel and the left most pixel on the next line will not be overwritten. For some formats, the image size might be rounded up due to inherent alignment.</summary>
     /// <param name="dst_data">data pointers to destination image</param>
@@ -3643,21 +3596,7 @@ public unsafe static partial class Raw
     /// <param name="pix_fmt">the AVPixelFormat of the image</param>
     /// <param name="width">width of the image in pixels</param>
     [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern int av_image_fill_linesizes(ref int_array4 linesizes, AVPixelFormat pix_fmt, int width);
-    
-    /// <summary>Fill plane linesizes for an image with pixel format pix_fmt and width width.</summary>
-    /// <param name="linesizes">array to be filled with the linesize for each plane</param>
-    /// <param name="pix_fmt">the AVPixelFormat of the image</param>
-    /// <param name="width">width of the image in pixels</param>
-    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern int av_image_fill_linesizes(int* linesizes, AVPixelFormat pix_fmt, int width);
-    
-    /// <summary>Compute the max pixel step for each plane of an image with a format described by pixdesc.</summary>
-    /// <param name="max_pixsteps">an array which is filled with the max pixel step for each plane. Since a plane may contain different pixel components, the computed max_pixsteps[plane] is relative to the component in the plane with the max pixel step.</param>
-    /// <param name="max_pixstep_comps">an array which is filled with the component for each plane which has the max pixel step. May be NULL.</param>
-    /// <param name="pixdesc">the AVPixFmtDescriptor for the image, describing its format</param>
-    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern void av_image_fill_max_pixsteps(ref int_array4 max_pixsteps, ref int_array4 max_pixstep_comps, AVPixFmtDescriptor* pixdesc);
     
     /// <summary>Compute the max pixel step for each plane of an image with a format described by pixdesc.</summary>
     /// <param name="max_pixsteps">an array which is filled with the max pixel step for each plane. Since a plane may contain different pixel components, the computed max_pixsteps[plane] is relative to the component in the plane with the max pixel step.</param>
@@ -3672,24 +3611,7 @@ public unsafe static partial class Raw
     /// <param name="height">height of the image in pixels</param>
     /// <param name="linesizes">the array containing the linesize for each plane, should be filled by av_image_fill_linesizes()</param>
     [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern int av_image_fill_plane_sizes(ref nuint_array4 size, AVPixelFormat pix_fmt, int height, nint_array4 linesizes);
-    
-    /// <summary>Fill plane sizes for an image with pixel format pix_fmt and height height.</summary>
-    /// <param name="size">the array to be filled with the size of each image plane</param>
-    /// <param name="pix_fmt">the AVPixelFormat of the image</param>
-    /// <param name="height">height of the image in pixels</param>
-    /// <param name="linesizes">the array containing the linesize for each plane, should be filled by av_image_fill_linesizes()</param>
-    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern int av_image_fill_plane_sizes(nuint* size, AVPixelFormat pix_fmt, int height, nint* linesizes);
-    
-    /// <summary>Fill plane data pointers for an image with pixel format pix_fmt and height height.</summary>
-    /// <param name="data">pointers array to be filled with the pointer for each image plane</param>
-    /// <param name="pix_fmt">the AVPixelFormat of the image</param>
-    /// <param name="height">height of the image in pixels</param>
-    /// <param name="ptr">the pointer to a buffer which will contain the image</param>
-    /// <param name="linesizes">the array containing the linesize for each plane, should be filled by av_image_fill_linesizes()</param>
-    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern int av_image_fill_pointers(ref byte_ptrArray4 data, AVPixelFormat pix_fmt, int height, byte* ptr, int_array4 linesizes);
     
     /// <summary>Fill plane data pointers for an image with pixel format pix_fmt and height height.</summary>
     /// <param name="data">pointers array to be filled with the pointer for each image plane</param>
@@ -4217,22 +4139,7 @@ public unsafe static partial class Raw
     public static extern uint av_q2intfloat(AVRational q);
     
     [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern void av_read_image_line(ushort* dst, ref byte_ptrArray4 data, int_array4 linesize, AVPixFmtDescriptor* desc, int x, int y, int c, int w, int read_pal_component);
-    
-    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern void av_read_image_line(ushort* dst, byte** data, int* linesize, AVPixFmtDescriptor* desc, int x, int y, int c, int w, int read_pal_component);
-    
-    /// <summary>Read a line from an image, and write the values of the pixel format component c to dst.</summary>
-    /// <param name="data">the array containing the pointers to the planes of the image</param>
-    /// <param name="linesize">the array containing the linesizes of the image</param>
-    /// <param name="desc">the pixel format descriptor for the image</param>
-    /// <param name="x">the horizontal coordinate of the first pixel to read</param>
-    /// <param name="y">the vertical coordinate of the first pixel to read</param>
-    /// <param name="w">the width of the line to read, that is the number of values to write to dst</param>
-    /// <param name="read_pal_component">if not zero and the format is a paletted format writes the values corresponding to the palette component c in data[1] to dst, rather than the palette indexes in data[0]. The behavior is undefined if the format is not paletted.</param>
-    /// <param name="dst_element_size">size of elements in dst array (2 or 4 byte)</param>
-    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern void av_read_image_line2(void* dst, ref byte_ptrArray4 data, int_array4 linesize, AVPixFmtDescriptor* desc, int x, int y, int c, int w, int read_pal_component, int dst_element_size);
     
     /// <summary>Read a line from an image, and write the values of the pixel format component c to dst.</summary>
     /// <param name="data">the array containing the pointers to the planes of the image</param>
@@ -4550,13 +4457,6 @@ public unsafe static partial class Raw
     /// <param name="cmp">compare function used to compare elements in the tree, API identical to that of Standard C&apos;s qsort It is guaranteed that the first and only the first argument to cmp() will be the key parameter to av_tree_find(), thus it could if the user wants, be a different type (like an opaque context).</param>
     /// <param name="next">If next is not NULL, then next[0] will contain the previous element and next[1] the next element. If either does not exist, then the corresponding entry in next is unchanged.</param>
     [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern void* av_tree_find(AVTreeNode* root, void* key, av_tree_find_cmp_func cmp, ref void_ptrArray2 next);
-    
-    /// <summary>Find an element.</summary>
-    /// <param name="root">a pointer to the root node of the tree</param>
-    /// <param name="cmp">compare function used to compare elements in the tree, API identical to that of Standard C&apos;s qsort It is guaranteed that the first and only the first argument to cmp() will be the key parameter to av_tree_find(), thus it could if the user wants, be a different type (like an opaque context).</param>
-    /// <param name="next">If next is not NULL, then next[0] will contain the previous element and next[1] the next element. If either does not exist, then the corresponding entry in next is unchanged.</param>
-    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern void* av_tree_find(AVTreeNode* root, void* key, av_tree_find_cmp_func cmp, void** next);
     
     /// <summary>Insert or remove an element.</summary>
@@ -4593,6 +4493,14 @@ public unsafe static partial class Raw
     [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern AVVkFrame* av_vk_frame_alloc();
     
+    /// <summary>Returns an array of optional Vulkan device extensions that FFmpeg may use if enabled.</summary>
+    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern byte** av_vk_get_optional_device_extensions(int* count);
+    
+    /// <summary>Returns an array of optional Vulkan instance extensions that FFmpeg may use if enabled.</summary>
+    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
+    public static extern byte** av_vk_get_optional_instance_extensions(int* count);
+    
     /// <summary>Returns the optimal per-plane Vulkan format for a given sw_format, one for each plane. Returns NULL on unsupported formats.</summary>
     [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern int* av_vkfmt_from_pixfmt(AVPixelFormat p);
@@ -4606,22 +4514,7 @@ public unsafe static partial class Raw
     public static extern void av_vlog(void* avcl, LogLevel level, [MarshalAs(UnmanagedType.LPUTF8Str)] string fmt, byte* vl);
     
     [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern void av_write_image_line(ushort* src, ref byte_ptrArray4 data, int_array4 linesize, AVPixFmtDescriptor* desc, int x, int y, int c, int w);
-    
-    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern void av_write_image_line(ushort* src, byte** data, int* linesize, AVPixFmtDescriptor* desc, int x, int y, int c, int w);
-    
-    /// <summary>Write the values from src to the pixel format component c of an image line.</summary>
-    /// <param name="src">array containing the values to write</param>
-    /// <param name="data">the array containing the pointers to the planes of the image to write into. It is supposed to be zeroed.</param>
-    /// <param name="linesize">the array containing the linesizes of the image</param>
-    /// <param name="desc">the pixel format descriptor for the image</param>
-    /// <param name="x">the horizontal coordinate of the first pixel to write</param>
-    /// <param name="y">the vertical coordinate of the first pixel to write</param>
-    /// <param name="w">the width of the line to write, that is the number of values to write to the image line</param>
-    /// <param name="src_element_size">size of elements in src array (2 or 4 byte)</param>
-    [DllImport(AVUTIL, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern void av_write_image_line2(void* src, ref byte_ptrArray4 data, int_array4 linesize, AVPixFmtDescriptor* desc, int x, int y, int c, int w, int src_element_size);
     
     /// <summary>Write the values from src to the pixel format component c of an image line.</summary>
     /// <param name="src">array containing the values to write</param>
@@ -4962,7 +4855,7 @@ public unsafe static partial class Raw
     /// <param name="dst">the array containing the pointers to the planes of the destination image</param>
     /// <param name="dstStride">the array containing the strides for each plane of the destination image</param>
     [DllImport(SWSCALE, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern int sws_scale(SwsContext* c, byte*[] srcSlice, int[] srcStride, int srcSliceY, int srcSliceH, byte*[] dst, int[] dstStride);
+    public static extern int sws_scale(SwsContext* c, byte** srcSlice, int* srcStride, int srcSliceY, int srcSliceH, byte** dst, int* dstStride);
     
     /// <summary>Scale source data from `src` and write the output to `dst`.</summary>
     /// <param name="dst">The destination frame. The data buffers may either be already allocated by the caller or left clear, in which case they will be allocated by the scaler. The latter may have performance advantages - e.g. in certain cases some (or all) output planes may be references to input planes, rather than copies.</param>
@@ -4980,18 +4873,6 @@ public unsafe static partial class Raw
     /// <param name="slice_height">number of rows in the slice</param>
     [DllImport(SWSCALE, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
     public static extern int sws_send_slice(SwsContext* c, uint slice_start, uint slice_height);
-    
-    /// <summary>Returns A negative error code on error, non negative otherwise. If `LIBSWSCALE_VERSION_MAJOR &lt; 7`, returns -1 if not supported.</summary>
-    /// <param name="c">the scaling context</param>
-    /// <param name="inv_table">the yuv2rgb coefficients describing the input yuv space, normally ff_yuv2rgb_coeffs[x]</param>
-    /// <param name="srcRange">flag indicating the white-black range of the input (1=jpeg / 0=mpeg)</param>
-    /// <param name="table">the yuv2rgb coefficients describing the output yuv space, normally ff_yuv2rgb_coeffs[x]</param>
-    /// <param name="dstRange">flag indicating the white-black range of the output (1=jpeg / 0=mpeg)</param>
-    /// <param name="brightness">16.16 fixed point brightness correction</param>
-    /// <param name="contrast">16.16 fixed point contrast correction</param>
-    /// <param name="saturation">16.16 fixed point saturation correction</param>
-    [DllImport(SWSCALE, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true), SuppressUnmanagedCodeSecurity]
-    public static extern int sws_setColorspaceDetails(SwsContext* c, int_array4 inv_table, int srcRange, int_array4 table, int dstRange, int brightness, int contrast, int saturation);
     
     /// <summary>Returns A negative error code on error, non negative otherwise. If `LIBSWSCALE_VERSION_MAJOR &lt; 7`, returns -1 if not supported.</summary>
     /// <param name="c">the scaling context</param>
