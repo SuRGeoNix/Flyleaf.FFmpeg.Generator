@@ -93,7 +93,7 @@ internal static class MacroEnumPostProcessor
             new("FF_DEBUG_", "DebugFlags", IsFlags: true),
             new("FF_BUG_", "WorkaroundBugFlags", IsFlags: true),
             new("FF_SUB_CHARENC_MODE_", "SubCharencModeFlags", IsFlags: true),
-            new("FF_CODEC_PROPERTY_", "CodecPropertyFlags", IsFlags: true),
+            //new("FF_CODEC_PROPERTY_", "CodecPropertyFlags", IsFlags: true),
 
             new("FF_DECODE_ERROR_", "DecodeErrorFlags", IsFlags: true),
         ];

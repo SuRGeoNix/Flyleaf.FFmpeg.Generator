@@ -3055,7 +3055,7 @@ public enum FilterFlags : int
     SupportTimelineInternal = 1 << 17,
 }
 
-public enum FilterFormatsState : byte
+public enum FilterFormatsState : int
 {
     /// <summary>The default value meaning that this filter supports all formats and (for audio) sample rates and channel layouts/counts as long as these properties agree for all inputs and outputs. This state is only allowed in case all inputs and outputs actually have the same type. The union is unused in this state.</summary>
     Passthrough = 0,

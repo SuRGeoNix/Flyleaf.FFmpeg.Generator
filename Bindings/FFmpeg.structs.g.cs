@@ -2479,7 +2479,7 @@ public unsafe struct FFFilter
     /// <summary>The number of entries in the list of outputs.</summary>
     public byte nb_outputs;
     /// <summary>This field determines the state of the formats union. It is an enum FilterFormatsState value.</summary>
-    public FilterFormatsState formats_state;
+    public byte formats_state;
     /// <summary>Filter pre-initialization function</summary>
     public FFFilter_preinit_func preinit;
     /// <summary>Filter initialization function.</summary>

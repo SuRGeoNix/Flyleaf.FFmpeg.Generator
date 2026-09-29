@@ -159,21 +159,21 @@ public unsafe static partial class Raw
     // original body hash: 2HuHK8WLchm3u+cK6H4QWhflx2JqfewtaSpj2Cwfi8M=
     
     public static AVDOVIColorMetadata* av_dovi_get_color(AVDOVIMetadata* data)
-        => (AVDOVIColorMetadata*)data + data->color_offset;
+        => (AVDOVIColorMetadata*)((byte*)data + data->color_offset);
     // original body hash: 95VVGrYYxehxy6xBNB3W5EXByQo7g6f/2xTaS2NNg7A=
     
     /// <summary>Gets the specified Dolby Vision Display Management (DM) metadata</summary>
     /// <param name="index">must be non negative and below data-&gt;num_ext_blocks</param>
     public static AVDOVIDmData* av_dovi_get_ext(AVDOVIMetadata* data, int index)
-        => (AVDOVIDmData*)(data + data->ext_block_offset + data->ext_block_size * (nuint)index);
+        => (AVDOVIDmData*)((byte*)data + data->ext_block_offset + data->ext_block_size * (nuint)index);
     // original body hash: 9s3LWaNhw7HthaPdPGsk1k9BVZdJ1Z5n/o75l5T/XeU=
     
     public static AVDOVIRpuDataHeader* av_dovi_get_header(AVDOVIMetadata* data)
-        => (AVDOVIRpuDataHeader*)(data + data->header_offset);
+        => (AVDOVIRpuDataHeader*)((byte*)data + data->header_offset);
     // original body hash: o2GAMR42tzsLDSTsgmgwZQZE/KVHnxSLs+Qv4NsGGfg=
     
     public static AVDOVIDataMapping* av_dovi_get_mapping(AVDOVIMetadata* data)
-        => (AVDOVIDataMapping*)(data + data->mapping_offset);
+        => (AVDOVIDataMapping*)((byte*)data + data->mapping_offset);
     // original body hash: 9L6NvV+QtpbRhlz6jS1E9tTjIovGIHJ33Cm+CJZ8Ru4=
     
     /// <summary>Reinterpret a float as a 32-bit integer.</summary>

@@ -98,7 +98,7 @@ internal class EnumerationProcessor
             var definition = new EnumerationDefinition
             {
                 Name        = name,
-                TypeName    = name == "FilterFormatsState" ? "byte" : TypeHelper.GetTypeName(enumeration.Type),
+                TypeName    = TypeHelper.GetTypeName(enumeration.Type),
                 IsFlags     = isflags,
                 XmlDocument = enumeration.Comment?.BriefText,
                 Obsoletion  = ObsoletionHelper.CreateObsoletion(enumeration),

@@ -156,8 +156,6 @@ internal static class Program
 
             "libswresample/swresample.h",
 
-            "libpostproc/postprocess.h",
-
             "libswscale/swscale.h",
 
             "libavcodec/avcodec.h",

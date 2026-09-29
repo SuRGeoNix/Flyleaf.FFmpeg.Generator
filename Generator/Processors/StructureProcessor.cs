@@ -214,9 +214,9 @@ internal class StructureProcessor
         if (className == "AVSideDataDescriptor" && fieldName == "props")
             return new() { Name = "AVSideDataProps" }; // orginally an enum
 
-        // libavfilter/filters.h (extra)
-        if (className == "FFFilter" && fieldName == "formats_state")
-            return new() { Name = "FilterFormatsState" };
+        // libavfilter/filters.h (extra) | don't mess with this is int enum with byte field in struct
+        //if (className == "FFFilter" && fieldName == "formats_state")
+            //return new() { Name = "FilterFormatsState" };
 
         if (className == "AVCodecContext")
         {
