@@ -2,6 +2,14 @@
 
 ---
 
+> [!IMPORTANT]
+> This project has been superseded by [Flyleaf.FFmpeg.ABI](https://github.com/SuRGeoNix/Flyleaf.FFmpeg.ABI).
+>
+> The new bindings are generated with [ClangABI](https://github.com/SuRGeoNix/ClangABI) and provide a more complete FFmpeg ABI surface, including hardware-context headers, improved cross-platform ABI handling, and Native AOT compatibility.
+>
+> New projects should use **Flyleaf.FFmpeg.ABI** instead.
+
+
 ## [Overview]
 
 Flyleaf.FFmpeg.Generator Generates FFmpeg C#/.NET bindings by using [CppSharp](https://github.com/mono/CppSharp)</br>
